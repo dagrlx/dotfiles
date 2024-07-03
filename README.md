@@ -1,2 +1,2 @@
 # dotfiles
-Dotfiles from my home config
+Dotfiles de mi home config, gestionado con [Chezmoi](https://www.chezmoi.io)
