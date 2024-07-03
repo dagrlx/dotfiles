@@ -1,0 +1,42 @@
+{
+	"$schema": "https://joplinapp.org/schema/settings.json",
+	"sync.target": 3,
+	"locale": "es_ES",
+	"markdown.plugin.softbreaks": true,
+	"markdown.plugin.typographer": false,
+	"ui.layout": {
+		"key": "root",
+		"children": [
+			{
+				"key": "sideBar",
+				"width": 250,
+				"visible": true
+			},
+			{
+				"key": "noteList",
+				"width": 250,
+				"visible": true
+			},
+			{
+				"key": "editor",
+				"visible": true,
+				"width": 1325
+			},
+			{
+				"key": "plugin-view-joplin.plugin.benji.favorites-favorites.panel",
+				"context": {
+					"pluginId": "joplin.plugin.benji.favorites"
+				},
+				"visible": true
+			}
+		],
+		"visible": true
+	},
+	"noteVisiblePanes": [
+		"editor"
+	],
+	"api.token": "b83fde5f4d1593cbeb78925ffa2768551c624b496aee49cfd661a4f8584bcab2cd2821f3f18a67f8e845e0056433b1cf4f2c9aed8ddda804c6a1a4902a4854d3",
+	"spellChecker.languages": [
+		"es"
+	]
+}

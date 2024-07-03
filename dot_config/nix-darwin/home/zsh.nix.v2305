@@ -1,0 +1,59 @@
+{pkgs, ...}: {
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+    #enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
+
+    #initExtra = builtins.readFile ./zshrc;
+
+    #variables = {
+    #shellInit ="source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme";
+    # }
+
+    #plugins = [
+    #  {
+    #    name = "powerlevel10k";
+    #    src = pkgs.zsh-powerlevel10k;
+    #    file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+    #  }
+    #  {
+    #    name = "powerlevel10k-config";
+    #src = ./p10k-config;
+    #    src = pkgs.zsh-powerlevel10k;
+    #    file = "p10k.zsh";
+    #  }
+    #];
+
+    shellAliases = {
+      rustscan = "docker run -it --rm --name rustscan --platform linux/amd64 rustscan/rustscan";
+      "..." = "cd ../..";
+      update = "darwin-rebuild switch --flake ~/.config/nix-darwin/";
+      uflake = "nix flake update ~/.config/nix-darwin";
+      ngc = "nix-collect-garbage -d";
+      sgc = "sudo nix-collect-garbage -d";
+      bcp0 = "brew cleanup --prune=0";
+      flushdns = "sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder";
+      allow_app = "codesign --sign - --force --deep @$ && xattr -d com.apple.quarantine @$"; #Para de-quarantine un app de MacOS
+      n = "nano -clS";
+    };
+
+    history = {
+      size = 10000;
+      ignoreDups = true; #Ignora duplicados
+      #ignoreAllDups = true; # NO almacenar duplicados ** Investigar porque indica que opcion no existe para Macos
+      ignoreSpace = true; #Elimina del historial los comandos que empiecen con un espacio
+      extended = true; # Guarda el timestamp
+      share = true; #Comparte el historial de comando entre sesiones
+      expireDuplicatesFirst = true; #elimina los duplicados primero.
+    };
+
+    oh-my-zsh = {
+      enable = true;
+      plugins = ["git" "sudo" "tmux" "docker" "kubectl" "direnv" "brew" "minikube" "fzf" "aliases" "vscode"];
+      theme = "strug"; #robbyrussell
+      #theme = "robbyrussell";
+    };
+  };
+}
