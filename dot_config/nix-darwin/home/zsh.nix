@@ -37,6 +37,7 @@
       allow_app = "codesign --sign - --force --deep @$ && xattr -d com.apple.quarantine @$"; #Para de-quarantine un app de MacOS
       n = "nano -clS";
       fzn="fzf --preview 'bat --style=numbers --color=always {}' | xargs -n1 nvim";
+      sshp="ssh -o ProxyJump=sabaext"
     };
 
     history = {

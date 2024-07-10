@@ -104,6 +104,7 @@
       "gromgit/fuse"
       "pkgxdev/made"
       "localsend/localsend"
+      "nikitabobko/tap"
     ];
 
     # `brew install`
@@ -120,13 +121,13 @@
       "poppler"  #para PDF preview en yazi
 
       ##Tiling windows manager
-      "yabai"
-      "skhd"
+      #"yabai"
+      #"skhd"
       "sketchybar"
       "lua"
       "switchaudio-osx"
       "nowplaying-cli"
-      #"borders"
+      "borders"
 
       "nushell"
       "the_silver_searcher" #A code searching tool similar to ack, with a focus on speed.
@@ -189,6 +190,8 @@
       "deeper"       
       "tyke"         # App para tomar notas rapidas temporal 
       "applite"       # App grafica homebrew - https://www.thriftmac.com
+
+      "aerospace"    # Tiling manager basado en i3wm 
 
       #Terminales
       "iterm2"

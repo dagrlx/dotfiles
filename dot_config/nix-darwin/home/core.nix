@@ -383,10 +383,10 @@
       enableZshIntegration = true;
     };
 
-    thefuck = {
-      enable = true;
-      enableZshIntegration = true;
-    };
+    #thefuck = {
+    #  enable = true;
+    #  enableZshIntegration = true;
+    #};
 
     direnv = {
       enable = true;
