@@ -124,20 +124,6 @@ local ip = sbar.add("item", {
   }
 })
 
-local public_ip = sbar.add("item", {
-  position = "popup." .. wifi_bracket.name,
-  icon = {
-    align = "left",
-    string = "Public IP:",
-    width = popup_width / 2,
-  },
-  label = {
-    string = "???.???.???.???",
-    width = popup_width / 2,
-    align = "right",
-  }
-})
-
 local mask = sbar.add("item", {
   position = "popup." .. wifi_bracket.name,
   icon = {
@@ -222,9 +208,6 @@ local function toggle_details()
     sbar.exec("networksetup -getinfo Wi-Fi | awk -F 'Router: ' '/^Router: / {print $2}'", function(result)
       router:set({ label = result })
     end)
-    sbar.exec("curl -s ifconfig.me", function(result)
-      public_ip:set({ label = result })
-    end)
   else
     hide_details()
   end
@@ -247,7 +230,5 @@ end
 ssid:subscribe("mouse.clicked", copy_label_to_clipboard)
 hostname:subscribe("mouse.clicked", copy_label_to_clipboard)
 ip:subscribe("mouse.clicked", copy_label_to_clipboard)
-public_ip:subscribe("mouse.clicked", copy_label_to_clipboard)
 mask:subscribe("mouse.clicked", copy_label_to_clipboard)
 router:subscribe("mouse.clicked", copy_label_to_clipboard)
-

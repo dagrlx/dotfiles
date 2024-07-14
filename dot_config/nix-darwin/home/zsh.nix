@@ -1,11 +1,15 @@
 {pkgs, ...}: {
   programs.zsh = {
     enable = true;
-    autosuggestion.enable = true;
     enableCompletion = true;
-    syntaxHighlighting.enable = true;
+    autosuggestion.enable = true;  # Habilita las sugerencias de autocompletado
+    syntaxHighlighting.enable = true;  # Habilita el resaltado de sintaxis
+    syntaxHighlighting.highlighters = [ "brackets" ];
 
     #initExtra = builtins.readFile ./zshrc;
+
+    #initExtraFirst = "  # Commands that should be added to top of {file}.zshrc.
+    #";
 
     initExtra = ''
      
@@ -14,14 +18,11 @@
 
       # Agregar pkgx al PATH y cargar su configuración
       source <(pkgx --shellcode)
+      #eval "$(pkgx integrate)"
 
-      # Agregar tea al PATH
-      #export PATH="$HOME/.local/bin:$HOME/.pkgx:$PATH"
+      # Integracion de thefuck
+      eval $(thefuck --alias)
 
-       # Integración de pkgx
-      #if command -v pkgx &> /dev/null; then
-      #  source <(pkgx --shellcode)
-      #fi
 
     '';
 
@@ -37,7 +38,7 @@
       allow_app = "codesign --sign - --force --deep @$ && xattr -d com.apple.quarantine @$"; #Para de-quarantine un app de MacOS
       n = "nano -clS";
       fzn="fzf --preview 'bat --style=numbers --color=always {}' | xargs -n1 nvim";
-      sshp="ssh -o ProxyJump=sabaext"
+      sshp="ssh -o ProxyJump=sabaext";
     };
 
     history = {

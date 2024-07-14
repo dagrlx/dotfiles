@@ -138,17 +138,19 @@
       #control versiones dotfiles
       "chezmoi"
       #"yadm"
+      "age"   # Is a simple, modern and secure file encryption tool, format, and Go library.
 
       #"talosctl"
       "ntfs-3g-mac"
 
       "pkgx"  # Alternativa a hombrew
-      #"thefuck"  #magnificent app that corrects your previous console command.
+      "thefuck"  #magnificent app that corrects your previous console command.
     ];
 
     # `brew install --cask`
     # TODO Feel free to add your favorite apps here.
     casks = [
+
       "firefox"
       #"google-chrome"
       "google-drive"
