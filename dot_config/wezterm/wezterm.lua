@@ -42,6 +42,7 @@ config.send_composed_key_when_right_alt_is_pressed = true
 
 --Set window opacity
 config.window_background_opacity = 0.9 -- personal recommended value
+--config.text_background_opacity = 0.4
 macos_window_background_blur = 30
 
 enable_clipboard_integration = true
