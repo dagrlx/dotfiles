@@ -1,3 +1,5 @@
 flake.lock
+.config/nix-darwin/flake.lock
 key.txt.age
+.dir_colors
 
