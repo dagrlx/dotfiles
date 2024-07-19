@@ -242,6 +242,7 @@
       "font-sf-pro" #Simbolos
       "sf-symbols" #iconos
       "font-sf-mono"
+      "font-blex-mono-nerd-font"
 
       "fly"  #Command line interface to Concourse CI
     ];
