@@ -8,7 +8,7 @@ after-startup-command = [
     #'exec-and-forget /opt/homebrew/opt/borders/bin/borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
     # Sketchybar has a built-in detection of already running process,
     # so it won't be run twice on AeroSpace restart
-    'exec-and-forget /opt/homebrew/opt/sketchybar/bin/sketchybar'
+    'exec-and-forget /opt/homebrew/opt/sketchybar/bin/sketchybar --reload'
 ]
 
 # Notify Sketchybar about workspace change
@@ -70,7 +70,7 @@ ctrl-enter = 'exec-and-forget open -n /Applications/WezTerm.app'
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
 #alt-s = 'layout v_accordion' # 'layout stacking' in i3
 #alt-w = 'layout h_accordion' # 'layout tabbed' in i3
-alt-slash = 'layout tiles horizontal vertical'    # Cambiar al diseño de mosaicos. Cambie la orientación del diseño si ya está en el diseño de mosaicos ('layout toggle split' in i3)
+alt-slash = 'layout tiles horizontal vertical'    # Cambiar al diseño de mosaicos y cambia la orientación del diseño si ya está en el diseño de mosaicos ('layout toggle split' in i3)
 alt-comma = 'layout accordion horizontal vertical'
 
 cmd-shift-v = 'layout v_tiles' # Cambie el diseño (layout) y la orientación de los mosaicos de una sola vez
@@ -84,7 +84,7 @@ alt-j = 'focus down'
 alt-k = 'focus up'
 alt-l = 'focus right'
 
-# Para poder usar estas opciones a que desactivar enable-normalization-flatten-containers 
+# Para poder usar estas opciones hay que desactivar enable-normalization-flatten-containers 
 # https://nikitabobko.github.io/AeroSpace/commands#split
 #alt-v = 'split horizontal'
 #alt-x = 'split vertical'
