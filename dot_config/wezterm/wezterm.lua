@@ -1,5 +1,6 @@
 local wezterm = require 'wezterm';
 local Tab = require 'tab';
+--local tab = require("tab")
 
 local config = {}
 -- Use config builder object if possible
@@ -25,6 +26,9 @@ config.color_scheme = 'catppuccin-macchiato' --Tokyo Night'
 config.font = wezterm.font_with_fallback({
   { family = "JetBrainsMono Nerd Font",       scale = 1.2, weight = "Medium", },
   { family = "FantasqueSansM Nerd Font", scale = 1.3, },
+  { family = "Noto Sans", scale = 1.0 },
+  { family = "BlexMono Nerd Font", scale = 1.0 },
+    
 })
 config.font_size = 12.0
 --#line_height= 1.2
@@ -42,7 +46,7 @@ config.send_composed_key_when_right_alt_is_pressed = true
 
 --Set window opacity
 config.window_background_opacity = 0.9 -- personal recommended value
---config.text_background_opacity = 0.4
+config.text_background_opacity = 0.5
 macos_window_background_blur = 30
 
 enable_clipboard_integration = true
@@ -111,6 +115,14 @@ config.window_background_gradient = {
 
 --Display Tab Navigator
 local act = wezterm.action
+
+--Para mitigar caso https://github.com/wez/wezterm/issues/2910
+config.mouse_bindings = {
+  { event = { Down = { streak = 1, button = 'Left' } }, mods = 'SHIFT', action = act.SelectTextAtMouseCursor('Cell') },
+  { event = { Down = { streak = 2, button = 'Left' } }, mods = 'SHIFT', action = act.SelectTextAtMouseCursor('Word') },
+  { event = { Down = { streak = 3, button = 'Left' } }, mods = 'SHIFT', action = act.SelectTextAtMouseCursor('Line') },
+  -- Agrega otras asignaciones de acciones del mouse según tus preferencias
+}
 
 config.keys = {
   {
