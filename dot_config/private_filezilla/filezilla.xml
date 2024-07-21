@@ -112,7 +112,6 @@
 		<Setting name="Trust system trust store">0</Setting>
 		<Setting name="Show Tree Local">1</Setting>
 		<Setting name="Size format">1</Setting>
-		<Setting name="Proxy type">0</Setting>
 		<Setting name="Language Code">es</Setting>
 		<Setting name="Already connected choice">0</Setting>
 		<Setting name="Show queue">1</Setting>
@@ -132,12 +131,13 @@
 		<Setting name="Search window size">0 -883 -787 1440 500 </Setting>
 		<Setting name="Local filelist sortorder">0 0</Setting>
 		<Setting name="Sitemanager last selected">0/SICA Interno</Setting>
-		<Setting name="Last automatic update check">2024-06-26 13:28:39</Setting>
+		<Setting name="Last automatic update check">2024-07-15 13:31:08</Setting>
 		<Setting name="Update Check New Version" platform="mac">release 3.67.0
 </Setting>
-		<Setting name="Site Manager position">0 59 230 1322 446 </Setting>
-		<Setting name="Window position and size">0 -3835 -650 1910 947 </Setting>
-		<Setting name="Splitter positions (v2)">38 -70 425654450 100 100 500000000</Setting>
+		<Setting name="Proxy type">2</Setting>
+		<Setting name="Site Manager position">0 -1621 -370 1322 446 </Setting>
+		<Setting name="Window position and size">0 -1914 -652 1908 944 </Setting>
+		<Setting name="Splitter positions (v2)">38 -275 425654450 156 155 500000000</Setting>
 		<Setting name="Tab data" sensitive="1">
 			<Tabs>
 				<Tab connected="1" selected="1">
@@ -152,8 +152,8 @@
 					<BypassProxy>0</BypassProxy>
 					<Name>SICA Interno</Name>
 					<Site>0/SICA Interno</Site>
-					<RemotePath>1 0 4 home 10 interfaces 9 Rendicion 2 in</RemotePath>
-					<LocalPath>/Users/dgarciar/Documents/Saba/TagUniversal/tmp/</LocalPath>
+					<RemotePath>1 0 4 home 10 interfaces 4 .ssh</RemotePath>
+					<LocalPath>/Users/dgarciar/Documents/Saba/ACSA/LuisPalavecino/Recibidos/</LocalPath>
 				</Tab>
 			</Tabs>
 		</Setting>
