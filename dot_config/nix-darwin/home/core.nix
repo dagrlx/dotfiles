@@ -321,12 +321,13 @@
         set -g @catppuccin_window_current_fill "number"
         set -g @catppuccin_window_current_text "#W"
 
-        set -g @catppuccin_status_modules_right "directory application session host session"
+        set -g @catppuccin_status_modules_right "directory application session host date_time"
         set -g @catppuccin_status_left_separator  ""
         set -g @catppuccin_status_right_separator " "
         set -g @catppuccin_status_right_separator_inverse "yes"
-        set -g @catppuccin_status_fill "icon"
+        set -g @catppuccin_status_fill "all"
         set -g @catppuccin_status_connect_separator "no"
+        set -g @catppuccin_status_fill "icon"
 
         set -g @catppuccin_directory_text "#{pane_current_path}"
 
@@ -341,12 +342,14 @@
 
         #"set-option -g status-right '('Caracas:' #(TZ=America/Caracas date +%%H:%%M) 'Miami:' #(TZ=America/New_York date +%%H:%%M)) 'Santiago:' %Y-%m-%d %H:%M'
 
+
     '';
     };
 
     zellij = {
       enable = true;
       #enableZshIntegration = true;
+
       settings = {
         theme = "catppuccin-macchiato";
       };
@@ -365,7 +368,7 @@
       enable = true;
       enableZshIntegration = true;
       defaultOptions = [
-        "--height 60%"
+        "--height 50%"
         "--border"
       ];
       tmux.enableShellIntegration = true;
