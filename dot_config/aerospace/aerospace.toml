@@ -82,12 +82,6 @@ cmd-shift-h = 'layout h_tiles'
 
 #alt-shift-q = 'close --quit-if-last-window'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#focus
-alt-h = 'focus left'
-alt-j = 'focus down'
-alt-k = 'focus up'
-alt-l = 'focus right'
-
 # Para poder usar estas opciones hay que desactivar enable-normalization-flatten-containers 
 # https://nikitabobko.github.io/AeroSpace/commands#split
 #alt-v = 'split horizontal'
@@ -98,6 +92,13 @@ alt-shift-f = 'macos-native-fullscreen'
 
 alt-cmd-t = 'layout floating tiling' # 'floating toggle' in i3
 
+# See: https://nikitabobko.github.io/AeroSpace/commands#focus
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# See: https://nikitabobko.github.io/AeroSpace/commands#move
 ctrl-shift-h = 'move left'
 ctrl-shift-j = 'move down'
 ctrl-shift-k = 'move up'
