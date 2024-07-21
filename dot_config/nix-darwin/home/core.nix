@@ -277,7 +277,6 @@
       plugins = with pkgs.tmuxPlugins;
           [
             yank
-            catppuccin
             better-mouse-mode
             vim-tmux-navigator
             tmux-fzf
@@ -285,9 +284,9 @@
             {
             plugin = catppuccin;
             extraConfig = '' 
-              set -g @catppuccin_flavour 'frappe'
-              set -g @catppuccin_window_tabs_enabled on
-              set -g @catppuccin_date_time "%H:%M"
+              set -g @catppuccin_flavour 'macchiato'
+              #set -g @catppuccin_window_tabs_enabled on
+              #set -g @catppuccin_date_time "%H:%M"
               set -g @catppuccin_window_left_separator "█"
               set -g @catppuccin_window_right_separator "█ "
               set -g @catppuccin_window_number_position "right"
@@ -326,7 +325,7 @@
             extraConfig = ''
               set -g @continuum-restore 'on'
               set -g @continuum-boot 'off'
-              set -g @continuum-save-interval '15'
+              set -g @continuum-save-interval '5'
             '';
             }
             
@@ -338,7 +337,7 @@
 
         set -g status-position top
 
-        set -g status-right 'Continuum status: #{continuum_status}'
+        #set -g status-right 'Continuum status: #{continuum_status}'
 
         #set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
 
@@ -351,6 +350,10 @@
         # Combinación de teclas para activar/desactivar la sincronización de paneles
         bind-key s setw synchronize-panes on \; display-message "Sincronización de paneles activada"
         bind-key x setw synchronize-panes off \; display-message "Sincronización de paneles desactivada"
+
+        # Easier reload of config
+        bind r source-file ~/.config/tmux/tmux.conf
+
 
         #"set-option -g status-right '('Caracas:' #(TZ=America/Caracas date +%%H:%%M) 'Miami:' #(TZ=America/New_York date +%%H:%%M)) 'Santiago:' %Y-%m-%d %H:%M'
 
