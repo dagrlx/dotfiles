@@ -273,6 +273,7 @@
       tmuxp.enable = true;
       newSession = true;
       sensibleOnTop = true;
+      terminal = "screen-256color";
       plugins = with pkgs.tmuxPlugins;
           [
             yank
@@ -292,7 +293,7 @@
             }
 
             {
-            plugin = tmuxPlugins.continuum;
+            plugin = tmuxPlugins.coç:ntinuum;
             extraConfig = ''
             #set -g @continuum-restore 'on'
             #set -g @continuum-boot 'off'
