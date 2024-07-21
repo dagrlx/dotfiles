@@ -309,6 +309,8 @@
 
         set -g status-position top
 
+        set -g status-right 'Continuum status: #{continuum_status}'
+
         #set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
 
         set -g @catppuccin_window_left_separator "█"
