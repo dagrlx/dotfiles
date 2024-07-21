@@ -283,6 +283,35 @@
             tmux-fzf
 
             {
+            plugin = catppuccin;
+            extraConfig = '' 
+              set -g @catppuccin_flavour 'frappe'
+              set -g @catppuccin_window_tabs_enabled on
+              set -g @catppuccin_date_time "%H:%M"
+              set -g @catppuccin_window_left_separator "█"
+              set -g @catppuccin_window_right_separator "█ "
+              set -g @catppuccin_window_number_position "right"
+              set -g @catppuccin_window_middle_separator "  █"
+
+              set -g @catppuccin_window_default_fill "number"
+              set -g @catppuccin_window_default_text "#W"
+
+              set -g @catppuccin_window_current_fill "number"
+              set -g @catppuccin_window_current_text "#W"
+
+              set -g @catppuccin_status_modules_right "directory session host"
+              set -g @catppuccin_status_left_separator  ""
+              set -g @catppuccin_status_right_separator " "
+              set -g @catppuccin_status_right_separator_inverse "no"
+              set -g @catppuccin_status_fill "icon"
+              set -g @catppuccin_status_connect_separator "no"
+
+              set -g @catppuccin_directory_text "#{pane_current_path}"
+
+            '';
+            }
+
+            {
             plugin = resurrect;  #Restaura el ambiente de tmux despues de reiniciar el equipo
             extraConfig = ''
               set -g @resurrect-strategy-vim 'session'
@@ -313,25 +342,6 @@
 
         #set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
 
-        set -g @catppuccin_window_left_separator "█"
-        set -g @catppuccin_window_right_separator "█ "
-        set -g @catppuccin_window_number_position "right"
-        set -g @catppuccin_window_middle_separator "  █"
-
-        set -g @catppuccin_window_default_fill "number"
-        set -g @catppuccin_window_default_text "#W"
-
-        set -g @catppuccin_window_current_fill "number"
-        set -g @catppuccin_window_current_text "#W"
-
-        set -g @catppuccin_status_modules_right "directory session host"
-        set -g @catppuccin_status_left_separator  ""
-        set -g @catppuccin_status_right_separator " "
-        set -g @catppuccin_status_right_separator_inverse "no"
-        set -g @catppuccin_status_fill "icon"
-        set -g @catppuccin_status_connect_separator "no"
-
-        set -g @catppuccin_directory_text "#{pane_current_path}"
 
         # Configuracion para mostrar correctamente image preview en yazi
         set -g allow-passthrough on
