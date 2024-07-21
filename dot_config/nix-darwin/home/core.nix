@@ -347,7 +347,6 @@
     zellij = {
       enable = true;
       #enableZshIntegration = true;
-
       settings = {
         theme = "catppuccin-macchiato";
       };
@@ -366,7 +365,7 @@
       enable = true;
       enableZshIntegration = true;
       defaultOptions = [
-        "--height 50%"
+        "--height 60%"
         "--border"
       ];
       tmux.enableShellIntegration = true;
