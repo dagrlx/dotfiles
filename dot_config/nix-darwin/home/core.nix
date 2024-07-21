@@ -293,7 +293,7 @@
             }
 
             {
-            plugin = tmuxPlugins.coç:ntinuum;
+            plugin = tmuxPlugins.continuum;
             extraConfig = ''
             #set -g @continuum-restore 'on'
             #set -g @continuum-boot 'off'
