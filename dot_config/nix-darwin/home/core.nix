@@ -273,7 +273,9 @@
       tmuxp.enable = true;
       newSession = true;
       sensibleOnTop = true;
+     # prefix = "C-a";
       terminal = "screen-256color";
+      historyLimit = 100000;
       plugins = with pkgs.tmuxPlugins;
           [
             yank
@@ -298,7 +300,8 @@
               set -g @catppuccin_window_current_fill "number"
               set -g @catppuccin_window_current_text "#W"
 
-              set -g @catppuccin_status_modules_right "directory session host"
+              set -g @catppuccin_status_modules_right "directory host session"
+  
               set -g @catppuccin_status_left_separator  ""
               set -g @catppuccin_status_right_separator " "
               set -g @catppuccin_status_right_separator_inverse "no"
@@ -324,7 +327,7 @@
             plugin = continuum;
             extraConfig = ''
               set -g @continuum-restore 'on'
-              set -g @continuum-boot 'off'
+              set -g @continuum-boot 'on'
               set -g @continuum-save-interval '5'
             '';
             }
