@@ -113,7 +113,7 @@
       loginwindow = {
         GuestEnabled = false; # disable guest user
         SHOWFULLNAME = true; # Muestra campos de usuario y passwd en vez de lista de usuario en la pantalla login 
-        LoginwindowText = "devops-tux";
+        LoginwindowText = "Esperanza y Fe en Dios";
       };
     };
   };
