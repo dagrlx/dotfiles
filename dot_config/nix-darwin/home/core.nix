@@ -291,14 +291,14 @@
             '';
             }
 
-           # {
-            #plugin = tmuxPlugins.continuum;
-            #extraConfig = ''
-            #set -g @continuum-restore 'off'
+            {
+            plugin = tmuxPlugins.continuum;
+            extraConfig = ''
+            #set -g @continuum-restore 'on'
             #set -g @continuum-boot 'off'
-            #set -g @continuum-save-interval '10'
+            #set -g @continuum-save-interval '15'
             #'';
-            #}
+            }
             
           ];
 
