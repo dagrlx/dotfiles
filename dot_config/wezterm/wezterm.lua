@@ -1,37 +1,93 @@
-local wezterm = require 'wezterm';
-local Tab = require 'tab';
---local tab = require("tab")
+local wezterm = require("wezterm")
+
+local process_icons = require("icons")
 
 local config = {}
--- Use config builder object if possible
 if wezterm.config_builder then
-  config = wezterm.config_builder()
+	config = wezterm.config_builder()
+	config:set_strict_mode(false)
+end
+local function get_proc_title(pane)
+	return (pane.title or pane:get_foreground_process_name()):gsub("^%s+", ""):gsub("%s+$", ""):match("[^/]+$")
 end
 
-config.front_end = "WebGpu"
-config.webgpu_power_preference = "HighPerformance"
+local act = wezterm.action
 
-config.visual_bell = {
-	fade_in_function = "EaseIn",
-	fade_in_duration_ms = 150,
-	fade_out_function = "EaseOut",
-	fade_out_duration_ms = 150,
-}
-config.colors = {
-	visual_bell = "#303030",
+config = {
+	font = wezterm.font_with_fallback({
+		"JetBrainsMono Nerd Font",
+		"Hack Nerd Font",
+		"Symbols Nerd Font",
+		-- "Maple Mono",
+		-- "Monaspace Radon",
+		"Fusion Kai G",
+	}),
+	front_end = "WebGpu",
+	webgpu_power_preference = "HighPerformance",
+	color_scheme = "catppuccin-macchiato",
+	animation_fps = 30,
+	max_fps = 60,
+	font_size = 12.0,
+	underline_thickness = 1,
+	underline_position = -2.0,
+	allow_square_glyphs_to_overflow_width = "Never",
+	-- colors = { background = "#26283f" },
+	window_padding = {
+		top = 0,
+		bottom = 0,
+		left = 0,
+		right = 0,
+	},
+	inactive_pane_hsb = {
+		saturation = 1.0,
+		brightness = 1.0,
+	},
+	enable_tab_bar = true,
+	window_decorations = "RESIZE",
+	-- hide_tab_bar_if_only_one_tab = true,
+	window_background_opacity = 0.9,
+	text_background_opacity = 0.5,
+	macos_window_background_blur = 30
+	use_fancy_tab_bar = false,
+	tab_bar_at_bottom = false,
+	tab_max_width = 30,
+	--enable_kitty_keyboard = true,
+	warn_about_missing_glyphs = false,
+	window_frame = {
+		font = wezterm.font({ family = "Monaspace Radon", weight = "Bold" }),
+		font_size = 13.0,
+		border_left_width = "0.0cell",
+		border_right_width = "0.0cell",
+		border_bottom_height = "0.10cell",
+		border_bottom_color = "#1a1b26",
+		border_top_height = "0.0cell",
+	},
+	launch_menu = {},
+	mouse_bindings = {
+		{
+			event = {
+				Down = { streak = 1, button = "Right" },
+			},
+			mods = "NONE",
+			action = wezterm.action_callback(function(window, pane)
+				local has_selection = window:get_selection_text_for_pane(pane) ~= ""
+				if has_selection then
+					window:perform_action(act.CopyTo("ClipboardAndPrimarySelection"), pane)
+					window:perform_action(act.ClearSelection, pane)
+				else
+					window:perform_action(act({ PasteFrom = "Clipboard" }), pane)
+				end
+			end),
+		},
+	},
 }
 
-config.color_scheme = 'catppuccin-macchiato' --Tokyo Night' 
---config.font = wezterm.font('JetBrainsMono Nerd Font')
-config.font = wezterm.font_with_fallback({
-  { family = "JetBrainsMono Nerd Font",       scale = 1.2, weight = "Medium", },
-  { family = "FantasqueSansM Nerd Font", scale = 1.3, },
-  { family = "Noto Sans", scale = 1.0 },
-  { family = "BlexMono Nerd Font", scale = 1.0 },
-    
-})
-config.font_size = 12.0
---#line_height= 1.2
+config.bypass_mouse_reporting_modifiers = "SHIFT"
+
+enable_clipboard_integration = true
+
+--Activa la barra de desplazamiento
+config.enable_scroll_bar = true
 
 config.colors = {
   -- El color del "thumb" de la barra de desplazamiento; la parte que representa el viewport actual
@@ -44,85 +100,103 @@ config.send_composed_key_when_left_alt_is_pressed = true
 config.send_composed_key_when_right_alt_is_pressed = true
 
 
---Set window opacity
-config.window_background_opacity = 0.9 -- personal recommended value
-config.text_background_opacity = 0.5
-macos_window_background_blur = 30
+wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, hover, _max_width)
+	local has_unseen_output = false
+	for _, pane in ipairs(tab.panes) do
+		if pane.has_unseen_output then
+			has_unseen_output = true
+			break
+		end
+	end
+	local proc_title = get_proc_title(tab.active_pane)
 
-enable_clipboard_integration = true
+	local icon
+	if process_icons[proc_title] ~= nil then
+		icon = wezterm.format({
+			{ Text = " " },
+			process_icons[proc_title],
+			{ Text = " " },
+		})
+	else
+		icon = wezterm.format({
+			{ Text = string.format(" %s", proc_title) },
+		})
+	end
+	local title = {}
+	if hover then
+		table.insert(title, {
+			Background = { Color = "#2a2e36" },
+		})
+	else
+		table.insert(title, {
+			Background = { Color = "#1a1b26" },
+		})
+	end
+	if has_unseen_output then
+		table.insert(title, {
+			Foreground = { Color = "#fffac2" },
+		})
+	elseif tab.is_active then
+		table.insert(title, {
+			Foreground = { Color = "#5de4c7" },
+		})
+	else
+		table.insert(title, {
+			Foreground = { Color = "#9196c2" },
+		})
+	end
+	table.insert(title, {
+		Text = icon,
+	})
+	table.insert(title, {
+		Foreground = {
+			Color = "#9196c2",
+		},
+	})
+	if tab.tab_title == "" then
+		table.insert(title, {
+			Text = proc_title or "",
+		})
+	else
+		table.insert(title, {
+			Text = tab.tab_title,
+		})
+	end
+	table.insert(title, {
+		Text = " ",
+	})
+	return title
+end)
 
---Activa la barra de desplazamiento
-config.enable_scroll_bar = true
+wezterm.on("update-right-status", function(window, pane)
+	window:set_right_status(wezterm.format({
+		{ Attribute = { Intensity = "Bold" } },
+		{ Foreground = { Color = "#9196c2" } },
+		{
+			Text = (function()
+				if pane:get_user_vars().IS_NVIM == "true" then
+					return ""
+				else
+					return ""
+				end
+			end)(),
+		},
+		{ Text = wezterm.strftime("%l:%M %p") },
+	}))
+end)
 
 
-config.window_background_gradient = {
-  -- Can be "Vertical" or "Horizontal".  Specifies the direction
-  -- in which the color gradient varies.  The default is "Horizontal",
-  -- with the gradient going from left-to-right.
-  -- Linear and Radial gradients are also supported; see the other
-  -- examples below
-  orientation = 'Vertical',
+-- wezterm.on("new-tab-button-click", function(window, pane, button, _default_action)
+-- 	if button == "Left" then
+-- 		window:perform_action(sesh.create.action, pane)
+-- 		return false
+-- 	end
+-- end)
 
-  -- Specifies the set of colors that are interpolated in the gradient.
-  -- Accepts CSS style color specs, from named colors, through rgb
-  -- strings and more
-  colors = {
-    '#0f0c29',
-    '#302b63',
-    '#24243e',
-  },
-
-  -- Instead of specifying `colors`, you can use one of a number of
-  -- predefined, preset gradients.
-  -- A list of presets is shown in a section below.
-  -- preset = "Warm",
-
-  -- Specifies the interpolation style to be used.
-  -- "Linear", "Basis" and "CatmullRom" as supported.
-  -- The default is "Linear".
-  interpolation = 'Linear',
-
-  -- How the colors are blended in the gradient.
-  -- "Rgb", "LinearRgb", "Hsv" and "Oklab" are supported.
-  -- The default is "Rgb".
-  blend = 'Rgb',
-
-  -- To avoid vertical color banding for horizontal gradients, the
-  -- gradient position is randomly shifted by up to the `noise` value
-  -- for each pixel.
-  -- Smaller values, or 0, will make bands more prominent.
-  -- The default value is 64 which gives decent looking results
-  -- on a retina macbook pro display.
-  -- noise = 64,
-
-  -- By default, the gradient smoothly transitions between the colors.
-  -- You can adjust the sharpness by specifying the segment_size and
-  -- segment_smoothness parameters.
-  -- segment_size configures how many segments are present.
-  -- segment_smoothness is how hard the edge is; 0.0 is a hard edge,
-  -- 1.0 is a soft edge.
-
-  -- segment_size = 11,
-  -- segment_smoothness = 0.0,
-}
-
-
---Disable fancy tab style
---config.use_fancy_tab_bar = true
-
---Hide the tab bar if there is only one tab
---config.hide_tab_bar_if_only_one_tab = true
-
---Display Tab Navigator
-local act = wezterm.action
-
---Para mitigar caso https://github.com/wez/wezterm/issues/2910
-config.mouse_bindings = {
-  { event = { Down = { streak = 1, button = 'Left' } }, mods = 'SHIFT', action = act.SelectTextAtMouseCursor('Cell') },
-  { event = { Down = { streak = 2, button = 'Left' } }, mods = 'SHIFT', action = act.SelectTextAtMouseCursor('Word') },
-  { event = { Down = { streak = 3, button = 'Left' } }, mods = 'SHIFT', action = act.SelectTextAtMouseCursor('Line') },
-  -- Agrega otras asignaciones de acciones del mouse según tus preferencias
-}
+-- wezterm.on("window-focus-changed", function(window)
+-- 	we["WEZTERM_TAB"] = window:active_tab():tab_id()
+-- end)
+--
 
 config.keys = {
   {
@@ -163,21 +237,10 @@ config.keys = {
 }
 
 --Para diferenciar que pane esta activo
-config.inactive_pane_hsb = {
-  saturation = 0.2,
-  brightness = 0.5,
-}
-
--- and finally, return the configuration to wezter
-if Tab and Tab.setup then
-  Tab.setup(config)
-else
-  print("El módulo 'tab' no se ha cargado correctamente o la función 'setup' no existe")
-end
+--config.inactive_pane_hsb = {
+--  saturation = 0.2,
+--  brightness = 0.5,
+--}
 
 return config
 
---Link de configuraciones
---https://ansidev.substack.com/p/wezterm-cheatsheet
---https://github.com/RauliL/wezterm-config/blob/master/wezterm.lua
---https://github.com/emretuna/.dotfiles/tree/main/wezterm/.config/wezterm
