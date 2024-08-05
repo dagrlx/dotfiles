@@ -18,7 +18,7 @@
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
   environment.systemPackages = with pkgs; [
     git
-    #lf  #Configurado en core.nix
+    just # use Justfile to simplify nix-darwin's commands 
   ];
 
    # Cambios derivados de actualizacion en nix-darwin inestable
@@ -117,6 +117,8 @@
       "duckdns"
       "podman"
 
+      "neovim"
+
       "yazi"  #file manager 
       "poppler"  #para PDF preview en yazi
 
@@ -180,6 +182,7 @@
       "zerotier-one"
       "tailscale"
 
+      # Utilities
       "localsend"
       "landrop"
       "keka"
