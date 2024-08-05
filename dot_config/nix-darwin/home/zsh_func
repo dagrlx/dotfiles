@@ -12,6 +12,10 @@ function zen () {
   ~/.config/sketchybar/plugins/zen.sh $1
 }
 
+nvt() {
+  nvim $(fzf -m --preview='bat --style=numbers --color=always {}')
+}
+
 #function suyabai () {
 #  SHA256=$(shasum -a 256 /opt/homebrew/bin/yabai | awk "{print \$1;}")
 #  if [ -f "/private/etc/sudoers.d/yabai" ]; then

@@ -12,7 +12,7 @@
     #";
 
     initExtra = ''
-     
+
       # Cargar funciones desde el archivo
       source ~/.config/nix-darwin/home/zsh_func
 
@@ -23,8 +23,10 @@
       # Integracion de thefuck
       eval $(thefuck --alias)
 
+      [ -n "$WEZTERM_PANE" ] && export NVIM_LISTEN_ADDRESS="/tmp/nvim$WEZTERM_PANE"
 
-    '';
+
+      '';
 
     shellAliases = {
       rustscan = "docker run -it --rm --name rustscan --platform linux/amd64 rustscan/rustscan";
