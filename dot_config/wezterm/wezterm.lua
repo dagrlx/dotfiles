@@ -1,246 +1,537 @@
+local os = require ("os")
 local wezterm = require("wezterm")
-
-local process_icons = require("icons")
-
-local config = {}
-if wezterm.config_builder then
-	config = wezterm.config_builder()
-	config:set_strict_mode(false)
-end
-local function get_proc_title(pane)
-	return (pane.title or pane:get_foreground_process_name()):gsub("^%s+", ""):gsub("%s+$", ""):match("[^/]+$")
-end
-
 local act = wezterm.action
+local session_manager = require("wezterm-session-manager/session-manager")
+local mux = wezterm.mux
 
-config = {
-	font = wezterm.font_with_fallback({
-		"JetBrainsMono Nerd Font",
-		"Hack Nerd Font",
-		"Symbols Nerd Font",
-		-- "Maple Mono",
-		-- "Monaspace Radon",
-		"Fusion Kai G",
-	}),
-	front_end = "WebGpu",
-	webgpu_power_preference = "HighPerformance",
-	color_scheme = "catppuccin-macchiato",
-	animation_fps = 30,
-	max_fps = 60,
-	font_size = 12.0,
-	underline_thickness = 1,
-	underline_position = -2.0,
-	allow_square_glyphs_to_overflow_width = "Never",
-	-- colors = { background = "#26283f" },
-	window_padding = {
-		top = 0,
-		bottom = 0,
-		left = 0,
-		right = 0,
-	},
-	inactive_pane_hsb = {
-		saturation = 1.0,
-		brightness = 1.0,
-	},
-	enable_tab_bar = true,
-	window_decorations = "RESIZE",
-	-- hide_tab_bar_if_only_one_tab = true,
-	window_background_opacity = 0.9,
-	text_background_opacity = 0.5,
-	macos_window_background_blur = 30
-	use_fancy_tab_bar = false,
-	tab_bar_at_bottom = false,
-	tab_max_width = 30,
-	--enable_kitty_keyboard = true,
-	warn_about_missing_glyphs = false,
-	window_frame = {
-		font = wezterm.font({ family = "Monaspace Radon", weight = "Bold" }),
-		font_size = 13.0,
-		border_left_width = "0.0cell",
-		border_right_width = "0.0cell",
-		border_bottom_height = "0.10cell",
-		border_bottom_color = "#1a1b26",
-		border_top_height = "0.0cell",
-	},
-	launch_menu = {},
-	mouse_bindings = {
-		{
-			event = {
-				Down = { streak = 1, button = "Right" },
-			},
-			mods = "NONE",
-			action = wezterm.action_callback(function(window, pane)
-				local has_selection = window:get_selection_text_for_pane(pane) ~= ""
-				if has_selection then
-					window:perform_action(act.CopyTo("ClipboardAndPrimarySelection"), pane)
-					window:perform_action(act.ClearSelection, pane)
-				else
-					window:perform_action(act({ PasteFrom = "Clipboard" }), pane)
-				end
-			end),
-		},
-	},
+-- session-manager - Provee fincionalidad para salvar, cargar y restaurar sesiones
+-- See https://github.com/danielcopper/wezterm-session-manager
+wezterm.on("save_state", function(window, pane) session_manager.save_state(window, pane) end)
+wezterm.on("load_state", function() session_manager.load_state() end)
+wezterm.on("restore_state", function(window) session_manager.restore_state(window) end)
+
+-- Wezterm <-> nvim pane navigation
+-- You will need to install https://github.com/aca/wezterm.nvim
+-- and ensure you export NVIM_LISTEN_ADDRESS per the README in that repo
+
+local move_around = function(window, pane, direction_wez, direction_nvim)
+    local result = os.execute("env NVIM_LISTEN_ADDRESS=/tmp/nvim" .. pane:pane_id() .. " " .. wezterm.home_dir .. "/.local/bin/wezterm.nvim.navigator" .. " " .. direction_nvim)
+    if result then
+		window:perform_action(
+            act({ SendString = "\x17" .. direction_nvim }),
+            pane
+        )
+    else
+        window:perform_action(
+            act({ ActivatePaneDirection = direction_wez }),
+            pane
+        )
+    end
+end
+
+wezterm.on("move-left", function(window, pane)
+	move_around(window, pane, "Left", "h")
+end)
+
+wezterm.on("move-right", function(window, pane)
+	move_around(window, pane, "Right", "l")
+end)
+
+wezterm.on("move-up", function(window, pane)
+	move_around(window, pane, "Up", "k")
+end)
+
+wezterm.on("move-down", function(window, pane)
+	move_around(window, pane, "Down", "j")
+end)
+
+local vim_resize = function(window, pane, direction_wez, direction_nvim)
+	local result = os.execute(
+		"env NVIM_LISTEN_ADDRESS=/tmp/nvim"
+			.. pane:pane_id()
+			.. " "
+           		.. wezterm.home_dir
+			.. "/.local/bin/wezterm.nvim.navigator"
+			.. " "
+			.. direction_nvim
+	)
+	if result then
+		window:perform_action(act({ SendString = "\x1b" .. direction_nvim }), pane)
+	else
+		window:perform_action(act({ ActivatePaneDirection = direction_wez }), pane)
+	end
+end
+
+wezterm.on("resize-left", function(window, pane)
+	vim_resize(window, pane, "Left", "h")
+end)
+
+wezterm.on("resize-right", function(window, pane)
+	vim_resize(window, pane, "Right", "l")
+end)
+
+wezterm.on("resize-up", function(window, pane)
+	vim_resize(window, pane, "Up", "k")
+end)
+
+wezterm.on("resize-down", function(window, pane)
+	vim_resize(window, pane, "Down", "j")
+end)
+
+
+-- Función para obtener el último segmento del directorio
+--local function get_last_folder_segment(path)
+--  local segments = {}
+--  for segment in string.gmatch(path, "[^/\\]+") do
+--    table.insert(segments, segment)
+--  end
+--  return segments[#segments] or ''
+--end
+
+local function get_last_folder_segment(path)
+  if type(path) ~= "string" then
+    return ''
+  end
+  local segments = {}
+  for segment in string.gmatch(path, "[^/\\]+") do
+    table.insert(segments, segment)
+  end
+  return segments[#segments] or ''
+end
+
+-- Función para obtener el directorio de trabajo actual
+local function get_current_working_dir(tab)
+  local current_dir = tab.active_pane.current_working_dir
+  if current_dir then
+    current_dir = tostring(current_dir)
+    ----wezterm.log_info("Directorio actual: " .. current_dir)
+  else
+    current_dir = ''
+  end
+  return get_last_folder_segment(current_dir)
+  --return current_dir  -- Devuelve la ruta completa del directorio
+end
+
+-- Icons for different processes
+local process_icons = {
+  ['docker'] = wezterm.nerdfonts.linux_docker,
+  ['docker-compose'] = wezterm.nerdfonts.linux_docker,
+  ['psql'] = wezterm.nerdfonts.dev_postgresql,
+  ['kubectl'] = wezterm.nerdfonts.linux_docker,
+  ['stern'] = wezterm.nerdfonts.linux_docker,
+  ['nvim'] = wezterm.nerdfonts.custom_vim,
+  ['make'] = wezterm.nerdfonts.seti_makefile,
+  ['vim'] = wezterm.nerdfonts.dev_vim,
+  ['go'] = wezterm.nerdfonts.seti_go,
+  ['zsh'] = wezterm.nerdfonts.dev_terminal,
+  ['bash'] = wezterm.nerdfonts.cod_terminal_bash,
+  ['btm'] = wezterm.nerdfonts.mdi_chart_donut_variant,
+  ['htop'] = wezterm.nerdfonts.md_chart_bar,
+  ['cargo'] = wezterm.nerdfonts.dev_rust,
+  ['sudo'] = wezterm.nerdfonts.fa_hashtag,
+  ['lazydocker'] = wezterm.nerdfonts.linux_docker,
+  ['git'] = wezterm.nerdfonts.dev_git,
+  ['lua'] = wezterm.nerdfonts.seti_lua,
+  ['wget'] = wezterm.nerdfonts.mdi_arrow_down_box,
+  ['curl'] = wezterm.nerdfonts.mdi_flattr,
+  ['gh'] = wezterm.nerdfonts.dev_github_badge,
+  ['ruby'] = wezterm.nerdfonts.cod_ruby,
+  ['pwsh'] = wezterm.nerdfonts.seti_powershell,
+  ['node'] = wezterm.nerdfonts.dev_nodejs_small,
+  ['dotnet'] = wezterm.nerdfonts.md_language_csharp,
 }
 
-config.bypass_mouse_reporting_modifiers = "SHIFT"
+-- Función para obtener el proceso en ejecución y su ícono
+local default_icon = wezterm.nerdfonts.dev_terminal  -- Ícono predeterminado para procesos no listados
 
-enable_clipboard_integration = true
+local function get_process(tab)
+  local process_name = tab.active_pane.foreground_process_name
+  if process_name then
+    --wezterm.log_info("Nombre completo del proceso: " .. process_name)
+    process_name = string.match(process_name, "([^/\\]+)$")
+    --endwezterm.log_info("Nombre del proceso después de match: " .. (process_name or "nil"))
+  else
+    process_name = "unknown"
+  end
+  local icon = process_icons[process_name] or default_icon
+  return { icon = icon, name = process_name }
+end
 
---Activa la barra de desplazamiento
+-- Configuración de WezTerm, this table will hold the configuration.
+local config = {}
+
+-- In newer versions of wezterm, use the config_builder which will
+-- help provide clearer error messages
+if wezterm.config_builder then
+  config = wezterm.config_builder()
+end
+
+config.automatically_reload_config = true
+config.color_scheme = "Catppuccin Mocha"
+
+config.font = wezterm.font_with_fallback {
+  "JetBrainsMono Nerd Font",
+  "Hack Nerd Font",
+  "Symbols Nerd Font",
+}
+
+config.font_size = 14.0
+config.underline_thickness = 1
+config.underline_position = -2.0
+
+-- Windows configurartion
+config.window_background_opacity = 0.9
+--config.text_background_opacity = 0.5
+config.macos_window_background_blur = 30
+config.window_close_confirmation = "AlwaysPrompt"
+config.adjust_window_size_when_changing_font_size = false
+-- Controla la apariencia, funcionalidad de los bordes de la ventana y se permite redimensionarla
+-- Valores  que se puede usar (REIZE, NONE, TITLE, RESIZE|TITLE, FULL)
+config.window_decorations = "RESIZE|TITLE"
+config.window_padding = {
+  top = 5,
+  right = 5,
+  bottom = 0,
+  left = 5,
+}
+
 config.enable_scroll_bar = true
-
+config.scrollback_lines = 5000
 config.colors = {
   -- El color del "thumb" de la barra de desplazamiento; la parte que representa el viewport actual
-  scrollbar_thumb = '#ff9452', --#D3D3D3',
-  -- Puedes cambiar los colores aquí según prefieras
+  scrollbar_thumb = '#ff9452',
 }
 
--- Colocando left y right en true permite que al presionar optio+ñ genere la ~ 
+--config.use_dead_keys = false
+config.warn_about_missing_glyphs = true  --Activa/Desactiva las advertencias sobre glifos faltantes.
+
+-- Colocando left y right en true permite que al presionar optio+ñ genere la ~ (Solo para macOS)
 config.send_composed_key_when_left_alt_is_pressed = true
 config.send_composed_key_when_right_alt_is_pressed = true
 
+-- Config tab
+--config.pane_focus_follows_mouse = true
+config.use_fancy_tab_bar = false
+config.show_new_tab_button_in_tab_bar = false
+config.hide_tab_bar_if_only_one_tab = false
+config.switch_to_last_active_tab_when_closing_tab = true
+config.show_new_tab_button_in_tab_bar = true
+config.status_update_interval = 1000
+config.tab_max_width = 60
+config.tab_bar_at_bottom = false
 
-wezterm.on("format-tab-title", function(tab, _tabs, _panes, _config, hover, _max_width)
-	local has_unseen_output = false
-	for _, pane in ipairs(tab.panes) do
-		if pane.has_unseen_output then
-			has_unseen_output = true
-			break
-		end
-	end
-	local proc_title = get_proc_title(tab.active_pane)
+-- Integración del portapapeles entre WezTerm y el sistema operativo.
+-- copiar (Ctrl+Shift+C) , pegar (Ctrl+Shift+V)
+enable_clipboard_integration = true
 
-	local icon
-	if process_icons[proc_title] ~= nil then
-		icon = wezterm.format({
-			{ Text = " " },
-			process_icons[proc_title],
-			{ Text = " " },
-		})
-	else
-		icon = wezterm.format({
-			{ Text = string.format(" %s", proc_title) },
-		})
-	end
-	local title = {}
-	if hover then
-		table.insert(title, {
-			Background = { Color = "#2a2e36" },
-		})
-	else
-		table.insert(title, {
-			Background = { Color = "#1a1b26" },
-		})
-	end
-	if has_unseen_output then
-		table.insert(title, {
-			Foreground = { Color = "#fffac2" },
-		})
-	elseif tab.is_active then
-		table.insert(title, {
-			Foreground = { Color = "#5de4c7" },
-		})
-	else
-		table.insert(title, {
-			Foreground = { Color = "#9196c2" },
-		})
-	end
-	table.insert(title, {
-		Text = icon,
-	})
-	table.insert(title, {
-		Foreground = {
-			Color = "#9196c2",
-		},
-	})
-	if tab.tab_title == "" then
-		table.insert(title, {
-			Text = proc_title or "",
-		})
-	else
-		table.insert(title, {
-			Text = tab.tab_title,
-		})
-	end
-	table.insert(title, {
-		Text = " ",
-	})
-	return title
-end)
-
-wezterm.on("update-right-status", function(window, pane)
-	window:set_right_status(wezterm.format({
-		{ Attribute = { Intensity = "Bold" } },
-		{ Foreground = { Color = "#9196c2" } },
-		{
-			Text = (function()
-				if pane:get_user_vars().IS_NVIM == "true" then
-					return ""
-				else
-					return ""
-				end
-			end)(),
-		},
-		{ Text = wezterm.strftime("%l:%M %p") },
-	}))
-end)
-
-
--- wezterm.on("new-tab-button-click", function(window, pane, button, _default_action)
--- 	if button == "Left" then
--- 		window:perform_action(sesh.create.action, pane)
--- 		return false
--- 	end
--- end)
-
--- wezterm.on("window-focus-changed", function(window)
--- 	we["WEZTERM_TAB"] = window:active_tab():tab_id()
--- end)
---
-
-config.keys = {
+-- Setup muxing by default
+config.unix_domains = {
   {
-    key = 't',
-    mods = 'CMD|SHIFT',
-    action = act.ShowTabNavigator,
+    name = 'unix',
   },
+}
+
+-- Función para formatear el título de la pestaña
+wezterm.on('format-tab-title', function(tab)
+  local has_unseen_output = false
+  local is_zoomed = false
+  for _, pane in ipairs(tab.panes) do
+    if pane.has_unseen_output then
+      has_unseen_output = true
+    end
+    if pane.is_zoomed then
+      is_zoomed = true
+    end
+  end
+
+  local cwd = get_current_working_dir(tab)
+  local process = get_process(tab)
+  local zoom_icon = is_zoomed and wezterm.nerdfonts.cod_zoom_in or ""
+  local title = string.format(' %s %s %s ', process.icon, process.name, cwd, zoom_icon)
+
+  local formatted_title = wezterm.format({
+    { Attribute = { Intensity = 'Bold' } },
+    { Text = title }
+  })
+
+  if has_unseen_output then
+    return {
+      { Foreground = { Color = '#28719c' } },
+      { Text = formatted_title }
+    }
+  else
+    return {
+      { Text = formatted_title }
+    }
+  end
+end)
+
+-- Actualización del estado de la ventana
+wezterm.on("update-status", function(window, pane)
+  local workspace_or_leader = window:active_workspace()
+  if window:active_key_table() then workspace_or_leader = window:active_key_table() end
+  if window:leader_is_active() then workspace_or_leader = "LEADER" end
+
+  local cmd = get_last_folder_segment(pane:get_foreground_process_name())
+  local time = wezterm.strftime("%H:%M")
+  local hostname = " " .. wezterm.hostname() .. " "
+
+  window:set_right_status(wezterm.format({
+    { Text = wezterm.nerdfonts.oct_table .. " " .. workspace_or_leader },
+    { Text = " | " },
+    { Foreground = { Color = "FFB86C" } },
+    { Text = wezterm.nerdfonts.oct_command_palette .. " " .. cmd },
+    "ResetAttributes",
+    { Text = " | " },
+    { Text = wezterm.nerdfonts.oct_person .. " " .. hostname },
+    { Text = " | " },
+    { Text = wezterm.nerdfonts.md_clock .. " " .. time },
+    { Text = " | " },
+  }))
+end)
+
+config.inactive_pane_hsb = {
+  saturation = 0.4,
+  brightness = 0.5
+}
+
+-- Custom key bindings
+
+config.leader = { key = "Space", mods = "SHIFT", timeout_milliseconds = 3000 }
+config.keys = {
+  { key = "C", mods = "LEADER", action = act.ActivateCopyMode },
+
+-- Copy mode
+  { key = '+', mods = 'LEADER', action = act.ActivateCopyMode, },
+
+  -- Pane Keybindings (Se ajusta segun westerm.nvim)
+    -- ----------------------------------------------------------------
+    -- PANES
+    --
+    -- These are great and get me most of the way to replacing tmux
+    -- entirely, particularly as you can use "wezterm ssh" to ssh to another
+    -- server, and still retain Wezterm as your terminal there.
+    -- ----------------------------------------------------------------
+
+    -- -- Vertical split
+    {
+        -- '¡'
+        key = '¡',
+        mods = 'LEADER',
+        action = act.SplitPane {
+            direction = 'Right',
+            size = { Percent = 50 },
+        },
+    },
+    -- Horizontal split
+    {
+        -- -
+        key = '-',
+        mods = 'LEADER',
+        action = act.SplitPane {
+            direction = 'Down',
+            size = { Percent = 50 },
+        },
+    },
+    -- CTRL + (h,j,k,l) to move between panes
+    {
+        key = 'h',
+        mods = 'CTRL',
+        action = act({ EmitEvent = "move-left" }),
+    },
+    {
+        key = 'j',
+        mods = 'CMD',
+        action = act({ EmitEvent = "move-down" }),
+    },
+    {
+        key = 'k',
+        mods = 'CMD',
+        action = act({ EmitEvent = "move-up" }),
+    },
+    {
+        key = 'l',
+        mods = 'CTRL',
+        action = act({ EmitEvent = "move-right" }),
+    },
+    -- ALT + (h,j,k,l) to resize panes
+    {
+        key = 'h',
+        mods = 'LEADER',
+        action = act({ EmitEvent = "resize-left" }),
+    },
+    {
+        key = 'j',
+        mods = 'LEADER',
+        action = act({ EmitEvent = "resize-down" }),
+    },
+    {
+        key = 'k',
+        mods = 'LEADER',
+        action = act({ EmitEvent = "resize-up" }),
+    },
+    {
+        key = 'l',
+        mods = 'LEADER',
+        action = act({ EmitEvent = "resize-right" }),
+    },
+    -- Close/kill active pane
+    {
+        key = 'x',
+        mods = 'LEADER',
+        action = act.CloseCurrentPane { confirm = true },
+    },
+    -- Swap active pane with another one
+    {
+        key = '+',
+        mods = 'LEADER|ALT',
+        action = act.PaneSelect { mode = "SwapWithActiveKeepFocus" },
+    },
+    -- Zoom current pane (toggle)
+    {
+        key = 'z',
+        mods = 'LEADER',
+        action = act.TogglePaneZoomState,
+    },
+    {
+        key = 'f',
+        mods = 'ALT',
+        action = act.TogglePaneZoomState,
+    },
+    -- Move to next/previous pane
+    {
+        key = ',',
+        mods = 'LEADER',
+        action = act.ActivatePaneDirection('Prev'),
+    },
+    {
+        key = 'o',
+        mods = 'LEADER',
+        action = act.ActivatePaneDirection('Next'),
+    },
+
+
+  -- Pane Keybindings (Sin wezterm.vim)
+--  { key = "-", mods = "LEADER", action = act.SplitVertical { domain = "CurrentPaneDomain" } },
+--  { key = "¡", mods = "LEADER", action = act.SplitHorizontal { domain = "CurrentPaneDomain" } },
+  -- LEADER + (h,j,k,l) to move between panes
+--  { key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
+--  { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+--  { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
+--  { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
+--  { key = "x", mods = "LEADER", action = act.CloseCurrentPane { confirm = true } },
+--  { key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
+--  { key = "s", mods = "LEADER", action = act.RotatePanes "Clockwise" },
+--  { key = "r", mods = "LEADER", action = act.ActivateKeyTable { name = "resize_pane", one_shot = false } },
+
+  -- Tab Keybindings
+  -- Create a tab (alternative to Ctrl-Shift-Tab)
+  { key = "c", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
+  -- Move to next/previous TAB
+  { key = "n", mods = "LEADER", action = act.ActivateTabRelative(1) },
+  { key = "p", mods = "LEADER", action = act.ActivateTabRelative(-1) },
+  -- Show tab navigator; similar to listing panes in tmux
+  { key = "t", mods = "LEADER", action = act.ShowTabNavigator },
+  { key = "m", mods = "LEADER", action = act.ActivateKeyTable { name = "move_tab", one_shot = false } },
+  -- Close tab
+  { key = '&', mods = 'LEADER|SHIFT', action = act.CloseCurrentTab{ confirm = true }, },
+  -- Rename current tab; analagous to command in tmux
+    {
+        key = ',',
+        mods = 'LEADER',
+        action = act.PromptInputLine {
+            description = 'Enter new name for tab',
+            action = wezterm.action_callback(
+                function(window, pane, line)
+                    if line then
+                        window:active_tab():set_title(line)
+                    end
+                end
+            ),
+        },
+    },
+
+  -- Workspace (These are roughly equivalent to tmux sessions.)
+  -- ----------------------------------------------------------------
+  -- Attach to muxer
   {
-    key = 'R',
-    mods = 'CMD|SHIFT',
+        key = 'a',
+        mods = 'LEADER',
+        action = act.AttachDomain 'unix',
+  },
+
+    -- Detach from muxer
+  {
+        key = 'd',
+        mods = 'LEADER',
+        action = act.DetachDomain { DomainName = 'unix' },
+  },
+
+  -- Show list of workspaces
+  { key = "w", mods = "LEADER", action = act.ShowLauncherArgs { flags = "FUZZY|WORKSPACES" } },
+
+  -- Rename current session; analagous to command in tmux
+  {
+    key = 'W',
+    mods = 'LEADER',
     action = act.PromptInputLine {
-      description = 'Enter new name for tab',
-      action = wezterm.action_callback(function(window, _, line)
+      description = wezterm.format {
+        { Attribute = { Intensity = 'Bold' } },
+        { Foreground = { AnsiColor = 'Fuchsia' } },
+        { Text = 'Enter name for new workspace' },
+      },
+      action = wezterm.action_callback(function(window, pane, line)
         -- line will be `nil` if they hit escape without entering anything
         -- An empty string if they just hit enter
         -- Or the actual line of text they wrote
         if line then
-          window:active_tab():set_title(line)
+          window:perform_action(
+            act.SwitchToWorkspace {
+              name = line,
+            },
+            pane
+          )
         end
       end),
     },
   },
-  {
-    key = ',',
-    mods = 'CMD',
-    action = act.SpawnCommandInNewTab {
-      cwd = os.getenv('WEZTERM_CONFIG_DIR'),
-      set_environment_variables = {
-        TERM = 'screen-256color',
-      },
-      args = {
-        '/etc/profiles/per-user/dgarciar/bin/nvim',
-        os.getenv('WEZTERM_CONFIG_FILE'),
-      },
-    },
-  },
-  -- other keys
+
+  -- Session Manager
+  { key = "S", mods = "LEADER", action = wezterm.action({ EmitEvent = "save_state" }) },
+  { key = "R", mods = "LEADER", action = wezterm.action({ EmitEvent = "restore_state" }) },
+  { key = "L", mods = "LEADER", action = wezterm.action({ EmitEvent = "load_state" }) },
 }
 
---Para diferenciar que pane esta activo
---config.inactive_pane_hsb = {
---  saturation = 0.2,
---  brightness = 0.5,
+-- Quick tab movement
+for i = 1, 9 do
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = "LEADER",
+    action = act.ActivateTab(i - 1)
+  })
+end
+
+--config.key_tables = {
+--  resize_pane = {
+--    { key = "h",      action = act.AdjustPaneSize { "Left", 1 } },
+--    { key = "j",      action = act.AdjustPaneSize { "Down", 1 } },
+--    { key = "k",      action = act.AdjustPaneSize { "Up", 1 } },
+--    { key = "l",      action = act.AdjustPaneSize { "Right", 1 } },
+--    { key = "Escape", action = "PopKeyTable" },
+--    { key = "Enter",  action = "PopKeyTable" },
+--  },
+--  move_tab = {
+--    { key = "h",      action = act.MoveTabRelative(-1) },
+--    { key = "j",      action = act.MoveTabRelative(-1) },
+--    { key = "k",      action = act.MoveTabRelative(1) },
+--    { key = "l",      action = act.MoveTabRelative(1) },
+--    { key = "Escape", action = "PopKeyTable" },
+--    { key = "Enter",  action = "PopKeyTable" },
+--  }
 --}
 
 return config
 
+-- Ideas tomadas de:
+-- https://github.com/danielcopper/dotfiles/blob/arch/.config/wezterm/wezterm.lua
+-- https://mwop.net/blog/2024-07-04-how-i-use-wezterm.html
