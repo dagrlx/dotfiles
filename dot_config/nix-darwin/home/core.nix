@@ -31,6 +31,7 @@
 
     fd  #para buscar archivos
     ffmpegthumbnailer # thumbnails de video necesario para yazi
+    imagemagick       # Yazi 0.3 now supports previewing fonts, SVGs, HEIC, and JPEG XL files
     procs  #Moderno reemplazo de ps basado e Rust
     android-tools
     cheat
@@ -119,104 +120,6 @@
     gpg.enable = true;
 
     lazygit = {enable = true;};
-
-    # modern vim
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-
-      extraConfig = ''
-
-        syntax enable
-        " colorscheme catppuccin-mocha
-        set number relativenumber
-        set cursorline
-
-        " Configuraci√≥n de Netrw
-        nnoremap <F7> :e.<CR>
-
-        " Configuraci√≥n de NeoTree
-        nnoremap <F6> :Neotree toggle<CR>   " F6 opens NEOTree
-
-        " Config para mapear tab y enter para aceptar completion
-        inoremap <silent><expr> <TAB>
-        \ coc#pum#visible() ? coc#pum#next(1) :
-        \ "\<Tab>"
-
-        " Make <CR> to accept selected completion item or notify coc.nvim to format
-        " <C-g>u breaks current undo, please make your own choice
-        inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-        " Habilitar la función iskeyword+=- para tratar TAB como carácter de tabulación
-        set iskeyword+=-
-
-        nnoremap  <C-p> <cmd>Files<CR> 
-        nnoremap  <C-f> <cmd>RG<CR>
-        nnoremap  <A-b> <cmd>Buffers<CR>
-        nnoremap  <A-h> <cmd>Helptags<CR> 
-
-      '';
-
-      plugins = with pkgs.vimPlugins; [
-        auto-pairs
-        fzf-vim
-        lf-vim
-        vim-nix
-        vim-markdown
-        LazyVim
-
-        # Otra forma de delcarar config
-        { plugin = catppuccin-nvim;
-          config = "colorscheme catppuccin-mocha";
-        }
-
-        #ChatGPT-nvim
-
-        trouble-nvim #Dependencia para chatgpt
-
-        #{ plugin = gruvbox-nvim;
-        #  config = "colorscheme gruvbox ";
-        #
-        #}
-        tabby-nvim #Tab bar
-        indentLine
-        vim-lastplace #Opens document where you left it
-        auto-pairs ## Print double quotes/brackets/etc.
-        lightline-vim ## Info bar at bottom
-        indent-blankline-nvim # Indentation lines
-        #nerdtree # File Manager - set in extraConfig to F6i
-
-        neo-tree-nvim # File Manager
-        coc-nvim #auto completacion
-        coc-fzf
-
-        # telescopeea para telescope y neo-tree
-        popup-nvim
-
-        telescope-nvim
-        telescope-fzf-native-nvim
-      
-
-        #completion-nvim
-        #vim-vsnip       #source de snipper
-        #vim-vsnip-integ
-        snippets-nvim #source de snipper
-        lazy-nvim
-        lazygit-nvim
-        nvim-treesitter
-        nvim-treesitter-context
-        nvim-treesitter.withAllGrammars
-        noice-nvim
-        nui-nvim #Dependencia para Neotree
-        nvim-notify
-        nvim-web-devicons  #Complemento recomendaod para neo-tree
-        #netman-nvim #Framework para manejar remoto recursos
-      ];
-    };
-
 
     dircolors = {
       enable = true;
@@ -401,10 +304,10 @@
       ];
     };
 
-    yazi = {
-      enable = true;
-      enableZshIntegration = true;
-    };
+    #yazi = {
+    #  enable = true;
+    #  enableZshIntegration = true;
+    #};
 
     #thefuck = {
     #  enable = true;
