@@ -1,0 +1,78 @@
+-- lua/plugins.lua
+
+-- Configuración de plugins usando lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",     -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+  "folke/lazy.nvim",
+  "nvim-lua/plenary.nvim",                          --- dependencia para remote-nvim
+  "MunifTanjim/nui.nvim",                           --- dependencia para algunos plugin
+  "nvim-telescope/telescope.nvim",                  --- Buscador
+  ---"nvim-telescope/telescope-fzf-native.nvim",    --- mejora el rendimiento de tel
+  "junegunn/fzf",
+  "junegunn/fzf.vim",
+  "yuki-yano/fzf-preview.vim",
+  "ptzz/lf.vim",                                    --- file manager
+  "LnL7/vim-nix",                                   --- soporte para el lenguaje nixpkgs
+  "godlygeek/tabular",
+  "junegunn/vim-easy-align",                        --- alternativa moderna a tabular
+  { "catppuccin/nvim", as = "catppuccin" },
+  "mrjones2014/smart-splits.nvim",                  --- administrador ventana.splits (se integra con wezterm)
+  "folke/trouble.nvim",
+  "nanozuki/tabby.nvim",                            --- gestion de tab
+   ---"Yggdroot/indentLine",                           --- indentación de líneas
+  "farmergreg/vim-lastplace",                       --- abre el documento donde lo dejaste
+  "jiangmiao/auto-pairs",                           --- completa automáticamente comillas, paréntesis, etc
+  "itchyny/lightline.vim",                          --- Info bar at bottom
+  ---"hoob3rt/lualine.nvim",                        --- Info barra inferior moderna
+  "lukas-reineke/indent-blankline.nvim",            --- Indentación de líneas
+  ---"nvim-neo-tree/neo-tree.nvim",                     --- File Manager
+  "kyazdani42/nvim-tree.lua",                       --- File manager mas actual
+  {
+    "neoclide/coc.nvim",
+    build = "npm install && npm run build",
+  },
+  {
+    "neoclide/coc.nvim",                            --- auto completación
+    build = "npm install && npm run build",
+  },
+
+  "antoinemadec/coc-fzf",
+  "honza/vim-snippets",
+  "kdheepak/lazygit.nvim",
+  { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }, --- soporte avanzado de sintaxis
+  "nvim-treesitter/nvim-treesitter-context",
+  "nvim-treesitter/playground",
+  "folke/noice.nvim",
+  "rcarriga/nvim-notify",
+  "kyazdani42/nvim-web-devicons",
+  {
+    "amitds1997/remote-nvim.nvim",
+    config = function()
+      require("remote-nvim").setup()
+    end,
+  },
+  "voldikss/vim-floaterm",                          --- terminal flotante
+  --- alternativa moderna de terminal
+  ---{ 'akinsho/toggleterm.nvim', version = "*", 
+  ---config = true, 
+  ---url = "git@github.com:akinsho/toggleterm.nvim.git" },
+  --- {
+  ---  "akinsho/nvim-toggleterm.lua",
+  ---  config = function()
+  ---    require("plugin.toggleterm")
+  ---  end,
+  ---},
+  
+})
