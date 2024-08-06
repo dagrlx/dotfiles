@@ -2,20 +2,28 @@
 
 -- Mapeos de teclas
 vim.g.mapleader = ","
-vim.api.nvim_set_keymap('n', '<F7>', ':e.<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<F9>', ':Neotree toggle<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<TAB>', 'coc#pum#visible() ? coc#pum#next(1) : "<Tab>"', { noremap = true, silent = true, expr = true })
-vim.api.nvim_set_keymap('i', '<CR>', 'coc#pum#visible() ? coc#pum#confirm() : "<C-g>u<CR><c-r>=coc#on_enter()<CR>"', { noremap = true, silent = true, expr = true })
-vim.api.nvim_set_keymap('n', '<C-p>', '<cmd>Files<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-f>', '<cmd>RG<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-b>', '<cmd>Buffers<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<A-h>', '<cmd>Helptags<CR>', { noremap = true, silent = true })
-vim.keymap.set("n", "<A-¡>", "<cmd>vsplit<CR>", { desc = "Split vertically" })
-vim.keymap.set("n", "<A-->", "<cmd>split<CR>", { desc = "Split horizontally" })
-vim.api.nvim_set_keymap('n', '<F5>', '<cmd>NvimTreeToggle<CR>', { noremap = true, silent = true })
 
---- Telescope ---
-vim.api.nvim_set_keymap('n', '<leader>ff', ":lua require('telescope.builtin').find_files({ cwd = vim.fn.input('Directorio de búsqueda: ', '', 'dir') })<CR>", { noremap = true, silent = true })
+local keymap = vim.keymap -- for conciseness
+
+keymap.set("i", "jk", "<ESC>", { desc = "Exit insert mode with jk" })
+
+keymap.set("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
+
+-- increment/decrement numbers
+keymap.set("n", "<leader>+", "<C-a>", { desc = "Increment number" }) -- increment
+keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decrement
+
+-- window management
+keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
+keymap.set("n", "<leader>sh", "<C-w>s", { desc = "Split window horizontally" }) -- split window horizontally
+keymap.set("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" }) -- make split windows equal width & height
+keymap.set("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" }) -- close current split window
+
+keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
+keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" }) -- close current tab
+keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  go to next tab
+keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
+keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
 --- OIL ---
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
