@@ -20,14 +20,14 @@ return {
       inc_rename = false, -- enables an input dialog for inc-rename.nvim
       lsp_doc_border = false, -- add a border to hover docs and signature help
     },
-    messages = {
-      enabled = false,
-      view = "mini", -- Puedes probar diferentes vistas como "mini", "split" o "popup"
-      view_error = "popup",
-      view_warn = "popup",
-      view_history = "messages",
-      view_search = "virtualtext",
-    },
+    -- messages = {
+    --   enabled = false,
+    --   view = "mini", -- Puedes probar diferentes vistas como "mini", "split" o "popup"
+    --   view_error = "popup",
+    --   view_warn = "popup",
+    --   view_history = "messages",
+    --   view_search = "virtualtext",
+    -- },
   },
   dependencies = {
     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
