@@ -147,7 +147,7 @@ alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 alt-ctrl-p = 'move-workspace-to-monitor --wrap-around prev'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-alt-shift-semicolon = 'mode service'
+alt-shift-s = 'mode service'
 alt-r = 'mode resize'
 
 # Desactiva el acceso directo "ocultar aplicación"
