@@ -4,3 +4,4 @@ key.txt.age
 key_chezmoi.txt.age
 .dir_colors
 .DS_Store
+lazy-lock.json
