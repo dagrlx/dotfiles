@@ -19,7 +19,7 @@ return {
     },
     
     opts = {
-    -- leverages tar's inbuilt VCS feature to exclude any VCS directories
+    -- Abrir neovim remoto en pestaña nueva
     client_callback = function(port, workspace_config)
       -- Launch a new wezterm tab with ccustom title when launching Neovim client
       local cmd = ("wezterm cli set-tab-title --pane-id $(wezterm cli spawn nvim --server localhost:%s --remote-ui) %s"):format(
