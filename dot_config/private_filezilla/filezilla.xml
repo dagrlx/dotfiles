@@ -131,14 +131,15 @@
 		<Setting name="Search window size">0 -883 -787 1440 500 </Setting>
 		<Setting name="Last automatic update check">2024-08-02 17:53:58</Setting>
 		<Setting name="Update Check New Version" platform="mac" />
-		<Setting name="Splitter positions (v2)">50 -262 425654450 100 100 500000000</Setting>
 		<Setting name="Sitemanager last selected">0/Saba FTP TAG2/TAG2 interno</Setting>
 		<Setting name="Site Manager position">0 299 317 1322 446 </Setting>
 		<Setting name="Proxy type">2</Setting>
-		<Setting name="Window position and size">0 6 35 1908 944 </Setting>
+		<Setting name="Local filelist sortorder">0 0</Setting>
+		<Setting name="Window position and size">0 1926 35 1428 764 </Setting>
+		<Setting name="Splitter positions (v2)">100 148 425654450 200 200 500000000</Setting>
 		<Setting name="Tab data" sensitive="1">
 			<Tabs>
-				<Tab connected="1" selected="1">
+				<Tab selected="1">
 					<Host>172.16.50.27</Host>
 					<Port>22</Port>
 					<Protocol>1</Protocol>
@@ -155,6 +156,5 @@
 				</Tab>
 			</Tabs>
 		</Setting>
-		<Setting name="Local filelist sortorder">0 0</Setting>
 	</Settings>
 </FileZilla3>
