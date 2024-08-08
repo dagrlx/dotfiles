@@ -118,6 +118,7 @@
       "podman"
 
       "neovim"
+      "stylua"     # formateador de lua para plugin de neovim formatting
 
       "yazi"  #file manager 
       "poppler"  #para PDF preview en yazi
