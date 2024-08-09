@@ -135,8 +135,8 @@
 		<Setting name="Site Manager position">0 299 317 1322 446 </Setting>
 		<Setting name="Proxy type">2</Setting>
 		<Setting name="Local filelist sortorder">0 0</Setting>
-		<Setting name="Window position and size">0 1926 35 1428 764 </Setting>
-		<Setting name="Splitter positions (v2)">100 148 425654450 200 200 500000000</Setting>
+		<Setting name="Window position and size">0 6 35 1428 764 </Setting>
+		<Setting name="Splitter positions (v2)">100 -474 425654450 93 93 500000000</Setting>
 		<Setting name="Tab data" sensitive="1">
 			<Tabs>
 				<Tab selected="1">
