@@ -29,5 +29,3 @@ keymap.set("n", "<leader>fz", "<cmd>Files<CR>", { desc = "Open fzf preview" }) -
 
 --- OIL ---
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-
-
