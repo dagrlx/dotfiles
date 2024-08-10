@@ -22,33 +22,18 @@
   ];
 
    # Cambios derivados de actualizacion en nix-darwin inestable
-  fonts = {
-  packages = with pkgs; [
-    source-code-pro
-    font-awesome
-    (nerdfonts.override {
-      fonts = [
-        "JetBrainsMono"
-        #"FiraCode"
-      ];
-    })
-  ];
-};
-
-#  fonts = {
-#    # Fonts
-#    fontDir.enable = true;
-#    fonts = with pkgs; [
-#      source-code-pro
-#      font-awesome
-#      (nerdfonts.override {
-#        fonts = [
-#          "JetBrainsMono"
-#          #"FiraCode"
-#        ];
-#      })
- #   ];
-  #};
+#   fonts = {
+#   packages = with pkgs; [
+#     source-code-pro
+#     font-awesome
+#     (nerdfonts.override {
+#       fonts = [
+#         "JetBrainsMono"
+#         #"FiraCode"
+#       ];
+#     })
+#   ];
+# };
 
   environment.variables.EDITOR = "nvim";
 
@@ -92,10 +77,7 @@
     };
 
     taps = [
-      #"homebrew/cask"  #Ya no es necesario en homebrew
-      #"homebrew/cask-fonts" # tag depreciado
       "homebrew/services"
-      #"homebrew/cask-versions"  # tap depreciado
       #"romkatv/powerlevel10k"
       "jzelinskie/duckdns"
       "koekeishiya/formulae"
@@ -126,7 +108,7 @@
       #"yabai"
       #"skhd"
       "sketchybar"
-      "lua"
+      "lua"         # Lenguaje para config sketchybar, aerospace
       "switchaudio-osx"
       "nowplaying-cli"
       "borders"

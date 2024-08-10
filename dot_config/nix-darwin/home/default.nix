@@ -1,10 +1,8 @@
-{...}: let
-  # please replace xxx with your username
-  username = "dgarciar";
-in {
+{ username, ...}:
+
+{
   # import sub modules
   imports = [
-    ./bash.nix
     ./zsh.nix
     ./core.nix
     #./git.nix

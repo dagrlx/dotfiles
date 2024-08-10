@@ -1,15 +1,18 @@
 {pkgs, ...}:
-###################################################################################
-#
-#  macOS's System configuration
-#
-#  All the configuration options are documented here:
-#    https://daiderd.com/nix-darwin/manual/index.html#sec-options
-#
-###################################################################################
+
+##################################################################################
+  #
+  #  macOS's System configuration
+  #
+  #  All the configuration options are documented here:
+  #    https://daiderd.com/nix-darwin/manual/index.html#sec-options
+  #  Incomplete list of macOS `defaults` commands :
+  #    https://github.com/yannbertrand/macos-defaults
+  #
+  ###################################################################################
 {
   system = {
-    stateVersion = 4;
+    #stateVersion = 4;
     # activationScripts are executed every time you boot the system or run `nixos-rebuild` / `darwin-rebuild`.
     activationScripts.postUserActivation.text = ''
       # activateSettings -u will reload the settings from the database and apply them to the current session,
@@ -49,13 +52,15 @@
 
       # customize trackpad
       trackpad = {
-        # tap-  touchpad, click
+        # tap - touchpad, click - Haga clic en el panel táctil
         Clicking = true; # enable tap to click(Tocar el touchpad equivale a hacer clic)
         TrackpadRightClick = true; # enable two finger right click
         #TrackpadThreeFingerDrag = true; # enable three finger drag
       };
 
-      # customize macOS
+      # customize settings that not supported by nix-darwin directly
+      # Incomplete list of macOS `defaults` commands :
+      #   https://github.com/yannbertrand/macos-defaults
       NSGlobalDomain = {
         # `defaults read NSGlobalDomain "xxx"`
         "com.apple.swipescrolldirection" = true; # enable natural scrolling(default to true)
@@ -87,6 +92,10 @@
           # Avoid creating .DS_Store files on network or USB volumes
           DSDontWriteNetworkStores = true;
           DSDontWriteUSBStores = true;
+        };
+
+         "com.apple.spaces" = {
+          "spans-displays" = 1; # Display have seperate spaces
         };
 
         "com.apple.screensaver" = {
@@ -127,4 +136,30 @@
   environment.shells = [
     pkgs.zsh
   ];
+
+  # Set your time zone.
+  time.timeZone = "America/Santiago";
+
+  # Fonts
+  fonts = {
+    packages = with pkgs; [
+      # icon fonts
+      material-design-icons
+      font-awesome
+
+      # nerdfonts
+      # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/data/fonts/nerdfonts/shas.nix
+      (nerdfonts.override {
+        fonts = [
+          # symbols icon only
+          "NerdFontsSymbolsOnly"
+          # Characters
+          "FiraCode"
+          "JetBrainsMono"
+          "Iosevka"
+        ];
+      })
+    ];
+  };
+
 }

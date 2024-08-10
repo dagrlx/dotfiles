@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ...}: {
+
   ##########################################################################
   #
   #  Install all apps and packages here.
@@ -34,10 +35,7 @@
     };
 
     taps = [
-      "homebrew/cask"
-      "homebrew/cask-fonts"
       "homebrew/services"
-      "homebrew/cask-versions"
     ];
 
     # `brew install`

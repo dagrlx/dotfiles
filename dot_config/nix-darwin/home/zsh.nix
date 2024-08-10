@@ -41,6 +41,10 @@
       n = "nano -clS";
       fzn="fzf --preview 'bat --style=numbers --color=always {}' | xargs -n1 nvim";
       sshp="ssh -o ProxyJump=sabaext";
+      
+      urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
+      urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
+
     };
 
     history = {

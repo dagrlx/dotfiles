@@ -1,7 +1,7 @@
 {
-  config,
   lib,
-  pkgs,
+  username,
+  usermail,
   ...
 }: {
   # `programs.git` will generate the config file: ~/.config/git/config
@@ -17,8 +17,8 @@
     lfs.enable = true;
 
     # TODO replace with your own name & email
-    userName = "dafrlx";
-    userEmail = "dagrlx@gmail.com";
+    userName = "username";
+    userEmail = "usermail";
 
     includes = [
       {

@@ -1,3 +1,5 @@
+# Ejemplo base tomado de https://github.com/ryan4yin/nix-darwin-kickstarter
+
 {
   description = "Nix for macOS configuration";
 
@@ -12,12 +14,6 @@
   nixConfig = {
     experimental-features = ["nix-command" "flakes" "auto-allocate-uids"];
 
-    #substituters = [
-    # Replace official cache with a mirror located in China
-    #
-    # Feel free to remove this line if you are not in China
-    #"https://cache.nixos.org"
-    #];
   };
 
   # This is the standard format for flake.nix. `inputs` are the dependencies of the flake,
@@ -56,21 +52,25 @@
     darwin,
     home-manager,
     ...
-  }: {
-    # TODO please update the whole "your-hostname" placeholder string to your own hostname!
-    # such as darwinConfigurations.mymac = darwin.lib.darwinSystem {
-    darwinConfigurations."enocm1" = darwin.lib.darwinSystem {
-      system = "aarch64-darwin"; # change this to "aarch64-darwin" if you are using Apple Silicon
-      pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-      #pkgs = import nixpkgs {
-      #  system = "aarch64-darwin";
-        #config.allowBroken = true; # Aquí es donde se establece allowBroken
-      #};
-      modules = [
+  }: let
+    # TODO replace with your own username, email, system, and hostname
+    username = "dgarciar";
+    useremail = "dagrlx@gmail.com";
+    system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
+    hostname = "enocm1";
+
+    specialArgs =
+      inputs
+      // {
+        inherit username useremail hostname;
+      };
+  in {
+    darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
+      inherit system specialArgs;      
+        modules = [
         ./modules/nix-core.nix
         ./modules/system.nix
         ./modules/apps.nix
-        #./modules/tiling-wm.nix
         ./modules/host-users.nix
 
         # home manager
@@ -78,23 +78,13 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = inputs;
-
-          # TODO replace "yourusername" with your own username!
-          home-manager.users.dgarciar = import ./home;
+          home-manager.extraSpecialArgs = specialArgs;
+          home-manager.users.${username} = import ./home;
         }
       ];
     };
 
-    # Define defaultPackage and packages for aarch64-darwin
-    defaultPackage.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
-    packages.aarch64-darwin = {
-      default = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
-      hydra-check = nixpkgs.legacyPackages.aarch64-darwin.hydra-check;
-    };
-
     # nix code formatter
-    # TODO also change this line to "aarch64-darwin" if you are using Apple Silicon
-    formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
+    formatter.${system} = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
   };
 }

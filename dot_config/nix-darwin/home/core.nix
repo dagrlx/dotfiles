@@ -1,4 +1,6 @@
-{pkgs, nixpkgs, ...}: with pkgs; {
+{pkgs, ...}: 
+
+{
   home.packages = with pkgs; [
     nnn # terminal file manager
 
@@ -13,7 +15,7 @@
     unar
 
     #Fonts
-    nerdfonts
+    #nerdfonts
 
     # utils
     mc
@@ -152,7 +154,7 @@
     # En 23.11 cambio exa por eza
     eza = {
       enable = true;
-      enableZshIntegration = true;
+      enableZshIntegration = true;  # enableAliases fue sustiuida por enableZshIntegration  
       git = true;
       icons = true;
     };
@@ -160,7 +162,7 @@
     # skim provides a single executable: sk.
     # Basically anywhere you would want to use grep, try sk instead.
     skim = {
-    #  enable = true;
+      enable = true;
     #  enableBashIntegration = true;
       enableZshIntegration = true;
     };
