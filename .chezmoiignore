@@ -1,6 +1,6 @@
 flake.lock
+key.txt
 key.txt.age
-key_chezmoi.txt.age
+key_chezmoi.age
 .dir_colors
 .DS_Store
-key_chezmoi.age
