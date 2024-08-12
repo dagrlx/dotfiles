@@ -40,3 +40,6 @@ opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or 
 
 -- clipboard
 opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+
+-- disable codeium by default
+vim.g.codeium_enabled = false

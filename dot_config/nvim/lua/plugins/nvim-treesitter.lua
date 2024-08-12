@@ -11,13 +11,14 @@ return {
 	config = function()
 		require("nvim-treesitter.configs").setup({
 			ensure_installed = {
+				"bash",
 				"lua",
 				"javascript",
+				"json",
 				"python",
 				"html",
 				"css",
 				"csv",
-				"bash",
 				"dockerfile",
 				"dot",
 				"git_config",
@@ -26,10 +27,13 @@ return {
 				"markdown_inline",
 				"nix",
 				"passwd",
+				"php",
+				"query",
 				"sql",
 				"ssh_config",
 				"tmux",
 				"toml",
+				"vim",
 				"vimdoc",
 				"yaml",
 				"rust",
@@ -50,7 +54,7 @@ return {
 			indent = { enable = true },
 
 			autotag = {
-				enable = true,
+				enable = true, -- enable auto close tag html/xml
 			},
 			incremental_selection = {
 				enable = true,
@@ -61,6 +65,8 @@ return {
 					node_decremental = "<bs>",
 				},
 			},
+			modules = {},
+			ignore_install = {},
 		})
 	end,
 }

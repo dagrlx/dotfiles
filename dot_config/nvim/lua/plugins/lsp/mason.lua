@@ -27,6 +27,7 @@ return {
 		mason_lspconfig.setup({
 			-- list of servers for mason to install
 			ensure_installed = {
+				"ansiblels", -- Ansible
 				"tsserver", -- JavaScript
 				"html", -- HTML
 				"cssls", -- CSS
@@ -35,6 +36,14 @@ return {
 				"jsonls", -- JSON
 				"yamlls", -- YAML
 				"marksman", -- Markdown
+				"docker-compose-language-service", -- Docker
+				"dockerfile-language-server", -- Dockerfile
+				"bash-language-server", -- Bash
+				"shellcheck",
+				"sqls", -- SQL
+				"taplo", -- Toml
+				"nil", -- nix
+				"rust_analyzer", -- Rust
 			},
 		})
 
@@ -46,6 +55,7 @@ return {
 				"black", -- python formatter
 				"pylint", -- python linter
 				"eslint_d", -- JavaScript linter
+				"sql-formatter",
 			},
 		})
 	end,

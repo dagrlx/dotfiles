@@ -23,9 +23,9 @@ return {
 		-- Función para lightline para mostrar si una pestaña tiene una ventana
 		-- maximizada
 		vim.cmd([[
-      function! MaximizeStatus()
-        return luaeval('vim.t.maximized and "   " or ""')
-      endfunction
-      ]])
+		    function! MaximizeStatus()
+		      return luaeval('vim.t.maximized and "   " or ""')
+		    endfunction
+		    ]])
 	end,
 }

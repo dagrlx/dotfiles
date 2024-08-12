@@ -42,7 +42,7 @@ return {
 			-- window splits
 			actions = {
 				open_file = {
-					quit_on_open = true, -- cierra nvim-tree al abrir el archivo
+					quit_on_open = false, -- cierra nvim-tree al abrir el archivo
 					window_picker = {
 						enable = false,
 					},
