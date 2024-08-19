@@ -51,10 +51,11 @@
   outputs = inputs@{ self, nixpkgs, darwin, home-manager, ... }:
     let
       # TODO replace with your own username, email, system, and hostname
-      username = "dgarciar";
-      useremail = "dagrlx@gmail.com";
+      config = import ./datos.nix;
+      username = config.username;
+      useremail = config.useremail;
       system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
-      hostname = "enocm1";
+      hostname = config.hostname;
 
       specialArgs = inputs // { inherit username useremail hostname; };
     in {
