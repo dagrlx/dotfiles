@@ -25,7 +25,10 @@ keymap.set("n", "<leader>tn", "<cmd>tabn<CR>", { desc = "Go to next tab" }) --  
 keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" }) --  go to previous tab
 keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 
-keymap.set("n", "<leader>fz", "<cmd>Files<CR>", { desc = "Open fzf preview" }) --  find file with fzf
+keymap.set("n", "<leader>fz", "<cmd>FzfLua files<CR>", { desc = "Open fzf-lua preview" }) --  find file with fzf
+keymap.set("n", "<c-P>", function()
+	require("fzf-lua").files({ cwd = "~/" })
+end, { desc = "Fzf Files $HOME" })
 
 --- OIL ---
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })

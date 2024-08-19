@@ -25,6 +25,7 @@
 
       [ -n "$WEZTERM_PANE" ] && export NVIM_LISTEN_ADDRESS="/tmp/nvim$WEZTERM_PANE"
 
+      export HOSTNAME=$(hostname)
 
       '';
 
@@ -41,7 +42,7 @@
       n = "nano -clS";
       fzn="fzf --preview 'bat --style=numbers --color=always {}' | xargs -n1 nvim";
       sshp="ssh -o ProxyJump=sabaext";
-      
+
       urldecode = "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
       urlencode = "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
 
@@ -57,13 +58,13 @@
       expireDuplicatesFirst = true; #elimina los duplicados primero.
     };
 
-    oh-my-zsh = {
-      enable = true;
-      plugins = [
-        "git" "sudo" "tmux" "docker" "kubectl" "direnv" "brew" "minikube" "fzf" "aliases" "vscode"];
-      theme = "strug"; #robbyrussell
-      #theme = "robbyrussell";
-    };
+    # oh-my-zsh = {
+    #   enable = true;
+    #   plugins = [
+    #     "git" "sudo" "tmux" "docker" "kubectl" "direnv" "brew" "minikube" "fzf" "aliases" "vscode"];
+    #   theme = "strug"; #robbyrussell
+    #   #theme = "robbyrussell";
+    # };
 
 #    initExtra = "eval \"\$(zoxide init zsh)\"";
 

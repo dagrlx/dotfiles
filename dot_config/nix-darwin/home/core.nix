@@ -1,11 +1,11 @@
-{pkgs, ...}: 
+{ pkgs, ... }:
 
 {
   home.packages = with pkgs; [
     nnn # terminal file manager
 
-   #python3Full
-   #unstable-nixpkgs.python311Packages.gssapi
+    #python3Full
+    #unstable-nixpkgs.python311Packages.gssapi
 
     # archives
     zip
@@ -26,15 +26,15 @@
     yq-go # yaml processer https://github.com/mikefarah/yq
     fzf # A command-line fuzzy finder
     fzf-zsh
-    zsh-fzf-tab #Replace zsh's default completion selection menu with fzf
+    zsh-fzf-tab # Replace zsh's default completion selection menu with fzf
     #nix-index
 
     #lua
 
-    fd  #para buscar archivos
+    fd # para buscar archivos
     ffmpegthumbnailer # thumbnails de video necesario para yazi
-    imagemagick       # Yazi 0.3 now supports previewing fonts, SVGs, HEIC, and JPEG XL files
-    procs  #Moderno reemplazo de ps basado e Rust
+    imagemagick # Yazi 0.3 now supports previewing fonts, SVGs, HEIC, and JPEG XL files
+    procs # Moderno reemplazo de ps basado e Rust
     android-tools
     cheat
     coreutils-full
@@ -44,7 +44,7 @@
     has
     aria2 # A lightweight multi-protocol & multi-source command-line download utility
     socat # replacement of openbsd-netcat
-    mas #Mac App Store command-line interface
+    mas # Mac App Store command-line interface
     nmap # A utility for network discovery and security auditing
     #httpie
 
@@ -85,7 +85,7 @@
     #zsh-powerlevel10k
     nodejs
     ansible
-    #stow   #Gestor de dotfile
+    nixfmt-classic # Formateador para nix
 
     # productivity
     glow # markdown previewer in terminal
@@ -95,7 +95,6 @@
     kubectl
     k9s
   ];
-
 
   # ver opciones de program en https://mynixos.com/home-manager/options/programs/2
 
@@ -121,7 +120,7 @@
 
     gpg.enable = true;
 
-    lazygit = {enable = true;};
+    lazygit = { enable = true; };
 
     dircolors = {
       enable = true;
@@ -130,11 +129,7 @@
 
     tealdeer = {
       enable = true;
-      settings = {
-        updates = {
-          auto_update = true;
-        };
-      };
+      settings = { updates = { auto_update = true; }; };
     };
 
     lf = {
@@ -147,14 +142,15 @@
         icons = true;
         ignorecase = true;
       };
-    };  
+    };
 
     # A modern replacement for ‘ls’
     # useful in bash/zsh prompt, not in nushell.
     # En 23.11 cambio exa por eza
     eza = {
       enable = true;
-      enableZshIntegration = true;  # enableAliases fue sustiuida por enableZshIntegration  
+      enableZshIntegration =
+        true; # enableAliases fue sustiuida por enableZshIntegration
       git = true;
       icons = true;
     };
@@ -163,7 +159,7 @@
     # Basically anywhere you would want to use grep, try sk instead.
     skim = {
       enable = true;
-    #  enableBashIntegration = true;
+      #  enableBashIntegration = true;
       enableZshIntegration = true;
     };
 
@@ -178,66 +174,66 @@
       tmuxp.enable = true;
       newSession = true;
       sensibleOnTop = true;
-     # prefix = "C-a";
+      # prefix = "C-a";
       terminal = "screen-256color";
       historyLimit = 100000;
-      plugins = with pkgs.tmuxPlugins;
-          [
-            yank
-            better-mouse-mode
-            vim-tmux-navigator
-            tmux-fzf
+      plugins = with pkgs.tmuxPlugins; [
+        yank
+        better-mouse-mode
+        vim-tmux-navigator
+        tmux-fzf
 
-            {
-            plugin = catppuccin;
-            extraConfig = '' 
-              set -g @catppuccin_flavour 'macchiato'
-              #set -g @catppuccin_window_tabs_enabled on
-              #set -g @catppuccin_date_time "%H:%M"
-              set -g @catppuccin_window_left_separator "█"
-              set -g @catppuccin_window_right_separator "█ "
-              set -g @catppuccin_window_number_position "right"
-              set -g @catppuccin_window_middle_separator "  █"
+        {
+          plugin = catppuccin;
+          extraConfig = ''
+            set -g @catppuccin_flavour 'macchiato'
+            #set -g @catppuccin_window_tabs_enabled on
+            #set -g @catppuccin_date_time "%H:%M"
+            set -g @catppuccin_window_left_separator "█"
+            set -g @catppuccin_window_right_separator "█ "
+            set -g @catppuccin_window_number_position "right"
+            set -g @catppuccin_window_middle_separator "  █"
 
-              set -g @catppuccin_window_default_fill "number"
-              set -g @catppuccin_window_default_text "#W"
+            set -g @catppuccin_window_default_fill "number"
+            set -g @catppuccin_window_default_text "#W"
 
-              set -g @catppuccin_window_current_fill "number"
-              set -g @catppuccin_window_current_text "#W"
+            set -g @catppuccin_window_current_fill "number"
+            set -g @catppuccin_window_current_text "#W"
 
-              set -g @catppuccin_status_modules_right "directory host session"
-  
-              set -g @catppuccin_status_left_separator  ""
-              set -g @catppuccin_status_right_separator " "
-              set -g @catppuccin_status_right_separator_inverse "no"
-              set -g @catppuccin_status_fill "icon"
-              set -g @catppuccin_status_connect_separator "no"
+            set -g @catppuccin_status_modules_right "directory host session"
 
-              set -g @catppuccin_directory_text "#{pane_current_path}"
+            set -g @catppuccin_status_left_separator  ""
+            set -g @catppuccin_status_right_separator " "
+            set -g @catppuccin_status_right_separator_inverse "no"
+            set -g @catppuccin_status_fill "icon"
+            set -g @catppuccin_status_connect_separator "no"
 
-            '';
-            }
+            set -g @catppuccin_directory_text "#{pane_current_path}"
 
-            {
-            plugin = resurrect;  #Restaura el ambiente de tmux despues de reiniciar el equipo
-            extraConfig = ''
-              set -g @resurrect-strategy-vim 'session'
-              set -g @resurrect-strategy-nvim 'session'
-              set -g @resurrect-capture-pane-contents 'on'
-              set -g @resurrect-processes 'ssh pgsql lazygit lf mc yazi'
-            '';
-            }
+          '';
+        }
 
-            {
-            plugin = continuum;
-            extraConfig = ''
-              set -g @continuum-restore 'on'
-              #set -g @continuum-boot 'on'
-              set -g @continuum-save-interval '10'
-            '';
-            }
-            
-          ];
+        {
+          plugin =
+            resurrect; # Restaura el ambiente de tmux despues de reiniciar el equipo
+          extraConfig = ''
+            set -g @resurrect-strategy-vim 'session'
+            set -g @resurrect-strategy-nvim 'session'
+            set -g @resurrect-capture-pane-contents 'on'
+            set -g @resurrect-processes 'ssh pgsql lazygit lf mc yazi'
+          '';
+        }
+
+        {
+          plugin = continuum;
+          extraConfig = ''
+            set -g @continuum-restore 'on'
+            #set -g @continuum-boot 'on'
+            set -g @continuum-save-interval '10'
+          '';
+        }
+
+      ];
 
       extraConfig = ''
         #Opción para mantener los colores del tema catppuccin de neovim cuando se esta dentro de tmux
@@ -266,34 +262,26 @@
         #"set-option -g status-right '('Caracas:' #(TZ=America/Caracas date +%%H:%%M) 'Miami:' #(TZ=America/New_York date +%%H:%%M)) 'Santiago:' %Y-%m-%d %H:%M'
 
 
-    '';
+      '';
     };
 
     zellij = {
       enable = true;
       #enableZshIntegration = true;
 
-      settings = {
-        theme = "catppuccin-macchiato";
-      };
+      settings = { theme = "catppuccin-macchiato"; };
 
     };
 
     ripgrep = {
       enable = true;
-      arguments = [
-        "--max-columns-preview"
-        "--colors=line:style:bold"
-      ];
+      arguments = [ "--max-columns-preview" "--colors=line:style:bold" ];
     };
 
     fzf = {
       enable = true;
       enableZshIntegration = true;
-      defaultOptions = [
-        "--height 50%"
-        "--border"
-      ];
+      defaultOptions = [ "--height 50%" "--border" ];
       tmux.enableShellIntegration = true;
     };
 

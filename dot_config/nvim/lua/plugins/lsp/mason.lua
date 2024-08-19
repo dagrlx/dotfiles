@@ -38,7 +38,7 @@ return {
 				"marksman", -- Markdown
 				"docker-compose-language-service", -- Docker
 				"dockerfile-language-server", -- Dockerfile
-				"bash-language-server", -- Bash
+				"bashls", -- Bash
 				"shellcheck",
 				"sqls", -- SQL
 				"taplo", -- Toml

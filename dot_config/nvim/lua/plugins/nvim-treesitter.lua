@@ -4,6 +4,7 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	event = { "BufReadPre", "BufNewFile" },
 	build = ":TSUpdate",
+	event = "VeryLazy",
 	dependencies = {
 		"windwp/nvim-ts-autotag",
 	},
@@ -13,6 +14,7 @@ return {
 			ensure_installed = {
 				"bash",
 				"lua",
+				"luadoc",
 				"javascript",
 				"json",
 				"python",

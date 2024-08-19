@@ -175,6 +175,7 @@ end
 
 config.automatically_reload_config = true
 config.color_scheme = "Catppuccin Mocha"
+config.default_cursor_style = "BlinkingBar"
 
 config.font = wezterm.font_with_fallback({
 	"JetBrainsMono Nerd Font",

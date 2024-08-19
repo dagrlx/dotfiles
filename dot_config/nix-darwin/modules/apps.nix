@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   ##########################################################################
   #
   #  Install all apps and packages here.
@@ -18,22 +18,8 @@
   # Related Discussion: https://discourse.nixos.org/t/darwin-again/29331
   environment.systemPackages = with pkgs; [
     git
-    just # use Justfile to simplify nix-darwin's commands 
+    just # use Justfile to simplify nix-darwin's commands
   ];
-
-   # Cambios derivados de actualizacion en nix-darwin inestable
-#   fonts = {
-#   packages = with pkgs; [
-#     source-code-pro
-#     font-awesome
-#     (nerdfonts.override {
-#       fonts = [
-#         "JetBrainsMono"
-#         #"FiraCode"
-#       ];
-#     })
-#   ];
-# };
 
   environment.variables.EDITOR = "nvim";
 
@@ -44,7 +30,7 @@
   homebrew = {
     enable = true;
 
-    onActivation = { 
+    onActivation = {
       # Controla si Homebrew se auto-actualiza a sí mismo y a todas las fórmulas durante la activación del sistema
       # Nix-darwin
       autoUpdate = true;
@@ -101,34 +87,36 @@
 
       "neovim"
 
-      "yazi"  #file manager 
-      "poppler"  #para PDF preview en yazi
+      "yazi" # file manager
+      "poppler" # para PDF preview en yazi
 
       ##Tiling windows manager
       #"yabai"
       #"skhd"
       "sketchybar"
-      "lua"         # Lenguaje para config sketchybar, aerospace
+      "lua" # Lenguaje para config sketchybar, aerospace
+      "rust"
       "switchaudio-osx"
       "nowplaying-cli"
       "borders"
 
       "nushell"
-      "the_silver_searcher" #A code searching tool similar to ack, with a focus on speed.
-      "jq" #Se usa en yabai - Lightweight and flexible command-line JSON processor
-      "gh" #Se usa en pluing git sketchybar
-      "btop" #monitoreo de recursos
+      "the_silver_searcher" # A code searching tool similar to ack, with a focus on speed.
+      "jq" # Se usa en yabai - Lightweight and flexible command-line JSON processor
+      "gh" # Se usa en pluing git sketchybar
+      "btop" # monitoreo de recursos
+      "sshs" # List and connect to hosts using ~/.ssh/config.
 
       #control versiones dotfiles
       "chezmoi"
       #"yadm"
-      "age"   # Is a simple, modern and secure file encryption tool, format, and Go library.
+      "age" # Is a simple, modern and secure file encryption tool, format, and Go library.
 
       #"talosctl"
       "ntfs-3g-mac"
 
-      "pkgx"  # Alternativa a hombrew
-      "thefuck"  #magnificent app that corrects your previous console command.
+      "pkgx" # Alternativa a hombrew
+      "thefuck" # magnificent app that corrects your previous console command.
     ];
 
     # `brew install --cask`
@@ -174,18 +162,17 @@
       "kubecontext"
       "maintenance"
       "onyx"
-      "deeper"       
-      "tyke"         # App para tomar notas rapidas temporal 
-      "applite"       # App grafica homebrew - https://www.thriftmac.com
-
-      "aerospace"    # Tiling manager basado en i3wm 
+      "deeper"
+      "tyke" # App para tomar notas rapidas temporal
+      "applite" # App grafica homebrew - https://www.thriftmac.com
+      "aerospace" # Tiling manager basado en i3wm
 
       #Terminales
       "iterm2"
       "wezterm"
       #"kitty"
-      "warp" #terminal con AI y wrapper
-      "wave" #terminal con AI alternativa a warp y es software libre
+      "warp" # terminal con AI y wrapper
+      "wave" # terminal con AI alternativa a warp y es software libre
       #"tabby" #Otro Terminal 
       #"rio"
 
@@ -209,12 +196,12 @@
       "telegram"
       #"wireshark" # network analyzer
       "grandperspective" # Muestra de forma grafica el uso del disco
-      "keycastr" #Muestra la pulsación de las teclas en pantalla
+      "keycastr" # Muestra la pulsación de las teclas en pantalla
       "hyperkey"
-      "karabiner-elements" #Permite modificar/crear teclado y combinaciones de teclas 
+      #"karabiner-elements" #Permite modificar/crear teclado y combinaciones de teclas 
       "vlc"
-      "keyclu" #Muestra la lista de shortcut de las aplicaciones que se seleccione
-      "cleanupbuddy" #Bloque teclado y mouse para poder hacer limpieza a la mac
+      "keyclu" # Muestra la lista de shortcut de las aplicaciones que se seleccione
+      "cleanupbuddy" # Bloque teclado y mouse para poder hacer limpieza a la mac
       #"displaylink"
       "obsidian"
       "jordanbaird-ice" # Menu bar - Equivalente a bartender
@@ -222,14 +209,14 @@
       "kap"
       #"spaceman"
 
-      #Fonts for sketchybar
-      "font-hack-nerd-font" #Font for sketchybar
-      "font-sf-pro" #Simbolos
-      "sf-symbols" #iconos
+      #Fonts for sketchybar, wezterm        
+      "font-hack-nerd-font" # Font for sketchybar
+      "font-sf-pro" # Simbolos
+      "sf-symbols" # iconos
       "font-sf-mono"
       "font-blex-mono-nerd-font"
 
-      "fly"  #Command line interface to Concourse CI
+      "fly" # Command line interface to Concourse CI
     ];
   };
 }

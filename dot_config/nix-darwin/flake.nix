@@ -12,7 +12,7 @@
 
   # the nixConfig here only affects the flake itself, not the system configuration!
   nixConfig = {
-    experimental-features = ["nix-command" "flakes" "auto-allocate-uids"];
+    experimental-features = [ "nix-command" "flakes" "auto-allocate-uids" ];
 
   };
 
@@ -38,6 +38,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    flake-utils.url = "github:numtide/flake-utils";
+
   };
 
   # The `outputs` function will return all the build results of the flake.
@@ -46,45 +48,36 @@
   # However, `self` is an exception, this special parameter points to the `outputs` itself (self-reference)
   # The `@` syntax here is used to alias the attribute set of the inputs's parameter, making it convenient to use inside the function.
 
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    darwin,
-    home-manager,
-    ...
-  }: let
-    # TODO replace with your own username, email, system, and hostname
-    username = "dgarciar";
-    useremail = "dagrlx@gmail.com";
-    system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
-    hostname = "enocm1";
+  outputs = inputs@{ self, nixpkgs, darwin, home-manager, ... }:
+    let
+      # TODO replace with your own username, email, system, and hostname
+      username = "dgarciar";
+      useremail = "dagrlx@gmail.com";
+      system = "aarch64-darwin"; # aarch64-darwin or x86_64-darwin
+      hostname = "enocm1";
 
-    specialArgs =
-      inputs
-      // {
-        inherit username useremail hostname;
-      };
-  in {
-    darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
-      inherit system specialArgs;      
+      specialArgs = inputs // { inherit username useremail hostname; };
+    in {
+      darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
+        inherit system specialArgs;
         modules = [
-        ./modules/nix-core.nix
-        ./modules/system.nix
-        ./modules/apps.nix
-        ./modules/host-users.nix
+          ./modules/nix-core.nix
+          ./modules/system.nix
+          ./modules/apps.nix
+          ./modules/host-users.nix
 
-        # home manager
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = specialArgs;
-          home-manager.users.${username} = import ./home;
-        }
-      ];
+          # home manager
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = specialArgs;
+            home-manager.users.${username} = import ./home;
+          }
+        ];
+      };
+
+      # nix code formatter
+      formatter.${system} = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
     };
-
-    # nix code formatter
-    formatter.${system} = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
-  };
 }

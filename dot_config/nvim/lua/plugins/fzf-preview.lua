@@ -7,7 +7,7 @@ return {
 			vim.fn("fzf#install")
 		end,
 	},
-	"junegunn/fzf.vim",
+	-- "junegunn/fzf.vim",
 	"ibhagwan/fzf-lua", -- si estás usando fzf-lua
 	"yuki-ycino/fzf-preview.vim",
 	config = function()
