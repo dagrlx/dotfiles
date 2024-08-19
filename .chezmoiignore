@@ -4,3 +4,5 @@ key.txt.age
 key_chezmoi.age
 .dir_colors
 .DS_Store
+.config/nix-darwin/datos.nix
+
