@@ -1,7 +1,0 @@
--- ~/.config/nvim/lua/plugins/codeium.lua.lua
-
-return {
-  'Exafunction/codeium.vim',
-  enable = false,
-  event = 'BufEnter'
-} 
