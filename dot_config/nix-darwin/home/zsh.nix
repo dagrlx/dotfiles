@@ -4,7 +4,7 @@
     enableCompletion = true;
     completionInit = "autoload -U compinit && compinit";
     autosuggestion.enable = true; # Habilita las sugerencias de autocompletado
-    #autosuggestion.highlight = "fg=#cdd6f4,bg=#1e1e2e,bold,underline";
+    autosuggestion.highlight = "fg=#ffffff,bg=#1e1e2e,bold,underline";
     autosuggestion.strategy = [ "history" ];
     syntaxHighlighting.enable = true; # Habilita el resaltado de sintaxis
     syntaxHighlighting.highlighters = [ "brackets" "pattern" "cursor" ];
