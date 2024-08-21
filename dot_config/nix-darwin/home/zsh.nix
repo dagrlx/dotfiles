@@ -3,7 +3,7 @@
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true; # Habilita las sugerencias de autocompletado
-    autosuggestion.highlight = "fg=#ff00ff,bg=cyan,bold,underline";
+    autosuggestion.highlight = "fg=#cdd6f4,bg=#1e1e2e,bold,underline";
     autosuggestion.strategy = [ "history" ];
     syntaxHighlighting.enable = true; # Habilita el resaltado de sintaxis
     syntaxHighlighting.highlighters = [ "brackets" ];

@@ -446,6 +446,27 @@ config.keys = {
 	{ key = "m", mods = "LEADER", action = act.ActivateKeyTable({ name = "move_tab", one_shot = false }) },
 	-- Close tab
 	{ key = "&", mods = "LEADER|SHIFT", action = act.CloseCurrentTab({ confirm = true }) },
+
+	-- Desanclar el pane actual a una nueva ventana
+	{
+		key = "N",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action_callback(function(window, pane)
+			local success, stdout, stderr = wezterm.run_child_process({
+				"/opt/homebrew/bin/wezterm",
+				"cli",
+				"move-pane-to-new-tab",
+				"--new-window",
+				"--pane-id",
+				tostring(pane:pane_id()),
+			})
+
+			if not success then
+				wezterm.log_error("Failed to detach pane: " .. stderr)
+			end
+		end),
+	},
+
 	-- Rename current tab; analagous to command in tmux
 	{
 		key = ",",
