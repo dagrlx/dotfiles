@@ -2,12 +2,16 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
+    completionInit = "autoload -U compinit && compinit";
     autosuggestion.enable = true; # Habilita las sugerencias de autocompletado
-    autosuggestion.highlight = "fg=#cdd6f4,bg=#1e1e2e,bold,underline";
+    #autosuggestion.highlight = "fg=#cdd6f4,bg=#1e1e2e,bold,underline";
     autosuggestion.strategy = [ "history" ];
     syntaxHighlighting.enable = true; # Habilita el resaltado de sintaxis
-    syntaxHighlighting.highlighters = [ "brackets" ];
+    syntaxHighlighting.highlighters = [ "brackets" "pattern" "cursor" ];
     historySubstringSearch.enable = true; # Enable history substring search.
+    sessionVariables = {
+      HOSTNAME = "${builtins.getEnv "hostname"}"; # export HOSTNAME=$(hostname)
+    };
 
     #initExtra = builtins.readFile ./zshrc;
 
@@ -28,7 +32,7 @@
 
       [ -n "$WEZTERM_PANE" ] && export NVIM_LISTEN_ADDRESS="/tmp/nvim$WEZTERM_PANE"
 
-      export HOSTNAME=$(hostname)
+      #export HOSTNAME=$(hostname)
 
     '';
 
