@@ -3,6 +3,7 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 local session_manager = require("wezterm-session-manager/session-manager")
 local mux = wezterm.mux
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 
 -- session-manager - Provee fincionalidad para salvar, cargar y restaurar sesiones
 -- See https://github.com/danielcopper/wezterm-session-manager
@@ -447,23 +448,20 @@ config.keys = {
 	-- Close tab
 	{ key = "&", mods = "LEADER|SHIFT", action = act.CloseCurrentTab({ confirm = true }) },
 
-	-- Desanclar el pane actual a una nueva ventana
+	{ -- Move pane to new tab
+		key = "M",
+		mods = "CTRL | SHIFT",
+		action = wezterm.action_callback(function(win, pane)
+			local tab, window = pane:move_to_new_tab()
+		end),
+	},
+
+	-- Move pane to new window
 	{
 		key = "N",
 		mods = "CTRL|SHIFT",
 		action = wezterm.action_callback(function(window, pane)
-			local success, stdout, stderr = wezterm.run_child_process({
-				"/opt/homebrew/bin/wezterm",
-				"cli",
-				"move-pane-to-new-tab",
-				"--new-window",
-				"--pane-id",
-				tostring(pane:pane_id()),
-			})
-
-			if not success then
-				wezterm.log_error("Failed to detach pane: " .. stderr)
-			end
+			local tab, window = pane:move_to_new_window()
 		end),
 	},
 
