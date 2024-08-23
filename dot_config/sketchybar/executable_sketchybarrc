@@ -5,4 +5,4 @@ require("helpers")
 require("init")
 sbar.hotload(true)
 
--- https://github.com/waytoabv/Dotfiles/blob/1531d9a80e5bb6ce48ed3ec062026cf694b748f4/sketchybar/items/spaces.lua
+-- https://github.com/waytoabv/Dotfiles/

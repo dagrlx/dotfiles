@@ -48,7 +48,6 @@
       # TODO Feel free to add your favorite apps here.
 
       #Xcode = 497799835;
-      "Little Snitch Mini" = 1629008763;
       "WireGuard" = 1451685025;
       #"Tomito" = 1526042937;
       "Microsoft Remote Desktop" = 1295203466;

@@ -51,7 +51,7 @@
     nano
     nanorc
     sshpass
-    #tealdeer #A very fast implementation of tldr in Rust
+    tealdeer # A very fast implementation of tldr in Rust
     tmux-mem-cpu-load
     tmux-xpanes
     tree

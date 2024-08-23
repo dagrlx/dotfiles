@@ -12,7 +12,7 @@
 
   # the nixConfig here only affects the flake itself, not the system configuration!
   nixConfig = {
-    experimental-features = [ "nix-command" "flakes" "auto-allocate-uids" ];
+    experimental-features = [ "nix-command" "flakes" ];
 
   };
 
@@ -38,7 +38,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-utils.url = "github:numtide/flake-utils";
+    # flake-utils.url = "github:numtide/flake-utils";
 
   };
 

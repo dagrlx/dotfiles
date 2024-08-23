@@ -1,5 +1,5 @@
-{...}: {
-programs.starship = {
+{ ... }: {
+  programs.starship = {
     enable = true;
 
     enableBashIntegration = true;
@@ -8,24 +8,24 @@ programs.starship = {
 
     settings = {
 
-    #format = ''
-    #    $hostname
-    #    $username
-    #    $directory
-    #    $git_branch
-    #    $git_state
-    #    $git_metrics
-    #    $cmd_duration $jobs $time
-    #    $line_break
-    #    $git_status
-    #    $character
-    #'';
+      #format = ''
+      #    $hostname
+      #    $username
+      #    $directory
+      #    $git_branch
+      #    $git_state
+      #    $git_metrics
+      #    $cmd_duration $jobs $time
+      #    $line_break
+      #    $git_status
+      #    $character
+      #'';
 
-    palette = "catppuccin_mocha";
+      palette = "catppuccin_mocha";
 
-    add_newline = true;
+      add_newline = true;
 
-    directory = {
+      directory = {
         style = "bold fg:blue";
         format = "[$path]($style)[$read_only]($read_only_style) ";
         truncation_length = 8;
@@ -34,73 +34,89 @@ programs.starship = {
         read_only = "🔒";
         read_only_style = "red";
         home_symbol = "~";
-    };
+      };
 
-    # directory.substitutions = {
-    #     "Documents" = "󰈙";
-    #     "Downloads" = " ";
-    #     "Music" = " ";
-    #     "Pictures" = " ";
-    # };
+      # directory.substitutions = {
+      #     "Documents" = "󰈙";
+      #     "Downloads" = " ";
+      #     "Music" = " ";
+      #     "Pictures" = " ";
+      # };
 
-    character = {
+      character = {
         success_symbol = "[›](bold green)";
         error_symbol = "[x](bold red)";
-    };
-    jobs = {
+      };
+      jobs = {
         symbol = " ";
         style = "red";
         number_threshold = 1;
         format = "[$symbol]($style)";
-    };
-    cmd_duration = {
+      };
+      cmd_duration = {
         min_time = 500;
         style = "bold yellow";
         # format = "[$duration]($style)";
         format = "[$duration]($style) ";
-    };
+      };
 
-    hostname = {
+      hostname = {
         ssh_only = false;
         ssh_symbol = " ";
         style = "bold dimmed green";
         format = "[$ssh_symbol$hostname]($style) in ";
-        detect_env_vars = ["HOSTNAME" "SSH_CONNECTION"];
+        detect_env_vars = [ "HOSTNAME" "SSH_CONNECTION" ];
         trim_at = ".";
         disabled = false;
-    };
+      };
 
-    username = {
+      username = {
         style_user = "peach bold";
         style_root = "red bold";
         format = "[$user]($style) ";
         disabled = false;
         show_always = true;
-    };
+      };
 
-    sudo = {
+      sudo = {
         style = "bold green";
         symbol = "👩‍💻 ";
         disabled = false;
-    };
+      };
 
-    aws = {
-        symbol = "🅰 ";
-    };
+      aws = { symbol = "🅰 "; };
 
-    gcloud = {
+      gcloud = {
         # do not show the account/project's info
         # to avoid the leak of sensitive information when sharing the terminal
-        format = "on [$symbol$active(\($region\))]($style) ";
+        format = "on [$symbol$active(($region))]($style) ";
         symbol = "🅶 ️";
       };
-    python = {
+
+      python = {
         symbol = " ";
+        #format = "[$symbol$pyenv_prefix($version )($virtualenv)]($style)";
+        #pyenv_version_name = true;
+        #pyenv_prefix = "";
         # format = "[$virtualenv]($style) ";
         # style = "bright-black";
-    };
+        #style = "teal";
+      };
+      rust = {
+        style = "orange";
+        symbol = " ";
+      };
 
-    palettes.catppuccin_macchiato = {
+      docker_context = {
+        symbol = " ";
+        style = "fg:#06969A";
+        format = "[$symbol]($style) $path";
+        detect_files =
+          [ "docker-compose.yml" "docker-compose.yaml" "Dockerfile" ];
+        detect_extensions = [ "Dockerfile" ];
+      };
+
+      palettes.catppuccin_macchiato = {
         rosewater = "#f4dbd6";
         flamingo = "#f0c6c6";
         pink = "#f5bde6";
@@ -127,9 +143,10 @@ programs.starship = {
         base = "#24273a";
         mantle = "#1e2030";
         crust = "#181926";
-    };
+        orange = "#ffb86c"; # Color del tema dracula
+      };
 
-    palettes.catppuccin_mocha = {
+      palettes.catppuccin_mocha = {
         rosewater = "#f5e0dc";
         flamingo = "#f2cdcd";
         pink = "#f5c2e7";
@@ -156,7 +173,7 @@ programs.starship = {
         base = "#1e1e2e";
         mantle = "#181825";
         crust = "#11111b";
+      };
     };
   };
- };
 }
