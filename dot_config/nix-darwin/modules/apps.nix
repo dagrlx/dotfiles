@@ -94,6 +94,7 @@
       #"skhd"
       "sketchybar"
       "lua" # Lenguaje para config sketchybar, aerospace
+      "lua-language-server"
       "rust"
       "switchaudio-osx"
       "nowplaying-cli"

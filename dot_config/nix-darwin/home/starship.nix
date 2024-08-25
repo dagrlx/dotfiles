@@ -21,7 +21,15 @@
       #    $character
       #'';
 
+      # A minimal left prompt
+      format = "$directory$character ";
+
       palette = "catppuccin_mocha";
+
+      # move the rest of the prompt to the right
+      right_format = "$all ";
+
+      command_timeout = 1000;
 
       add_newline = true;
 
@@ -64,7 +72,7 @@
         ssh_only = false;
         ssh_symbol = " ";
         style = "bold dimmed green";
-        format = "[$ssh_symbol$hostname]($style) in ";
+        format = "on [$ssh_symbol$hostname]($style) in ";
         detect_env_vars = [ "HOSTNAME" "SSH_CONNECTION" ];
         trim_at = ".";
         disabled = false;
@@ -95,6 +103,8 @@
 
       python = {
         symbol = " ";
+        format =
+          "(via [$symbol$pyenv_prefix($version)(($virtualenv))]($style)) ";
         #format = "[$symbol$pyenv_prefix($version )($virtualenv)]($style)";
         #pyenv_version_name = true;
         #pyenv_prefix = "";

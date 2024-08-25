@@ -5,7 +5,7 @@ local session_manager = require("wezterm-session-manager/session-manager")
 local mux = wezterm.mux
 local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 
--- session-manager - Provee fincionalidad para salvar, cargar y restaurar sesiones
+-- session-manager - Provee funcionalidad para salvar, cargar y restaurar sesiones
 -- See https://github.com/danielcopper/wezterm-session-manager
 wezterm.on("save_state", function(window, pane)
 	session_manager.save_state(window, pane)

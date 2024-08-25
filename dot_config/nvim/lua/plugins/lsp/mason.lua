@@ -36,13 +36,12 @@ return {
 				"jsonls", -- JSON
 				"yamlls", -- YAML
 				"marksman", -- Markdown
-				"docker-compose-language-service", -- Docker
-				"dockerfile-language-server", -- Dockerfile
+				"docker_compose_language_service", -- Docker
+				"dockerls", -- Dockerfile
 				"bashls", -- Bash
-				"shellcheck",
 				"sqls", -- SQL
 				"taplo", -- Toml
-				"nil", -- nix
+				-- "nil_ls", -- nix
 				"rust_analyzer", -- Rust
 			},
 		})
@@ -50,12 +49,16 @@ return {
 		mason_tool_installer.setup({
 			ensure_installed = {
 				"prettier", -- prettier formatter
+				"prettierd", -- prettierd formatter
+				"lua-language-server",
 				"stylua", -- lua formatter
 				"isort", -- python formatter
 				"black", -- python formatter
 				"pylint", -- python linter
 				"eslint_d", -- JavaScript linter
-				"sql-formatter",
+				"sql-formatter", -- sql formatter
+				"shellcheck", -- script
+				"nixpkgs-fmt", -- nix
 			},
 		})
 	end,

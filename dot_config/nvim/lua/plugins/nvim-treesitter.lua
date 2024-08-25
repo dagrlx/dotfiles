@@ -4,9 +4,10 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	event = { "BufReadPre", "BufNewFile" },
 	build = ":TSUpdate",
-	event = "VeryLazy",
+	-- event = "VeryLazy",
 	dependencies = {
 		"windwp/nvim-ts-autotag",
+		"nvim-treesitter/nvim-treesitter-textobjects",
 	},
 
 	config = function()
@@ -39,6 +40,7 @@ return {
 				"vimdoc",
 				"yaml",
 				"rust",
+				"regex",
 			},
 
 			-- Install parsers synchronously (only applied to `ensure_installed`)
