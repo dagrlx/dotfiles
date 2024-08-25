@@ -99,6 +99,7 @@
       "switchaudio-osx"
       "nowplaying-cli"
       "borders"
+      "fastfetch" # Reemplazo neofecht
 
       "nushell"
       "the_silver_searcher" # A code searching tool similar to ack, with a focus on speed.
