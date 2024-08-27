@@ -4,19 +4,19 @@ after-login-command = []
 after-startup-command = [
   # JankyBorders has a built-in detection of already running process,
   # so it won't be run twice on AeroSpace restart
-  'exec-and-forget borders style=round width=5.0 hidpi=off active_color=0xc0e2e2e3 inactive_color=0xc02c2e34 background_color=0x302c2e34',
-  #'exec-and-forget /opt/homebrew/opt/borders/bin/borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
+  #'exec-and-forget borders style=round width=5.0 hidpi=off active_color=0xc0e2e2e3 inactive_color=0xc02c2e34 background_color=0x302c2e34',
+  'exec-and-forget /opt/homebrew/opt/borders/bin/borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
   # Sketchybar has a built-in detection of already running process,
   # so it won't be run twice on AeroSpace restart
   # 'exec-and-forget sketchybar --reload',
-  'exec-and-forget /opt/homebrew/opt/sketchybar/bin/sketchybar',
+  'exec-and-forget /opt/homebrew/bin/sketchybar',
 ]
 
 # Notify Sketchybar about workspace change
 exec-on-workspace-change = [
   '/bin/bash',
   '-c',
-  '/opt/homebrew/opt/sketchybar/bin/sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+  '/opt/homebrew/bin/sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
 
 # Normalizations. See: https://nikitabobko.giaedrthub.io/AeroSpace/guide.html#normalization
@@ -61,16 +61,17 @@ outer.top = 38
 outer.right = 6
 
 [workspace-to-monitor-force-assignment]
-1 = 'Built-in Retina Display'
-2 = 'Built-in Retina Display'
-3 = 'Built-in Retina Display'
+T = 'Built-in Retina Display'
+W = 'Built-in Retina Display'
+Z = 'Built-in Retina Display'
+1 = 'DELL P2419H'
+2 = 'DELL P2419H'
+3 = 'DELL P2419H'
 4 = 'DELL P2419H'
-5 = 'DELL P2419H'
-6 = 'DELL P2419H'
+5 = 'LG FHD'
+6 = 'LG FHD'
 7 = 'LG FHD'
 8 = 'LG FHD'
-9 = 'LG FHD'
-#10 = 'LG FHD'
 #11 = 'LG FHD'
 
 [mode.main.binding]
@@ -96,7 +97,7 @@ cmd-shift-h = 'layout h_tiles'
 alt-f = 'fullscreen'
 alt-shift-f = 'macos-native-fullscreen'
 
-alt-cmd-t = 'layout floating tiling' # 'floating toggle' in i3
+alt-cmd-f = 'layout floating tiling' # 'floating toggle' in i3
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
 ctrl-alt-h = 'focus left'
@@ -115,6 +116,9 @@ alt-shift-minus = 'resize smart -50'
 alt-shift-equal = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+ctrl-alt-t = 'workspace T'
+ctrl-alt-r = 'workspace W'
+ctrl-alt-w = 'workspace Z'
 ctrl-alt-1 = 'workspace 1'
 ctrl-alt-2 = 'workspace 2'
 ctrl-alt-3 = 'workspace 3'
@@ -123,20 +127,19 @@ ctrl-alt-5 = 'workspace 5'
 ctrl-alt-6 = 'workspace 6'
 ctrl-alt-7 = 'workspace 7'
 ctrl-alt-8 = 'workspace 8'
-ctrl-alt-9 = 'workspace 9'
-#ctrl-alt-0 = 'workspace 0'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-alt-shift-1 = 'move-node-to-workspace 1'
-alt-shift-2 = 'move-node-to-workspace 2'
-alt-shift-3 = 'move-node-to-workspace 3'
-alt-shift-4 = 'move-node-to-workspace 4'
-alt-shift-5 = 'move-node-to-workspace 5'
-alt-shift-6 = 'move-node-to-workspace 6'
-alt-shift-7 = 'move-node-to-workspace 7'
-alt-shift-8 = 'move-node-to-workspace 8'
-alt-shift-9 = 'move-node-to-workspace 9'
-#alt-shift-0 = 'move-node-to-workspace 0'
+alt-cmd-t = 'move-node-to-workspace T'
+alt-cmd-r = 'move-node-to-workspace W'
+alt-cmd-w = 'move-node-to-workspace Z'
+alt-cmd-1 = 'move-node-to-workspace 1'
+alt-cmd-2 = 'move-node-to-workspace 2'
+alt-cmd-3 = 'move-node-to-workspace 3'
+alt-cmd-4 = 'move-node-to-workspace 4'
+alt-cmd-5 = 'move-node-to-workspace 5'
+alt-cmd-6 = 'move-node-to-workspace 6'
+alt-cmd-7 = 'move-node-to-workspace 7'
+alt-cmd-8 = 'move-node-to-workspace 8'
 
 # https://nikitabobko.github.io/AeroSpace/commands#workspace
 alt-right = 'workspace next'
@@ -194,19 +197,19 @@ esc = 'mode main'
 
 [[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'
-run = 'move-node-to-workspace 2'
+run = 'move-node-to-workspace W'
 
 [[on-window-detected]]
 if.app-id = 'net.whatsapp.WhatsApp'
-run = 'move-node-to-workspace 2'
+run = 'move-node-to-workspace W'
 
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
-run = 'move-node-to-workspace 1'
+run = 'move-node-to-workspace T'
 
 [[on-window-detected]]
 if.app-id = 'dev.warp.Warp-Stable'
-run = 'move-node-to-workspace 1'
+run = 'move-node-to-workspace T'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'VNC'
@@ -214,7 +217,7 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'org.keepassxc.keepassxc'
-run = ['layout floating', 'move-node-to-workspace 3']
+run = ['layout floating', 'move-node-to-workspace Z']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
@@ -226,19 +229,19 @@ run = ['layout floating']
 
 [[on-window-detected]]
 if.app-id = 'com.microsoft.rdc.macos'
-run = ['layout floating', 'move-node-to-workspace 9']
-
-[[on-window-detected]]
-if.app-id = 'com.microsoft.teams2'
-run = ['move-node-to-workspace 5']
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'zoom'
 run = ['layout floating', 'move-node-to-workspace 8']
 
 [[on-window-detected]]
+if.app-id = 'com.microsoft.teams2'
+run = ['move-node-to-workspace 2']
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'zoom'
+run = ['layout floating', 'move-node-to-workspace 7']
+
+[[on-window-detected]]
 if.app-id = 'com.vivaldi.Vivaldi'
-run = 'move-node-to-workspace 4'
+run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
@@ -253,7 +256,7 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.AppStore'
-run = ['layout floating', 'move-node-to-workspace 3']
+run = ['layout floating', 'move-node-to-workspace Z']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'

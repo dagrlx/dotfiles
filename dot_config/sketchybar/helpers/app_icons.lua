@@ -85,6 +85,7 @@ return {
 	["System Preferences"] = ":gear:",
 	["System Settings"] = ":gear:",
 	["Systemeinstellungen"] = ":gear:",
+	["Configuración del Sistema"] = ":gear:",
 	["系统设置"] = ":gear:",
 	["Réglages Système"] = ":gear:",
 	["GitHub Desktop"] = ":git_hub:",

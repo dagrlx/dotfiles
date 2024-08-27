@@ -22,16 +22,16 @@
       #'';
 
       # A minimal left prompt
-      format = "$directory$character ";
+      #format = "$directory$character ";
 
       palette = "catppuccin_mocha";
 
+      add_newline = true;
+
       # move the rest of the prompt to the right
-      right_format = "$all ";
+      #right_format = "$all ";
 
       command_timeout = 1000;
-
-      add_newline = true;
 
       directory = {
         style = "bold fg:blue";

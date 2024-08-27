@@ -3,13 +3,14 @@ local icons = require("icons")
 local settings = require("settings")
 local app_icons = require("helpers.app_icons")
 
---local LIST_ALL = "aerospace list-workspaces --all"
-local LIST_CURRENT = "aerospace list-workspaces --focused"
+-- Comandos para obtener información de monitores y workspaces
 local LIST_MONITORS = "aerospace list-monitors | awk '{print $1}'"
-local LIST_WORKSPACES = "aerospace list-workspaces --monitor all"
+local LIST_WORKSPACES = "aerospace list-workspaces --monitor %s"
 local LIST_APPS = "aerospace list-windows --workspace %s | awk -F'|' '{gsub(/^ *| *$/, \"\", $2); print $2}'"
+local LIST_CURRENT = "aerospace list-workspaces --focused"
 
 local spaces = {}
+local workspaceToMonitorMap = {}
 
 local function getIconForApp(appName)
 	return app_icons[appName] or "?"
@@ -18,12 +19,11 @@ end
 local function updateSpaceIcons(spaceId, workspaceName)
 	local icon_strip = ""
 	local shouldDraw = false
+	local appFound = false
 
 	sbar.exec(LIST_APPS:format(workspaceName), function(appsOutput)
-		local appFound = false
-
 		for app in appsOutput:gmatch("[^\r\n]+") do
-			local appName = app:match("^%s*(.-)%s*$") -- Trim whitespace
+			local appName = app:match("^%s*(.-)%s*$")
 			if appName and appName ~= "" then
 				icon_strip = icon_strip .. " " .. getIconForApp(appName)
 				appFound = true
@@ -39,8 +39,6 @@ local function updateSpaceIcons(spaceId, workspaceName)
 			spaces[spaceId].item:set({
 				label = { string = icon_strip, drawing = shouldDraw },
 			})
-		else
-			print("Warning: Space ID '" .. spaceId .. "' not found when updating icons.")
 		end
 	end)
 end
@@ -73,13 +71,11 @@ local function addWorkspaceItem(workspaceName, monitorId, isSelected)
 				height = 24,
 				border_color = colors.bg1,
 				corner_radius = 9,
-				drawing = "on",
 			},
 			click_script = "aerospace workspace " .. workspaceName,
-			associated_display = monitorId,
+			display = monitorId,
 		})
 
-		-- Create bracket for double border effect
 		local space_bracket = sbar.add("bracket", { spaceId }, {
 			background = {
 				color = colors.transparent,
@@ -90,20 +86,18 @@ local function addWorkspaceItem(workspaceName, monitorId, isSelected)
 			},
 		})
 
-		-- Subscribe to mouse events for changing workspace
 		space_item:subscribe("mouse.clicked", function()
 			sbar.exec("aerospace workspace " .. workspaceName)
 		end)
 
-		-- Store both the item and its bracket in the spaces table
 		spaces[spaceId] = { item = space_item, bracket = space_bracket }
+		workspaceToMonitorMap[workspaceName] = monitorId
 	end
 
 	spaces[spaceId].item:set({
 		icon = { highlight = isSelected },
 		label = { highlight = isSelected },
 	})
-
 	spaces[spaceId].bracket:set({
 		background = { border_color = isSelected and colors.dirty_white or colors.transparent },
 	})
@@ -111,18 +105,57 @@ local function addWorkspaceItem(workspaceName, monitorId, isSelected)
 	updateSpaceIcons(spaceId, workspaceName)
 end
 
+local function removeWorkspaceItem(spaceId)
+	if spaces[spaceId] then
+		sbar.remove(spaces[spaceId].item)
+		sbar.remove(spaces[spaceId].bracket)
+		spaces[spaceId] = nil
+
+		local workspaceName = spaceId:match("workspace_(.-)_%d+")
+		if workspaceName then
+			workspaceToMonitorMap[workspaceName] = nil
+		end
+	end
+end
+
 local function drawSpaces()
 	sbar.exec(LIST_MONITORS, function(monitorsOutput)
+		local monitorList = {}
+		for monitorId in monitorsOutput:gmatch("[^\r\n]+") do
+			table.insert(monitorList, monitorId)
+		end
+
 		sbar.exec(LIST_CURRENT, function(focusedWorkspaceOutput)
 			local focusedWorkspace = focusedWorkspaceOutput:match("[^\r\n]+")
+			local updatedSpaces = {}
 
-			for monitorId in monitorsOutput:gmatch("[^\r\n]+") do
+			for _, monitorId in ipairs(monitorList) do
 				sbar.exec(LIST_WORKSPACES:format(monitorId), function(workspacesOutput)
+					local workspaces = {}
+
 					for workspaceName in workspacesOutput:gmatch("[^\r\n]+") do
+						table.insert(workspaces, workspaceName)
+					end
+
+					-- Ordenar workspaces alfabéticamente
+					table.sort(workspaces, function(a, b)
+						return a:lower() < b:lower()
+					end)
+
+					for _, workspaceName in ipairs(workspaces) do
+						local spaceId = "workspace_" .. workspaceName .. "_" .. monitorId
 						local isSelected = workspaceName == focusedWorkspace
 						addWorkspaceItem(workspaceName, monitorId, isSelected)
+						updatedSpaces[spaceId] = true
 					end
 				end)
+			end
+
+			-- Eliminar espacios que ya no existen
+			for spaceId, _ in pairs(spaces) do
+				if not updatedSpaces[spaceId] then
+					removeWorkspaceItem(spaceId)
+				end
 			end
 		end)
 	end)
@@ -135,7 +168,7 @@ local space_window_observer = sbar.add("item", {
 	updates = true,
 })
 
-space_window_observer:subscribe("aerospace_workspace_change", function(env)
+space_window_observer:subscribe("aerospace_workspace_change", function()
 	drawSpaces()
 end)
 
