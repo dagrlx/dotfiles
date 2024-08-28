@@ -175,7 +175,9 @@ if wezterm.config_builder then
 end
 
 config.automatically_reload_config = true
-config.color_scheme = "Catppuccin Mocha"
+--config.color_scheme = "Catppuccin Mocha"
+config.color_scheme = "Tokyo Night"
+--config.color_scheme = "Tokyo Night Moon"
 config.default_cursor_style = "BlinkingBar"
 
 config.font = wezterm.font_with_fallback({

@@ -117,8 +117,8 @@ alt-shift-equal = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 ctrl-alt-t = 'workspace T'
-ctrl-alt-r = 'workspace W'
-ctrl-alt-w = 'workspace Z'
+ctrl-alt-w = 'workspace W'
+ctrl-alt-z = 'workspace Z'
 ctrl-alt-1 = 'workspace 1'
 ctrl-alt-2 = 'workspace 2'
 ctrl-alt-3 = 'workspace 3'
@@ -130,8 +130,8 @@ ctrl-alt-8 = 'workspace 8'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-cmd-t = 'move-node-to-workspace T'
-alt-cmd-r = 'move-node-to-workspace W'
-alt-cmd-w = 'move-node-to-workspace Z'
+alt-cmd-w = 'move-node-to-workspace W'
+alt-cmd-z = 'move-node-to-workspace Z'
 alt-cmd-1 = 'move-node-to-workspace 1'
 alt-cmd-2 = 'move-node-to-workspace 2'
 alt-cmd-3 = 'move-node-to-workspace 3'

@@ -236,31 +236,43 @@
       ];
 
       extraConfig = ''
-        #Opción para mantener los colores del tema catppuccin de neovim cuando se esta dentro de tmux
-        set-option -sa terminal-overrides ",xterm*:Tc"
+                #Opción para mantener los colores del tema catppuccin de neovim cuando se esta dentro de tmux
+                set-option -sa terminal-overrides ",xterm*:Tc"
 
-        set -g status-position top
+                set -g status-position top
 
-        #set -g status-right 'Continuum status: #{continuum_status}'
+                #set -g status-right 'Continuum status: #{continuum_status}'
 
-        #set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
-
-
-        # Configuracion para mostrar correctamente image preview en yazi
-        set -g allow-passthrough on
-        set -ga update-environment TERM
-        set -ga update-environment TERM_PROGRAM
-
-        # Combinación de teclas para activar/desactivar la sincronización de paneles
-        bind-key s setw synchronize-panes on \; display-message "Sincronización de paneles activada"
-        bind-key x setw synchronize-panes off \; display-message "Sincronización de paneles desactivada"
-
-        # Easier reload of config
-        bind r source-file ~/.config/tmux/tmux.conf
+                #set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
 
 
-        #"set-option -g status-right '('Caracas:' #(TZ=America/Caracas date +%%H:%%M) 'Miami:' #(TZ=America/New_York date +%%H:%%M)) 'Santiago:' %Y-%m-%d %H:%M'
+                # Configuracion para mostrar correctamente image preview en yazi
+                set -g allow-passthrough on
+                set -ga update-environment TERM
+                set -ga update-environment TERM_PROGRAM
 
+                # Combinación de teclas para activar/desactivar la sincronización de paneles
+                bind-key s setw synchronize-panes on \; display-message "Sincronización de paneles activada"
+                bind-key x setw synchronize-panes off \; display-message "Sincronización de paneles desactivada"
+
+                # Easier reload of config
+                bind r source-file ~/.config/tmux/tmux.conf
+
+
+                #"set-option -g status-right '('Caracas:' #(TZ=America/Caracas date +%%H:%%M) 'Miami:' #(TZ=America/New_York date +%%H:%%M)) 'Santiago:' %Y-%m-%d %H:%M'
+
+                bind-key "E" run-shell "sesh connect \"$(
+        	        sesh list | fzf-tmux -p 55%,60% \
+                        --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
+                        --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
+                        --bind 'tab:down,btab:up' \
+                        --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list)' \
+                        --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t)' \
+                        --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c)' \
+                        --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z)' \
+                        --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
+                        --bind 'ctrl-d:execute(tmux kill-session -t {})+change-prompt(⚡  )+reload(sesh list)'
+                )\""
 
       '';
     };
