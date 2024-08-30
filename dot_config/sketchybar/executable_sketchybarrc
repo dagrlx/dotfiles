@@ -1,8 +1,8 @@
-#!/opt/homebrew/bin/lua
+#!/usr/bin/env lua
 
 -- Load the sketchybar-package and prepare the helper binaries
 require("helpers")
 require("init")
--- sbar.hotload(true)
+sbar.hotload(true)
 
 -- https://github.com/waytoabv/Dotfiles/

@@ -12,37 +12,41 @@ local LIST_CURRENT = "aerospace list-workspaces --focused"
 local spaces = {}
 local workspaceToMonitorMap = {}
 
+-- Función para obtener el ícono de la aplicación
 local function getIconForApp(appName)
 	return app_icons[appName] or "?"
 end
 
+-- Función para actualizar los íconos de los espacios de trabajo
 local function updateSpaceIcons(spaceId, workspaceName)
 	local icon_strip = ""
 	local shouldDraw = false
-	local appFound = false
 
 	sbar.exec(LIST_APPS:format(workspaceName), function(appsOutput)
+		if not appsOutput then
+			return
+		end
+
 		for app in appsOutput:gmatch("[^\r\n]+") do
 			local appName = app:match("^%s*(.-)%s*$")
 			if appName and appName ~= "" then
 				icon_strip = icon_strip .. " " .. getIconForApp(appName)
-				appFound = true
 				shouldDraw = true
 			end
 		end
 
-		if not appFound then
-			shouldDraw = false
-		end
-
+		-- Verificar si el ítem existe antes de intentar actualizarlo
 		if spaces[spaceId] then
 			spaces[spaceId].item:set({
 				label = { string = icon_strip, drawing = shouldDraw },
 			})
+		else
+			print("Advertencia: No se encontró el espacio '" .. spaceId .. "' para actualizar los íconos.")
 		end
 	end)
 end
 
+-- Función para agregar un ítem de workspace
 local function addWorkspaceItem(workspaceName, monitorId, isSelected)
 	local spaceId = "workspace_" .. workspaceName .. "_" .. monitorId
 
@@ -51,13 +55,14 @@ local function addWorkspaceItem(workspaceName, monitorId, isSelected)
 			icon = {
 				font = { family = settings.font.numbers },
 				string = workspaceName,
-				padding_left = 10,
-				padding_right = 2,
-				color = colors.grey,
+				padding_left = 12,
+				padding_right = 12,
+				color = colors.white,
 				highlight_color = colors.yellow,
 			},
 			label = {
-				padding_right = 12,
+				padding_right = 14,
+				padding_left = 0,
 				color = colors.grey,
 				highlight_color = colors.yellow,
 				font = "sketchybar-app-font:Regular:12.0",
@@ -66,10 +71,10 @@ local function addWorkspaceItem(workspaceName, monitorId, isSelected)
 			padding_left = 2,
 			padding_right = 2,
 			background = {
-				color = colors.bg2,
+				color = colors.bg1,
 				border_width = 1,
-				height = 24,
-				border_color = colors.bg1,
+				height = 26,
+				border_color = colors.grey,
 				corner_radius = 9,
 			},
 			click_script = "aerospace workspace " .. workspaceName,
@@ -105,6 +110,7 @@ local function addWorkspaceItem(workspaceName, monitorId, isSelected)
 	updateSpaceIcons(spaceId, workspaceName)
 end
 
+-- Función para remover un ítem de workspace
 local function removeWorkspaceItem(spaceId)
 	if spaces[spaceId] then
 		sbar.remove(spaces[spaceId].item)
@@ -118,44 +124,102 @@ local function removeWorkspaceItem(spaceId)
 	end
 end
 
-local function drawSpaces()
-	sbar.exec(LIST_MONITORS, function(monitorsOutput)
+local cachedMonitors = {}
+local cachedWorkspaces = {}
+
+-- Manejo de Errores y Ejecución Segura
+local function safeExec(command, callback)
+	sbar.exec(command, function(output)
+		if output then
+			callback(output)
+		end
+	end)
+end
+
+-- Función para Obtener la Lista de Monitores
+local function getMonitors(callback)
+	safeExec(LIST_MONITORS, function(monitorsOutput)
 		local monitorList = {}
 		for monitorId in monitorsOutput:gmatch("[^\r\n]+") do
 			table.insert(monitorList, monitorId)
 		end
+		callback(monitorList)
+	end)
+end
 
-		sbar.exec(LIST_CURRENT, function(focusedWorkspaceOutput)
-			local focusedWorkspace = focusedWorkspaceOutput:match("[^\r\n]+")
-			local updatedSpaces = {}
+-- Función para Obtener el Workspace Actual Enfocado
+local function getFocusedWorkspace(callback)
+	safeExec(LIST_CURRENT, function(focusedWorkspaceOutput)
+		local focusedWorkspace = focusedWorkspaceOutput:match("[^\r\n]+")
+		callback(focusedWorkspace)
+	end)
+end
 
-			for _, monitorId in ipairs(monitorList) do
-				sbar.exec(LIST_WORKSPACES:format(monitorId), function(workspacesOutput)
-					local workspaces = {}
+-- Función para Obtener y Ordenar los Workspaces por Monitor
+local function getWorkspacesForMonitor(monitorId, callback)
+	safeExec(LIST_WORKSPACES:format(monitorId), function(workspacesOutput)
+		local workspaces = {}
+		for workspaceName in workspacesOutput:gmatch("[^\r\n]+") do
+			table.insert(workspaces, workspaceName)
+		end
+		table.sort(workspaces, function(a, b)
+			return a:lower() < b:lower()
+		end)
+		callback(workspaces)
+	end)
+end
 
-					for workspaceName in workspacesOutput:gmatch("[^\r\n]+") do
-						table.insert(workspaces, workspaceName)
-					end
+-- Función para Dibujar los Workspaces
+local function drawWorkspaces(monitorList, focusedWorkspace)
+	local updatedSpaces = {}
 
-					-- Ordenar workspaces alfabéticamente
-					table.sort(workspaces, function(a, b)
-						return a:lower() < b:lower()
-					end)
+	for _, monitorId in ipairs(monitorList) do
+		getWorkspacesForMonitor(monitorId, function(workspaces)
+			cachedWorkspaces[monitorId] = workspaces
 
-					for _, workspaceName in ipairs(workspaces) do
-						local spaceId = "workspace_" .. workspaceName .. "_" .. monitorId
-						local isSelected = workspaceName == focusedWorkspace
-						addWorkspaceItem(workspaceName, monitorId, isSelected)
-						updatedSpaces[spaceId] = true
-					end
-				end)
+			for _, workspaceName in ipairs(workspaces) do
+				local spaceId = "workspace_" .. workspaceName .. "_" .. monitorId
+				local isSelected = workspaceName == focusedWorkspace
+				addWorkspaceItem(workspaceName, monitorId, isSelected)
+				updatedSpaces[spaceId] = true
 			end
+		end)
+	end
 
-			-- Eliminar espacios que ya no existen
-			for spaceId, _ in pairs(spaces) do
-				if not updatedSpaces[spaceId] then
-					removeWorkspaceItem(spaceId)
-				end
+	-- Eliminar workspaces obsoletos
+	for spaceId, _ in pairs(spaces) do
+		if not updatedSpaces[spaceId] then
+			removeWorkspaceItem(spaceId)
+		end
+	end
+end
+
+-- Sistema de Cache para Evitar Ejecuciones Redundantes
+local function isCacheValid(monitorList, focusedWorkspace)
+	if #monitorList ~= #cachedMonitors then
+		return false
+	end
+
+	for i, monitorId in ipairs(monitorList) do
+		if monitorId ~= cachedMonitors[i] then
+			return false
+		end
+		if cachedWorkspaces[monitorId] == nil then
+			return false
+		end
+	end
+
+	return focusedWorkspace == cachedWorkspaces.focusedWorkspace
+end
+
+-- Función Principal para Dibujar los Espacios
+local function drawSpaces()
+	getMonitors(function(monitorList)
+		getFocusedWorkspace(function(focusedWorkspace)
+			if not isCacheValid(monitorList, focusedWorkspace) then
+				drawWorkspaces(monitorList, focusedWorkspace)
+				cachedMonitors = monitorList
+				cachedWorkspaces.focusedWorkspace = focusedWorkspace
 			end
 		end)
 	end)
@@ -177,7 +241,22 @@ space_window_observer:subscribe("front_app_switched", function()
 end)
 
 space_window_observer:subscribe("space_windows_change", function()
-	drawSpaces()
+	sbar.exec(LIST_CURRENT, function(focusedWorkspaceOutput)
+		local focusedWorkspace = focusedWorkspaceOutput:match("[^\r\n]+")
+		if focusedWorkspace then
+			local monitorId = workspaceToMonitorMap[focusedWorkspace]
+			if monitorId then
+				-- print("Monitor: " .. monitorId)
+				local spaceId = "workspace_" .. focusedWorkspace .. "_" .. monitorId
+				-- print("id space: " .. spaceId)
+				updateSpaceIcons(spaceId, focusedWorkspace)
+				-- else
+				-- 	print("Advertencia: No se encontró monitorId para el workspace '" .. focusedWorkspace .. "'")
+			end
+		end
+		-- También actualizar todos los workspaces si es necesario
+		drawSpaces()
+	end)
 end)
 
 -- Indicator for swapping menus and spaces

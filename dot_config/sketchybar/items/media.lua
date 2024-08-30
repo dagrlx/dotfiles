@@ -2,16 +2,14 @@ local icons = require("icons")
 local colors = require("colors")
 
 local whitelist = { ["Spotify"] = true,
-                    ["Musik"] = true,
-                    ["Music"] = true    };
+                    ["Musik"] = true    };
 
 local media_cover = sbar.add("item", {
-  position = "left",
+  position = "right",
   background = {
     image = {
       string = "media.artwork",
-      scale = 0.75,
-      corner_radius=7,
+      scale = 0.85,
     },
     color = colors.transparent,
   },
@@ -26,7 +24,7 @@ local media_cover = sbar.add("item", {
 })
 
 local media_artist = sbar.add("item", {
-  position = "left",
+  position = "right",
   drawing = false,
   padding_left = 3,
   padding_right = 0,
@@ -36,13 +34,13 @@ local media_artist = sbar.add("item", {
     width = 0,
     font = { size = 9 },
     color = colors.with_alpha(colors.white, 0.6),
-    max_chars = 24,
+    max_chars = 18,
     y_offset = 6,
   },
 })
 
 local media_title = sbar.add("item", {
-  position = "left",
+  position = "right",
   drawing = false,
   padding_left = 3,
   padding_right = 0,
@@ -50,7 +48,7 @@ local media_title = sbar.add("item", {
   label = {
     font = { size = 11 },
     width = 0,
-    max_chars = 35,
+    max_chars = 40,
     y_offset = -5,
   },
 })

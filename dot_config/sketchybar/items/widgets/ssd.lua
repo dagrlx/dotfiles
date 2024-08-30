@@ -21,7 +21,6 @@ local ssd = sbar.add("item", "widgets.ssd", {
 	},
 })
 
-
 local ssd_volume = sbar.add("item", "widgets.ssd.volume", {
 	position = "right",
 	icon = {
@@ -37,17 +36,15 @@ local ssd_volume = sbar.add("item", "widgets.ssd.volume", {
 			size = 12.0,
 		},
 		string = "...%",
-		y_offset = -2
+		y_offset = -2,
 	},
 	update_freq = 180,
 })
 
-
 local ssd_padding = sbar.add("item", "widgets.ssd.padding", {
 	position = "right",
-	width = settings.group_paddings
+	width = settings.group_paddings,
 })
-
 
 local ssd_bracket = sbar.add("bracket", "widgets.ssd.bracket", {
 	ssd.name,
@@ -58,7 +55,7 @@ local ssd_bracket = sbar.add("bracket", "widgets.ssd.bracket", {
 		border_color = colors.bg1,
 		border_width = 2,
 	},
-	popup = { align = "center", height = 30 }
+	popup = { align = "center", height = 30 },
 })
 
 ssd_volume:subscribe({ "routine", "forced" }, function(env)
@@ -118,8 +115,6 @@ ssd_volume:subscribe("mouse.clicked", function(env)
 	sbar.exec("open -a 'DaisyDisk'")
 end)
 
-
-
 local system_indicator = sbar.add("item", {
 	position = "right",
 	padding_left = 0,
@@ -140,14 +135,13 @@ local system_indicator = sbar.add("item", {
 	background = {
 		color = colors.with_alpha(colors.grey, 0.0),
 		border_color = colors.with_alpha(colors.bg1, 0.0),
-	}
+	},
 })
-
 
 system_indicator:subscribe("swap_system_info", function(env)
 	local currently_on = system_indicator:query().icon.value == icons.switch.on
 	system_indicator:set({
-		icon = currently_on and icons.switch.off or icons.switch.on
+		icon = currently_on and icons.switch.off or icons.switch.on,
 	})
 end)
 
@@ -159,7 +153,7 @@ system_indicator:subscribe("mouse.entered", function(env)
 				border_color = { alpha = 1.0 },
 			},
 			icon = { color = colors.bg1 },
-			label = { width = "dynamic" }
+			label = { width = "dynamic" },
 		})
 	end)
 end)
@@ -172,7 +166,7 @@ system_indicator:subscribe("mouse.exited", function(env)
 				border_color = { alpha = 0.0 },
 			},
 			icon = { color = colors.grey },
-			label = { width = 0, }
+			label = { width = 0 },
 		})
 	end)
 end)
