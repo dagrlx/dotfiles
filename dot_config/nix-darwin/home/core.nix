@@ -186,6 +186,13 @@
         {
           plugin = catppuccin;
           extraConfig = ''
+
+            set -g base-index 1              # start indexing windows at 1 instead of 0
+            set -g set-clipboard on          # use system clipboard
+            set -g renumber-windows on       # renumber all windows when any window is closed
+            set -g @fzf-url-fzf-options '-p 60%,30% --prompt="   " --border-label=" Open URL "'
+            set -g @fzf-url-history-limit '2000'
+
             set -g @catppuccin_flavour 'macchiato'
             #set -g @catppuccin_window_tabs_enabled on
             #set -g @catppuccin_date_time "%H:%M"
