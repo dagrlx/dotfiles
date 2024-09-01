@@ -180,6 +180,14 @@ config.color_scheme = "Tokyo Night"
 --config.color_scheme = "Tokyo Night Moon"
 config.default_cursor_style = "BlinkingBar"
 
+-- Set visual bell and audio bell
+config.audible_bell = "SystemBeep"
+config.visual_bell = {
+	fade_in_duration_ms = 75,
+	fade_out_duration_ms = 75,
+	target = "CursorColor",
+}
+
 config.font = wezterm.font_with_fallback({
 	"JetBrainsMono Nerd Font",
 	"Hack Nerd Font",
