@@ -3,7 +3,6 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 local session_manager = require("wezterm-session-manager/session-manager")
 local mux = wezterm.mux
-local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 
 -- session-manager - Provee funcionalidad para salvar, cargar y restaurar sesiones
 -- See https://github.com/danielcopper/wezterm-session-manager
@@ -243,6 +242,8 @@ config.tab_bar_at_bottom = false
 -- copiar (Ctrl+Shift+C) , pegar (Ctrl+Shift+V)
 enable_clipboard_integration = true
 
+config.default_workspace = "Personal"
+
 -- Setup muxing by default
 config.unix_domains = {
 	{
@@ -423,7 +424,7 @@ config.keys = {
 	},
 	-- Move to next/previous pane
 	{
-		key = ",",
+		key = ".",
 		mods = "LEADER",
 		action = act.ActivatePaneDirection("Prev"),
 	},
@@ -506,7 +507,11 @@ config.keys = {
 	},
 
 	-- Show list of workspaces
-	{ key = "w", mods = "LEADER", action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+	{
+		key = "w",
+		mods = "LEADER",
+		action = act.ShowLauncherArgs({ flags = "FUZZY|TABS|DOMAINS|WORKSPACES" }),
+	},
 
 	-- Rename current session; analagous to command in tmux
 	{

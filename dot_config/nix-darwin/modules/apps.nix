@@ -101,6 +101,8 @@
       "borders"
       "fastfetch" # Reemplazo neofecht
 
+      #"starship"
+
       "nushell"
       "the_silver_searcher" # A code searching tool similar to ack, with a focus on speed.
       "jq" # Se usa en yabai - Lightweight and flexible command-line JSON processor

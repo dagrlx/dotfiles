@@ -33,6 +33,8 @@
       [ -n "$WEZTERM_PANE" ] && export NVIM_LISTEN_ADDRESS="/tmp/nvim$WEZTERM_PANE"
 
       #export HOSTNAME=$(hostname)
+      #eval "$(starship init zsh)"
+      #export STARSHIP_CONFIG=~/.config/starship.toml
 
     '';
 

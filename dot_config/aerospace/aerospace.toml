@@ -256,7 +256,8 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.AppStore'
-run = ['layout floating', 'move-node-to-workspace Z']
+#run = ['layout floating', 'move-node-to-workspace Z']
+run = ['move-node-to-workspace Z']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'
