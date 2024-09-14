@@ -51,6 +51,7 @@
     nano
     nanorc
     sshpass
+    sshfs
     tealdeer # A very fast implementation of tldr in Rust
     tmux-mem-cpu-load
     tmux-xpanes
@@ -184,14 +185,29 @@
         tmux-fzf
 
         {
-          plugin = catppuccin;
+          plugin = fzf-tmux-url;
           extraConfig = ''
-
-            set -g base-index 1              # start indexing windows at 1 instead of 0
-            set -g set-clipboard on          # use system clipboard
-            set -g renumber-windows on       # renumber all windows when any window is closed
             set -g @fzf-url-fzf-options '-p 60%,30% --prompt="   " --border-label=" Open URL "'
             set -g @fzf-url-history-limit '2000'
+          '';
+        }
+
+        {
+          plugin = tmux-floax;
+          extraConfig = ''
+            set -g @floax-width '80%'
+            set -g @floax-height '80%'
+            set -g @floax-border-color 'magenta'
+            set -g @floax-text-color 'blue'
+            set -g @floax-bind 'p'
+            set -g @floax-change-path 'true'
+
+          '';
+        }
+
+        {
+          plugin = catppuccin;
+          extraConfig = ''
 
             set -g @catppuccin_flavour 'macchiato'
             #set -g @catppuccin_window_tabs_enabled on
@@ -205,7 +221,7 @@
             set -g @catppuccin_window_default_text "#W"
 
             set -g @catppuccin_window_current_fill "number"
-            set -g @catppuccin_window_current_text "#W"
+            set -g @catppuccin_window_current_text "#W{?window_zoomed_flag,(),}"
 
             set -g @catppuccin_status_modules_right "directory host session"
 
@@ -215,7 +231,7 @@
             set -g @catppuccin_status_fill "icon"
             set -g @catppuccin_status_connect_separator "no"
 
-            set -g @catppuccin_directory_text "#{pane_current_path}"
+            set -g @catppuccin_directory_text "#{b:pane_current_path}"
 
           '';
         }
@@ -243,42 +259,47 @@
       ];
 
       extraConfig = ''
-                #Opción para mantener los colores del tema catppuccin de neovim cuando se esta dentro de tmux
-                set-option -sa terminal-overrides ",xterm*:Tc"
+            #Opción para mantener los colores del tema catppuccin de neovim cuando se esta dentro de tmux
+            #set-option -g terminal-overrides ',xterm-256color:RGB'
+            set-option -sa terminal-overrides ",xterm*:Tc"
 
-                set -g status-position top
+            set -g base-index 1              # start indexing windows at 1 instead of 0
+            set -g set-clipboard on          # use system clipboard
+            set -g renumber-windows on       # renumber all windows when any window is closed
 
-                #set -g status-right 'Continuum status: #{continuum_status}'
+            set -g status-position top      # macOS / darwin style
 
-                #set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
+            #set -g status-right 'Continuum status: #{continuum_status}'
 
-
-                # Configuracion para mostrar correctamente image preview en yazi
-                set -g allow-passthrough on
-                set -ga update-environment TERM
-                set -ga update-environment TERM_PROGRAM
-
-                # Combinación de teclas para activar/desactivar la sincronización de paneles
-                bind-key s setw synchronize-panes on \; display-message "Sincronización de paneles activada"
-                bind-key x setw synchronize-panes off \; display-message "Sincronización de paneles desactivada"
-
-                # Easier reload of config
-                bind r source-file ~/.config/tmux/tmux.conf
+            #set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
 
 
-                #"set-option -g status-right '('Caracas:' #(TZ=America/Caracas date +%%H:%%M) 'Miami:' #(TZ=America/New_York date +%%H:%%M)) 'Santiago:' %Y-%m-%d %H:%M'
+            # Configuracion para mostrar correctamente image preview en yazi
+            set -g allow-passthrough on
+            set -ga update-environment TERM
+            set -ga update-environment TERM_PROGRAM
 
-                bind-key "E" run-shell "sesh connect \"$(
-        	        sesh list | fzf-tmux -p 55%,60% \
-                        --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
-                        --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
-                        --bind 'tab:down,btab:up' \
-                        --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list)' \
-                        --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t)' \
-                        --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c)' \
-                        --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z)' \
-                        --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
-                        --bind 'ctrl-d:execute(tmux kill-session -t {})+change-prompt(⚡  )+reload(sesh list)'
+            # Combinación de teclas para activar/desactivar la sincronización de paneles
+            bind-key s setw synchronize-panes on \; display-message "Sincronización de paneles activada"
+            bind-key x setw synchronize-panes off \; display-message "Sincronización de paneles desactivada"
+
+            # Easier reload of config
+            bind r source-file ~/.config/tmux/tmux.conf
+
+
+            #"set-option -g status-right '('Caracas:' #(TZ=America/Caracas date +%%H:%%M) 'Miami:' #(TZ=America/New_York date +%%H:%%M)) 'Santiago:' %Y-%m-%d %H:%M'
+
+            bind-key "E" run-shell "sesh connect \"$(
+        	    sesh list | fzf-tmux -p 55%,60% \
+                    --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
+                    --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
+                    --bind 'tab:down,btab:up' \
+                    --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list)' \
+                    --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t)' \
+                    --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c)' \
+                    --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z)' \
+                    --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
+                    --bind 'ctrl-d:execute(tmux kill-session -t {})+change-prompt(⚡  )+reload(sesh list)'
                 )\""
 
       '';

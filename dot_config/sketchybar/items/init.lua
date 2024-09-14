@@ -1,5 +1,7 @@
 require("items.apple")
-require("items.spaces_aero_and_icons")
+--require("items.spaces_aero_and_icons")
+require("items.aerospaces6")
+--require("items.spaces")
 require("items.menus")
 require("items.front_app")
 require("items.calendar")

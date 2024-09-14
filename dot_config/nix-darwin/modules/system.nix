@@ -1,18 +1,18 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 
 ##################################################################################
-  #
-  #  macOS's System configuration
-  #
-  #  All the configuration options are documented here:
-  #    https://daiderd.com/nix-darwin/manual/index.html#sec-options
-  #  Incomplete list of macOS `defaults` commands :
-  #    https://github.com/yannbertrand/macos-defaults
-  #
-  ###################################################################################
+#
+#  macOS's System configuration
+#
+#  All the configuration options are documented here:
+#    https://daiderd.com/nix-darwin/manual/index.html#sec-options
+#  Incomplete list of macOS `defaults` commands :
+#    https://github.com/yannbertrand/macos-defaults
+#
+###################################################################################
 {
   system = {
-    #stateVersion = 4;
+    stateVersion = 5;
     # activationScripts are executed every time you boot the system or run `nixos-rebuild` / `darwin-rebuild`.
     activationScripts.postUserActivation.text = ''
       # activateSettings -u will reload the settings from the database and apply them to the current session,
@@ -32,19 +32,22 @@
         tilesize = 40;
         enable-spring-load-actions-on-all-items = true;
         appswitcher-all-displays = true;
-        expose-group-by-app = false; #Agrupa ventana por aplicació (Opción desactivada para mejora de yabai)
-        mru-spaces = false; # Agrupa spaces auto en función del uso mas reciente (Opción desactivada para yabai)
-        magnification = false; #Resalta icono cuando se posiciona sobre el
+        expose-group-by-app =
+          false; # Agrupa ventana por aplicació (Opción desactivada para mejora de yabai)
+        mru-spaces =
+          false; # Agrupa spaces auto en función del uso mas reciente (Opción desactivada para yabai)
+        magnification = false; # Resalta icono cuando se posiciona sobre el
       };
 
       # customize finder
       finder = {
         _FXShowPosixPathInTitle = true; # show full path in finder title
-        AppleShowAllFiles = true; #Muestra siempre los archivos ocultos
+        AppleShowAllFiles = true; # Muestra siempre los archivos ocultos
         AppleShowAllExtensions = true; # show all file extensions
-        FXEnableExtensionChangeWarning = false; # disable warning when changing file extension
+        FXEnableExtensionChangeWarning =
+          false; # disable warning when changing file extension
         FXPreferredViewStyle = "Nlsv"; # Vista por defecto modo lista
-        FXDefaultSearchScope = "SCcf"; #Busca en el directorio actual
+        FXDefaultSearchScope = "SCcf"; # Busca en el directorio actual
         QuitMenuItem = true; # enable quit menu item
         ShowPathbar = true; # show path bar
         ShowStatusBar = true; # show status bar
@@ -53,7 +56,8 @@
       # customize trackpad
       trackpad = {
         # tap - touchpad, click - Haga clic en el panel táctil
-        Clicking = true; # enable tap to click(Tocar el touchpad equivale a hacer clic)
+        Clicking =
+          true; # enable tap to click(Tocar el touchpad equivale a hacer clic)
         TrackpadRightClick = true; # enable two finger right click
         #TrackpadThreeFingerDrag = true; # enable three finger drag
       };
@@ -63,8 +67,10 @@
       #   https://github.com/yannbertrand/macos-defaults
       NSGlobalDomain = {
         # `defaults read NSGlobalDomain "xxx"`
-        "com.apple.swipescrolldirection" = true; # enable natural scrolling(default to true)
-        "com.apple.sound.beep.feedback" = 0; # disable beep sound when pressing volume up/down key
+        "com.apple.swipescrolldirection" =
+          true; # enable natural scrolling(default to true)
+        "com.apple.sound.beep.feedback" =
+          0; # disable beep sound when pressing volume up/down key
         #AppleInterfaceStyle = "Dark"; # dark mode
         AppleInterfaceStyleSwitchesAutomatically = true;
         AppleKeyboardUIMode = 3; # Mode 3 enables full keyboard control.
@@ -94,7 +100,7 @@
           DSDontWriteUSBStores = true;
         };
 
-         "com.apple.spaces" = {
+        "com.apple.spaces" = {
           "spans-displays" = 1; # Display have seperate spaces
         };
 
@@ -121,7 +127,8 @@
 
       loginwindow = {
         GuestEnabled = false; # disable guest user
-        SHOWFULLNAME = true; # Muestra campos de usuario y passwd en vez de lista de usuario en la pantalla login 
+        SHOWFULLNAME =
+          true; # Muestra campos de usuario y passwd en vez de lista de usuario en la pantalla login
         LoginwindowText = "Esperanza y Fe en Dios";
       };
     };
@@ -133,9 +140,7 @@
   # Create /etc/zshrc that loads the nix-darwin environment.
   # this is required if you want to use darwin's default shell - zsh
   programs.zsh.enable = true;
-  environment.shells = [
-    pkgs.zsh
-  ];
+  environment.shells = [ pkgs.zsh ];
 
   # Set your time zone.
   time.timeZone = "America/Santiago";

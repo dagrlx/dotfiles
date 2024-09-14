@@ -4,11 +4,14 @@
     enableCompletion = true;
     completionInit = "autoload -U compinit && compinit";
     autosuggestion.enable = true; # Habilita las sugerencias de autocompletado
-    autosuggestion.highlight = "fg=#ffffff,bg=#1e1e2e,bold,underline";
+    #autosuggestion.highlight = "fg=#808080,bg=none,bold,underline";
+    autosuggestion.highlight = "fg=#f8f8f2,bg=#272822,bold";
+    #autosuggestion.highlight = "fg=#c79267,bg=#282a36,bold,italic";
     autosuggestion.strategy = [ "history" ];
     syntaxHighlighting.enable = true; # Habilita el resaltado de sintaxis
-    syntaxHighlighting.highlighters = [ "brackets" "pattern" "cursor" ];
+    syntaxHighlighting.highlighters = [ "brackets" "pattern" "cursor" "root" ];
     historySubstringSearch.enable = true; # Enable history substring search.
+    zsh-abbr.enable = true; # Expande las abrebiaciones
     sessionVariables = {
       HOSTNAME = "${builtins.getEnv "hostname"}"; # export HOSTNAME=$(hostname)
     };
@@ -19,6 +22,11 @@
     #";
 
     initExtra = ''
+
+      export PATH=/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH
+      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+        . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+      fi
 
       # Cargar funciones desde el archivo
       source ~/.config/nix-darwin/home/zsh_func

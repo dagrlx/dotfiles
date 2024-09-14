@@ -262,7 +262,7 @@ end)
 -- Indicator for swapping menus and spaces
 local spaces_indicator = sbar.add("item", {
 	padding_left = -3,
-	padding_right = 3,
+	padding_right = 0,
 	icon = {
 		padding_left = 8,
 		padding_right = 9,
@@ -289,7 +289,7 @@ spaces_indicator:subscribe("swap_menus_and_spaces", function(env)
 	})
 end)
 
-spaces_indicator:subscribe("mouse.entered", function(env)
+spaces_indicator:subscribe("mouse.entered", function(_)
 	sbar.animate("tanh", 30, function()
 		spaces_indicator:set({
 			background = {
@@ -302,7 +302,7 @@ spaces_indicator:subscribe("mouse.entered", function(env)
 	end)
 end)
 
-spaces_indicator:subscribe("mouse.exited", function(env)
+spaces_indicator:subscribe("mouse.exited", function(_)
 	sbar.animate("tanh", 30, function()
 		spaces_indicator:set({
 			background = {
@@ -315,6 +315,6 @@ spaces_indicator:subscribe("mouse.exited", function(env)
 	end)
 end)
 
-spaces_indicator:subscribe("mouse.clicked", function(env)
+spaces_indicator:subscribe("mouse.clicked", function(_)
 	sbar.trigger("swap_menus_and_spaces")
 end)

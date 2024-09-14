@@ -28,7 +28,7 @@ return {
 			-- list of servers for mason to install
 			ensure_installed = {
 				"ansiblels", -- Ansible
-				"tsserver", -- JavaScript
+				"ts_ls", -- JavaScript
 				"html", -- HTML
 				"cssls", -- CSS
 				"lua_ls", -- Lua

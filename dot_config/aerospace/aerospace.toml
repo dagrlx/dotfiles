@@ -62,16 +62,16 @@ outer.right = 6
 
 [workspace-to-monitor-force-assignment]
 T = 'Built-in Retina Display'
-W = 'Built-in Retina Display'
+Chat = 'Built-in Retina Display'
 Z = 'Built-in Retina Display'
 Web = 'DELL P2419H'
+1 = 'DELL P2419H'
 2 = 'DELL P2419H'
 3 = 'DELL P2419H'
-4 = 'DELL P2419H'
+4 = 'LG FHD'
 5 = 'LG FHD'
 6 = 'LG FHD'
 7 = 'LG FHD'
-8 = 'LG FHD'
 #11 = 'LG FHD'
 
 [mode.main.binding]
@@ -117,29 +117,29 @@ alt-shift-equal = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 ctrl-alt-t = 'workspace T'
-ctrl-alt-w = 'workspace W'
+ctrl-alt-c = 'workspace Chat'
 ctrl-alt-z = 'workspace Z'
-ctrl-alt-1 = 'workspace Web'
+ctrl-alt-w = 'workspace Web'
+ctrl-alt-1 = 'workspace 1'
 ctrl-alt-2 = 'workspace 2'
 ctrl-alt-3 = 'workspace 3'
 ctrl-alt-4 = 'workspace 4'
 ctrl-alt-5 = 'workspace 5'
 ctrl-alt-6 = 'workspace 6'
 ctrl-alt-7 = 'workspace 7'
-ctrl-alt-8 = 'workspace 8'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-cmd-t = 'move-node-to-workspace T'
-alt-cmd-w = 'move-node-to-workspace W'
+alt-cmd-c = 'move-node-to-workspace Chat'
 alt-cmd-z = 'move-node-to-workspace Z'
-alt-cmd-1 = 'move-node-to-workspace Web'
+alt-cmd-w = 'move-node-to-workspace Web'
+alt-cmd-1 = 'move-node-to-workspace 1'
 alt-cmd-2 = 'move-node-to-workspace 2'
 alt-cmd-3 = 'move-node-to-workspace 3'
 alt-cmd-4 = 'move-node-to-workspace 4'
 alt-cmd-5 = 'move-node-to-workspace 5'
 alt-cmd-6 = 'move-node-to-workspace 6'
 alt-cmd-7 = 'move-node-to-workspace 7'
-alt-cmd-8 = 'move-node-to-workspace 8'
 
 # https://nikitabobko.github.io/AeroSpace/commands#workspace
 alt-right = 'workspace next'
@@ -197,11 +197,11 @@ esc = 'mode main'
 
 [[on-window-detected]]
 if.app-id = 'ru.keepcoder.Telegram'
-run = 'move-node-to-workspace W'
+run = 'move-node-to-workspace Chat'
 
 [[on-window-detected]]
 if.app-id = 'net.whatsapp.WhatsApp'
-run = 'move-node-to-workspace W'
+run = 'move-node-to-workspace Chat'
 
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
@@ -229,7 +229,11 @@ run = ['layout floating']
 
 [[on-window-detected]]
 if.app-id = 'com.microsoft.rdc.macos'
-run = ['layout floating', 'move-node-to-workspace 8']
+run = ['layout floating', 'move-node-to-workspace 7']
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.rdc.osx.beta'
+run = ['layout floating', 'move-node-to-workspace 7']
 
 [[on-window-detected]]
 if.app-id = 'com.microsoft.teams2'
@@ -237,7 +241,7 @@ run = ['move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'zoom'
-run = ['layout floating', 'move-node-to-workspace 7']
+run = ['layout floating', 'move-node-to-workspace 6']
 
 [[on-window-detected]]
 if.app-id = 'com.vivaldi.Vivaldi'
