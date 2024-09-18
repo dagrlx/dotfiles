@@ -48,7 +48,7 @@
       # TODO Feel free to add your favorite apps here.
 
       #Xcode = 497799835;
-      "WireGuard" = 1451685025;
+      #"WireGuard" = 1451685025;
       #"Tomito" = 1526042937;
       "Microsoft Remote Desktop" = 1295203466;
       "CotEditor" = 1024640650;

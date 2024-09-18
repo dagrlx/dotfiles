@@ -57,7 +57,6 @@
     tmux-xpanes
     tree
     tree-sitter
-    #vagrant  ## Dio problemas la migrar a 23.11
     watch
     wifi-password
     wget
@@ -69,7 +68,6 @@
     zsh-autosuggestions
     zsh-autocomplete
     zsh-you-should-use
-    #zsh-fast-syntax-highlighting
 
     # misc
     cowsay
