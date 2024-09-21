@@ -209,7 +209,8 @@ local space_window_observer = sbar.add("item", {
 })
 
 space_window_observer:subscribe(
-    { "aerospace_workspace_change", "front_app_switched", "space_windows_change" },
+--{ "aerospace_workspace_change", "front_app_switched", "space_windows_change" }, space_windwos_change lo ejecuto desde la config aerospace
+    { "aerospace_workspace_change", "front_app_switched" },
     function()
         updateAllWorkspaces()
     end

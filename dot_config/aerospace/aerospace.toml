@@ -9,14 +9,14 @@ after-startup-command = [
   # Sketchybar has a built-in detection of already running process,
   # so it won't be run twice on AeroSpace restart
   # 'exec-and-forget sketchybar --reload',
-  'exec-and-forget /opt/homebrew/bin/sketchybar',
+  'exec-and-forget sketchybar',
 ]
 
 # Notify Sketchybar about workspace change
 exec-on-workspace-change = [
   '/bin/bash',
   '-c',
-  '/opt/homebrew/bin/sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
+  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
 
 # Normalizations. See: https://nikitabobko.giaedrthub.io/AeroSpace/guide.html#normalization
@@ -42,7 +42,10 @@ default-root-container-orientation = 'auto'
 key-mapping.preset = 'qwerty'
 
 # Mouse lazily follows any focus (window or workspace)
-on-focus-changed = ['move-mouse window-lazy-center']
+on-focus-changed = [
+'move-mouse window-lazy-center',
+'exec-and-forget sketchybar --trigger space_windows_change'
+]
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
@@ -96,6 +99,8 @@ cmd-shift-h = 'layout h_tiles'
 
 alt-f = 'fullscreen'
 alt-shift-f = 'macos-native-fullscreen'
+
+alt-cmd-x = 'close-all-windows-but-current --quit-if-last-window'
 
 alt-cmd-f = 'layout floating tiling' # 'floating toggle' in i3
 
