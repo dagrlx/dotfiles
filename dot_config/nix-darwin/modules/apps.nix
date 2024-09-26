@@ -50,7 +50,7 @@
       #Xcode = 497799835;
       #"WireGuard" = 1451685025;
       #"Tomito" = 1526042937;
-      "Microsoft Remote Desktop" = 1295203466;
+      "Windows App" = 1295203466;
       "CotEditor" = 1024640650;
       "MegaIPTVmacOS" = 1494386779;
       #"Airmail" = 918858936;
@@ -139,10 +139,14 @@
       #  name = "opera";
       #  greedy = true;
       #}
+      {
+        name = "deepl";
+        greedy = true;
+      }
+
       #"vivaldi"
       "visual-studio-code"
       "zed"
-      "microsoft-remote-desktop"
       "microsoft-teams"
       "syncthing" # file sync
       "raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
@@ -159,7 +163,6 @@
       "localsend"
       "landrop"
       "keka"
-      #"deepl"
       "KnockKnock"
       "kopiaui"
       "kubecontext"

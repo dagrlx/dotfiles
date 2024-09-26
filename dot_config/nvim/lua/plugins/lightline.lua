@@ -11,11 +11,12 @@ return {
 				right = {
 					{ "lineinfo" },
 					{ "percent" },
-					{ "fileformat", "fileencoding", "filetype", "maximize_status" },
+					{ "fileformat", "fileencoding", "filetype", "codeium_status", "maximize_status" },
 				},
 			},
 			component_function = {
 				maximize_status = "MaximizeStatus",
+				codeium_status = "CodeiumStatus",
 				-- Otros componentes que ya tienes configurados
 			},
 		}
@@ -27,5 +28,19 @@ return {
 		      return luaeval('vim.t.maximized and "   " or ""')
 		    endfunction
 		    ]])
+
+		-- Función para lightline para mostrar el estado de Codeium
+		vim.cmd([[
+            function! CodeiumStatus()
+              let status = luaeval('vim.api.nvim_call_function("codeium#GetStatusString", {})')
+              if status == 'ON'
+                return 'CodeiS: ON'
+              elseif status == 'OFF'
+                return 'CodeiS: OFF'
+              else
+                return 'Codeium Status: ' . status
+              endif
+            endfunction
+        ]])
 	end,
 }
