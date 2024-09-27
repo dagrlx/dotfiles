@@ -214,6 +214,7 @@
       "tomatobar"
       "kap"
       #"spaceman"
+      "raspberry-pi-imager"
 
       #Fonts for sketchybar, wezterm        
       "font-hack-nerd-font" # Font for sketchybar
