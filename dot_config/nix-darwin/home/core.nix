@@ -219,7 +219,8 @@
             set -g @catppuccin_window_default_text "#W"
 
             set -g @catppuccin_window_current_fill "number"
-            set -g @catppuccin_window_current_text "#W{?window_zoomed_flag,(),}"
+            set -g @catppuccin_window_current_text "#W"
+            #set -g @catppuccin_window_current_text "#W{?window_zoomed_flag,(),}"
 
             set -g @catppuccin_status_modules_right "directory host session"
 
@@ -250,6 +251,7 @@
           extraConfig = ''
             set -g @continuum-restore 'on'
             #set -g @continuum-boot 'on'
+            #set -g @continuum-boot-options 'wezterm,fullscreen'
             set -g @continuum-save-interval '10'
           '';
         }
