@@ -54,7 +54,7 @@
       "CotEditor" = 1024640650;
       "MegaIPTVmacOS" = 1494386779;
       #"Airmail" = 918858936;
-      "Magnet" = 441258766;
+      #"Magnet" = 441258766;
       "ScreenBrush" = 1233965871;
       "Amphetamine" = 937984704;
       "The Unarchiver" = 425424353;
