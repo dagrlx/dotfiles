@@ -171,7 +171,7 @@ ctrl-alt-shift-s = [
   'exec-and-forget sketchybar --reload',
   'mode main',
 ]
-
+ 
 alt-shift-left = ['join-with left', 'mode main']
 alt-shift-down = ['join-with down', 'mode main']
 alt-shift-up = ['join-with up', 'mode main']
@@ -291,3 +291,7 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = 'com.openai.chat'
 run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.OneDrive'
+run = 'layout tiling'

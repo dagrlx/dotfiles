@@ -72,6 +72,7 @@
       "pkgxdev/made"
       "localsend/localsend"
       "nikitabobko/tap"
+      "netbirdio/tap"
     ];
 
     # `brew install`
@@ -83,6 +84,7 @@
       "httpie" # http client
       "duckdns"
       "podman"
+      "podlet"
 
       "neovim"
 
@@ -148,6 +150,7 @@
       "visual-studio-code"
       "zed"
       "microsoft-teams"
+      "microsoft-auto-update"
       "syncthing" # file sync
       "raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
       "iglance" # beautiful system monitor
@@ -158,6 +161,7 @@
       #VPN
       "zerotier-one"
       "tailscale"
+      "netbird-ui"
 
       # Utilities
       "localsend"
@@ -184,6 +188,7 @@
 
       "keepassxc"
       "podman-desktop"
+      "devpod" # desarrollo en container
       "slack"
       "teamviewer"
       "anydesk"
