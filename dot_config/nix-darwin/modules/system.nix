@@ -23,6 +23,9 @@
     defaults = {
       menuExtraClock.Show24Hour = true; # show 24 hour clock
 
+      spaces.spans-displays =
+        false; # (false = each physical display has a separate space (Mac default) true = one space spans across all physical displays)
+
       # customize dock
       dock = {
         autohide = true;
@@ -37,6 +40,8 @@
         mru-spaces =
           false; # Agrupa spaces auto en función del uso mas reciente (Opción desactivada para yabai)
         magnification = false; # Resalta icono cuando se posiciona sobre el
+        minimize-to-application =
+          true; # minimize windows into their application icon
       };
 
       # customize finder
@@ -47,10 +52,12 @@
         FXEnableExtensionChangeWarning =
           false; # disable warning when changing file extension
         FXPreferredViewStyle = "Nlsv"; # Vista por defecto modo lista
+        #FXPreferredViewStyle = "clmv";
         FXDefaultSearchScope = "SCcf"; # Busca en el directorio actual
         QuitMenuItem = true; # enable quit menu item
         ShowPathbar = true; # show path bar
-        ShowStatusBar = true; # show status bar
+        ShowStatusBar =
+          true; # show status bar at bottom of finder windows with item/disk space stats
       };
 
       # customize trackpad
@@ -75,6 +82,11 @@
         AppleInterfaceStyleSwitchesAutomatically = true;
         AppleKeyboardUIMode = 3; # Mode 3 enables full keyboard control.
         #ApplePressAndHoldEnabled = true; # enable press and hold
+        _HIHideMenuBar = true; # autohide the menu bar
+        NSWindowShouldDragOnGesture =
+          true; # enable moving window by holding anywhere on it like on Linux
+        NSAutomaticWindowAnimationsEnabled =
+          false; # Whether to animate opening and closing of windows and popovers
       };
 
       # Customize settings that not supported by nix-darwin directly
@@ -100,9 +112,9 @@
           DSDontWriteUSBStores = true;
         };
 
-        "com.apple.spaces" = {
-          "spans-displays" = 1; # Display have seperate spaces
-        };
+        # "com.apple.spaces" = {
+        #   "spans-displays" = 1; # Display have seperate spaces
+        # };
 
         "com.apple.screensaver" = {
           # Require password immediately after sleep or screen saver begins

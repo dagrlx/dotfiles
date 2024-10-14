@@ -74,6 +74,12 @@ Ubuntu = " "
 Unknown = " "
 Windows = "󰍲 "
 
+[shell]
+nu_indicator = 'nu'
+zsh_indicator = 'zsh'
+style = 'cyan bold'
+disabled = false
+
 [aws]
 symbol = "🅰 "
 
