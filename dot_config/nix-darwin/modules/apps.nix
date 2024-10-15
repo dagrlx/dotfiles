@@ -176,6 +176,7 @@
       "tyke" # App para tomar notas rapidas temporal
       "applite" # App grafica homebrew - https://www.thriftmac.com
       "aerospace" # Tiling manager basado en i3wm
+      "MonitorControl"
 
       #Terminales
       "iterm2"
