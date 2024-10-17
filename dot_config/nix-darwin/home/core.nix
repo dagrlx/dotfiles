@@ -175,6 +175,7 @@
       sensibleOnTop = true;
       # prefix = "C-a";
       terminal = "screen-256color";
+      shell = "${pkgs.zsh}/bin/zsh";
       historyLimit = 100000;
       plugins = with pkgs.tmuxPlugins; [
         yank
@@ -259,6 +260,9 @@
       ];
 
       extraConfig = ''
+            set-option -g default-shell ${pkgs.zsh}/bin/zsh
+            set-option -g default-command ${pkgs.zsh}/bin/zsh
+
             #Opción para mantener los colores del tema catppuccin de neovim cuando se esta dentro de tmux
             #set-option -g terminal-overrides ',xterm-256color:RGB'
             set-option -sa terminal-overrides ",xterm*:Tc"

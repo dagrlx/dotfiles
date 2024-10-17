@@ -72,7 +72,7 @@
       "pkgxdev/made"
       "localsend/localsend"
       "nikitabobko/tap"
-      "netbirdio/tap"
+      #"netbirdio/tap"
     ];
 
     # `brew install`
@@ -161,7 +161,7 @@
       #VPN
       "zerotier-one"
       "tailscale"
-      "netbird-ui"
+      #"netbird-ui"
 
       # Utilities
       "localsend"
