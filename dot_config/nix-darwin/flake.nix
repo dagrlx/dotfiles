@@ -79,7 +79,7 @@
       };
 
       # Expose the package set, including overlays, for convenience.
-      darwinPackages = self.darwinConfigurations."Omers-MacBook-Pro".pkgs;
+      #darwinPackages = self.darwinConfigurations.${hostname}.pkgs;
 
       # nix code formatter
       formatter.${system} = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
