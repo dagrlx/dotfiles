@@ -145,8 +145,8 @@ alt-cmd-z = 'move-node-to-workspace --fail-if-noop Z'
 alt-cmd-w = 'move-node-to-workspace --fail-if-noop W'
 alt-cmd-1 = 'move-node-to-workspace --fail-if-noop 1'
 alt-cmd-2 = 'move-node-to-workspace --fail-if-noop 2'
-alt-cmd-3 = 'move-node-to-workspace --fail-if-noop 3'
-alt-cmd-4 = 'move-node-to-workspace --focus-follows-window  --fail-if-noop 4'
+alt-cmd-3 = 'move-node-to-workspace --focus-follows-window --fail-if-noop 3'
+alt-cmd-4 = 'move-node-to-workspace --focus-follows-window --fail-if-noop 4'
 alt-cmd-5 = 'move-node-to-workspace --fail-if-noop 5'
 alt-cmd-6 = 'move-node-to-workspace --fail-if-noop 6'
 alt-cmd-7 = 'move-node-to-workspace --fail-if-noop 7'
@@ -270,8 +270,8 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'com.apple.AppStore'
-run = ['layout floating', 'move-node-to-workspace Z']
-#run = ['move-node-to-workspace Z']
+#run = ['layout floating', 'move-node-to-workspace Z']
+run = ['move-node-to-workspace Z']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'

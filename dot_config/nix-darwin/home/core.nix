@@ -55,6 +55,7 @@
     tealdeer # A very fast implementation of tldr in Rust
     tmux-mem-cpu-load
     tmux-xpanes
+    sesh # manager for tmux session
     tree
     tree-sitter
     watch
@@ -152,14 +153,6 @@
         true; # enableAliases fue sustiuida por enableZshIntegration
       git = true;
       icons = "auto";
-    };
-
-    # skim provides a single executable: sk.
-    # Basically anywhere you would want to use grep, try sk instead.
-    skim = {
-      enable = true;
-      #  enableBashIntegration = true;
-      enableZshIntegration = true;
     };
 
     #Terminal basado en Rust 
@@ -260,8 +253,8 @@
       ];
 
       extraConfig = ''
-            set-option -g default-shell ${pkgs.zsh}/bin/zsh
-            set-option -g default-command ${pkgs.zsh}/bin/zsh
+            #set-option -g default-shell ${pkgs.zsh}/bin/zsh
+            #set-option -g default-command ${pkgs.zsh}/bin/zsh
 
             #Opción para mantener los colores del tema catppuccin de neovim cuando se esta dentro de tmux
             #set-option -g terminal-overrides ',xterm-256color:RGB'
@@ -294,7 +287,7 @@
             #"set-option -g status-right '('Caracas:' #(TZ=America/Caracas date +%%H:%%M) 'Miami:' #(TZ=America/New_York date +%%H:%%M)) 'Santiago:' %Y-%m-%d %H:%M'
 
             bind-key "E" run-shell "sesh connect \"$(
-        	    sesh list | fzf-tmux -p 55%,60% \
+        	    sesh list | sk-tmux -p 55%,60% \
                     --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
                     --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
                     --bind 'tab:down,btab:up' \
@@ -327,6 +320,16 @@
       enableZshIntegration = true;
       defaultOptions = [ "--height 50%" "--border" ];
       tmux.enableShellIntegration = true;
+    };
+
+    # skim provides a single executable: sk.
+    # Basically anywhere you would want to use grep, try sk instead.
+    skim = {
+      enable = true;
+      #  enableBashIntegration = true;
+      enableZshIntegration = true;
+      defaultOptions = [ "--height 50%" "--prompt >" ];
+
     };
 
     zoxide = {

@@ -86,6 +86,8 @@
       "podman"
       "podlet"
 
+      #"sesh" # session manager for tmux
+
       "neovim"
 
       "yazi" # file manager
@@ -177,6 +179,7 @@
       "applite" # App grafica homebrew - https://www.thriftmac.com
       "aerospace" # Tiling manager basado en i3wm
       "MonitorControl"
+      "pearcleaner" # mac app cleaner
 
       #Terminales
       "iterm2"
@@ -214,7 +217,7 @@
       "vlc"
       "keyclu" # Muestra la lista de shortcut de las aplicaciones que se seleccione
       "cleanupbuddy" # Bloque teclado y mouse para poder hacer limpieza a la mac
-      #"displaylink"
+      "displaylink"
       "obsidian"
       "jordanbaird-ice" # Menu bar - Equivalente a bartender
       "tomatobar"

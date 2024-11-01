@@ -1,99 +1,17 @@
 local os = require("os")
 local wezterm = require("wezterm")
 local act = wezterm.action
-local session_manager = require("wezterm-session-manager/session-manager")
 local mux = wezterm.mux
 
--- session-manager - Provee funcionalidad para salvar, cargar y restaurar sesiones
--- See https://github.com/danielcopper/wezterm-session-manager
-wezterm.on("save_state", function(window, pane)
-	session_manager.save_state(window, pane)
-end)
-wezterm.on("load_state", function()
-	session_manager.load_state()
-end)
-wezterm.on("restore_state", function(window)
-	session_manager.restore_state(window)
-end)
+--local cmd_sender = wezterm.plugin.require("https://github.com/aureolebigben/wezterm-cmd-sender")
 
--- Wezterm <-> nvim pane navigation
--- You will need to install https://github.com/aca/wezterm.nvim
--- and ensure you export NVIM_LISTEN_ADDRESS per the README in that repo
+local resurrect = wezterm.plugin.require("https://github.com/MLFlexer/resurrect.wezterm")
 
-local move_around = function(window, pane, direction_wez, direction_nvim)
-	local result = os.execute(
-		"env NVIM_LISTEN_ADDRESS=/tmp/nvim"
-			.. pane:pane_id()
-			.. " "
-			.. wezterm.home_dir
-			.. "/.local/bin/wezterm.nvim.navigator"
-			.. " "
-			.. direction_nvim
-	)
-	if result then
-		window:perform_action(act({ SendString = "\x17" .. direction_nvim }), pane)
-	else
-		window:perform_action(act({ ActivatePaneDirection = direction_wez }), pane)
-	end
-end
+resurrect.periodic_save()
 
-wezterm.on("move-left", function(window, pane)
-	move_around(window, pane, "Left", "h")
-end)
-
-wezterm.on("move-right", function(window, pane)
-	move_around(window, pane, "Right", "l")
-end)
-
-wezterm.on("move-up", function(window, pane)
-	move_around(window, pane, "Up", "k")
-end)
-
-wezterm.on("move-down", function(window, pane)
-	move_around(window, pane, "Down", "j")
-end)
-
-local vim_resize = function(window, pane, direction_wez, direction_nvim)
-	local result = os.execute(
-		"env NVIM_LISTEN_ADDRESS=/tmp/nvim"
-			.. pane:pane_id()
-			.. " "
-			.. wezterm.home_dir
-			.. "/.local/bin/wezterm.nvim.navigator"
-			.. " "
-			.. direction_nvim
-	)
-	if result then
-		window:perform_action(act({ SendString = "\x1b" .. direction_nvim }), pane)
-	else
-		window:perform_action(act({ ActivatePaneDirection = direction_wez }), pane)
-	end
-end
-
-wezterm.on("resize-left", function(window, pane)
-	vim_resize(window, pane, "Left", "h")
-end)
-
-wezterm.on("resize-right", function(window, pane)
-	vim_resize(window, pane, "Right", "l")
-end)
-
-wezterm.on("resize-up", function(window, pane)
-	vim_resize(window, pane, "Up", "k")
-end)
-
-wezterm.on("resize-down", function(window, pane)
-	vim_resize(window, pane, "Down", "j")
-end)
-
--- Función para obtener el último segmento del directorio
---local function get_last_folder_segment(path)
---  local segments = {}
---  for segment in string.gmatch(path, "[^/\\]+") do
---    table.insert(segments, segment)
---  end
---  return segments[#segments] or ''
---end
+-- Save only 5000 lines per pane
+resurrect.set_max_nlines(5000)
+--resurrect.change_state_save_dir("/Users/dgarciar/.local/share/wezterm/sessions/")
 
 local function get_last_folder_segment(path)
 	if type(path) ~= "string" then
@@ -154,9 +72,7 @@ local default_icon = wezterm.nerdfonts.dev_terminal -- Ícono predeterminado par
 local function get_process(tab)
 	local process_name = tab.active_pane.foreground_process_name
 	if process_name then
-		--wezterm.log_info("Nombre completo del proceso: " .. process_name)
 		process_name = string.match(process_name, "([^/\\]+)$")
-	--endwezterm.log_info("Nombre del proceso después de match: " .. (process_name or "nil"))
 	else
 		process_name = "unknown"
 	end
@@ -172,6 +88,96 @@ local config = {}
 if wezterm.config_builder then
 	config = wezterm.config_builder()
 end
+
+-- Ensures that a zsh session is always started within tmux if available, or just a zsh session if it is not
+-- config.default_prog = {
+-- 	"/bin/zsh",
+-- 	"--login",
+-- 	"-c",
+-- 	[[
+-- 	   if command -v tmux >/dev/null 2>&1; then
+-- 	     tmux attach || tmux new;
+-- 	   else
+-- 	     exec zsh;
+-- 	   fi
+-- 	   ]],
+-- }
+--
+-- config.default_prog = {
+-- 	"/bin/zsh",
+-- 	"--login",
+-- 	"-c",
+-- 	[[
+--   if command -v tmux >/dev/null 2>&1; then
+--     if [ -z "$TMUX" ]; then
+--       echo "Do you want to use tmux? (y/n)"
+--       read use_tmux
+--       if [ "$use_tmux" = "y" ]; then
+--         sessions=$(tmux ls | awk -F: '{print $1}')
+--         if [ -n "$sessions" ]; then
+--           echo "Available sessions:"
+--           echo "$sessions"
+--           echo "Enter session name to attach or press Enter to start a new session:"
+--           read session_name
+--           if [ -z "$session_name" ]; then
+--             tmux new-session
+--           else
+--             tmux attach-session -t "$session_name" || tmux new-session -s "$session_name"
+--           fi
+--         else
+--           tmux new-session
+--         fi
+--       else
+--         exec zsh
+--       fi
+--     fi
+--   else
+--     exec zsh
+--   fi
+-- ]],
+-- }
+
+-- config.default_prog = {
+-- 	"/bin/zsh",
+-- 	"--login",
+-- 	"-c",
+-- 	[[
+--   if command -v sesh >/dev/null 2>&1; then
+--     while true; do
+--       echo "¿Quieres usar tmux? (s/n)"
+--       read use_tmux
+--       case "$use_tmux" in
+--         [Ss]*)
+--           session=$( (echo "Nueva Sesión"; sesh list) | fzf --no-sort --ansi --border-label 'sesh' --prompt '⚡  ' --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find')
+--           if [ "$session" = "Nueva Sesión" ]; then
+--             echo "Introduce el nombre de la nueva sesión de tmux:"
+--             read new_session
+--             if [ -n "$new_session" ]; then
+--               tmux new-session -s "$new_session"
+--               tmux attach-session -t "$new_session"
+--             else
+--               tmux new-session
+--               tmux attach-session -t "$(tmux display-message -p '#S')"
+--             fi
+--           elif [ -n "$session" ]; then
+--             sesh connect "$session"
+--           else
+--             echo "Opción no válida."
+--           fi
+--           break;;
+--         [Nn]*)
+--           exec zsh
+--           break;;
+--         *)
+--           echo "Entrada inválida. Por favor, presiona 's' para usar tmux o 'n' para una sesión normal."
+--           ;;
+--       esac
+--     done
+--   else
+--     exec zsh
+--   fi
+-- ]],
+-- }
 
 config.automatically_reload_config = true
 --config.color_scheme = "Catppuccin Mocha"
@@ -319,6 +325,8 @@ config.inactive_pane_hsb = {
 	brightness = 0.5,
 }
 
+--wezterm.log_info("Configuración antes de aplicar cmd_sender:", config)
+
 -- Custom key bindings
 
 config.leader = { key = "Space", mods = "SHIFT", timeout_milliseconds = 3000 }
@@ -328,77 +336,96 @@ config.keys = {
 	-- Copy mode
 	{ key = "+", mods = "LEADER", action = act.ActivateCopyMode },
 
-	-- Pane Keybindings (Se ajusta segun westerm.nvim)
-	-- ----------------------------------------------------------------
-	-- PANES
-	--
-	-- These are great and get me most of the way to replacing tmux
-	-- entirely, particularly as you can use "wezterm ssh" to ssh to another
-	-- server, and still retain Wezterm as your terminal there.
-	-- ----------------------------------------------------------------
+	{
+		key = "w",
+		mods = "ALT",
+		action = wezterm.action_callback(function(win, pane)
+			resurrect.save_state(resurrect.workspace_state.get_workspace_state())
+		end),
+	},
+	-- {
+	-- 	key = "W",
+	-- 	mods = "ALT",
+	-- 	action = resurrect.window_state.save_window_action(),
+	-- },
+	-- {
+	-- 	key = "T",
+	-- 	mods = "ALT",
+	-- 	action = resurrect.tab_state.save_tab_action(),
+	-- },
+	{
+		key = "S",
+		mods = "LEADER|SHIFT",
+		action = wezterm.action_callback(function(win, pane)
+			local state = resurrect.workspace_state.get_workspace_state()
+			resurrect.save_state(state)
+			resurrect.window_state.save_window_action()
+		end),
+	},
 
+	{
+		key = "L",
+		mods = "LEADER|SHIFT",
+		action = wezterm.action_callback(function(win, pane)
+			resurrect.fuzzy_load(win, pane, function(id, label)
+				local type = string.match(id, "^([^/]+)") -- match before '/'
+				id = string.match(id, "([^/]+)$") -- match after '/'
+				id = string.match(id, "(.+)%..+$") -- remove file extention
+				local opts = {
+					--	window = win:mux_window(),
+					relative = true,
+					restore_text = true,
+					on_pane_restore = resurrect.tab_state.default_on_pane_restore,
+				}
+				if type == "workspace" then
+					local state = resurrect.load_state(id, "workspace")
+					resurrect.workspace_state.restore_workspace(state, opts)
+				elseif type == "window" then
+					local state = resurrect.load_state(id, "window")
+					resurrect.window_state.restore_window(pane:window(), state, opts)
+				elseif type == "tab" then
+					local state = resurrect.load_state(id, "tab")
+					resurrect.tab_state.restore_tab(pane:tab(), state, opts)
+				end
+			end)
+		end),
+	},
+
+	{
+		-- Delete a saved session using a fuzzy finder
+		key = "d",
+		mods = "LEADER|SHIFT",
+		action = wezterm.action_callback(function(win, pane)
+			resurrect.fuzzy_load(win, pane, function(id)
+				resurrect.delete_state(id)
+			end, {
+				title = "Delete State",
+				description = "Select session to delete and press Enter = accept, Esc = cancel, / = filter",
+				fuzzy_description = "Search session to delete: ",
+				is_fuzzy = true,
+			})
+		end),
+	},
 	-- -- Vertical split
-	{
-		-- '¡'
-		key = "¡",
-		mods = "LEADER",
-		action = act.SplitPane({
-			direction = "Right",
-			size = { Percent = 50 },
-		}),
-	},
-	-- Horizontal split
-	{
-		-- -
-		key = "-",
-		mods = "LEADER",
-		action = act.SplitPane({
-			direction = "Down",
-			size = { Percent = 50 },
-		}),
-	},
-	-- CTRL + (h,j,k,l) to move between panes
-	{
-		key = "h",
-		mods = "CMD",
-		action = act({ EmitEvent = "move-left" }),
-	},
-	{
-		key = "j",
-		mods = "CMD",
-		action = act({ EmitEvent = "move-down" }),
-	},
-	{
-		key = "k",
-		mods = "CMD",
-		action = act({ EmitEvent = "move-up" }),
-	},
-	{
-		key = "l",
-		mods = "CMD",
-		action = act({ EmitEvent = "move-right" }),
-	},
-	-- ALT + (h,j,k,l) to resize panes
-	{
-		key = "h",
-		mods = "LEADER",
-		action = act({ EmitEvent = "resize-left" }),
-	},
-	{
-		key = "j",
-		mods = "LEADER",
-		action = act({ EmitEvent = "resize-down" }),
-	},
-	{
-		key = "k",
-		mods = "LEADER",
-		action = act({ EmitEvent = "resize-up" }),
-	},
-	{
-		key = "l",
-		mods = "LEADER",
-		action = act({ EmitEvent = "resize-right" }),
-	},
+	-- {
+	-- 	-- '¡'
+	-- 	key = "¡",
+	-- 	mods = "LEADER",
+	-- 	action = act.SplitPane({
+	-- 		direction = "Right",
+	-- 		size = { Percent = 50 },
+	-- 	}),
+	-- },
+	-- -- Horizontal split
+	-- {
+	-- 	-- -
+	-- 	key = "-",
+	-- 	mods = "LEADER",
+	-- 	action = act.SplitPane({
+	-- 		direction = "Down",
+	-- 		size = { Percent = 50 },
+	-- 	}),
+	-- },
 	-- Close/kill active pane
 	{
 		key = "x",
@@ -435,17 +462,18 @@ config.keys = {
 	},
 
 	-- Pane Keybindings (Sin wezterm.vim)
-	--  { key = "-", mods = "LEADER", action = act.SplitVertical { domain = "CurrentPaneDomain" } },
-	--  { key = "¡", mods = "LEADER", action = act.SplitHorizontal { domain = "CurrentPaneDomain" } },
+	{ key = "-", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "¡", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+
 	-- LEADER + (h,j,k,l) to move between panes
-	--  { key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
-	--  { key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
-	--  { key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
-	--  { key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
-	--  { key = "x", mods = "LEADER", action = act.CloseCurrentPane { confirm = true } },
-	--  { key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
-	--  { key = "s", mods = "LEADER", action = act.RotatePanes "Clockwise" },
-	--  { key = "r", mods = "LEADER", action = act.ActivateKeyTable { name = "resize_pane", one_shot = false } },
+	{ key = "h", mods = "LEADER", action = act.ActivatePaneDirection("Left") },
+	{ key = "j", mods = "LEADER", action = act.ActivatePaneDirection("Down") },
+	{ key = "k", mods = "LEADER", action = act.ActivatePaneDirection("Up") },
+	{ key = "l", mods = "LEADER", action = act.ActivatePaneDirection("Right") },
+	{ key = "x", mods = "LEADER", action = act.CloseCurrentPane({ confirm = true }) },
+	{ key = "z", mods = "LEADER", action = act.TogglePaneZoomState },
+	{ key = "s", mods = "LEADER", action = act.RotatePanes("Clockwise") },
+	{ key = "r", mods = "LEADER", action = act.ActivateKeyTable({ name = "resize_pane", one_shot = false }) },
 
 	-- Tab Keybindings
 	-- Create a tab (alternative to Ctrl-Shift-Tab)
@@ -528,50 +556,39 @@ config.keys = {
 				-- An empty string if they just hit enter
 				-- Or the actual line of text they wrote
 				if line then
-					window:perform_action(
-						act.SwitchToWorkspace({
-							name = line,
-						}),
-						pane
-					)
+					mux.rename_workspace(window:mux_window():get_workspace(), line)
+					-- window:perform_action(
+					-- 	act.SwitchToWorkspace({
+					-- 		name = line,
+					-- 	}),
+					-- 	pane
+					-- )
 				end
 			end),
 		}),
 	},
-
-	-- Session Manager
-	{ key = "S", mods = "LEADER", action = wezterm.action({ EmitEvent = "save_state" }) },
-	{ key = "R", mods = "LEADER", action = wezterm.action({ EmitEvent = "restore_state" }) },
-	{ key = "L", mods = "LEADER", action = wezterm.action({ EmitEvent = "load_state" }) },
 }
 
--- Quick tab movement
-for i = 1, 9 do
-	table.insert(config.keys, {
-		key = tostring(i),
-		mods = "LEADER",
-		action = act.ActivateTab(i - 1),
-	})
-end
+config.key_tables = {
+	resize_pane = {
+		{ key = "h", action = act.AdjustPaneSize({ "Left", 1 }) },
+		{ key = "j", action = act.AdjustPaneSize({ "Down", 1 }) },
+		{ key = "k", action = act.AdjustPaneSize({ "Up", 1 }) },
+		{ key = "l", action = act.AdjustPaneSize({ "Right", 1 }) },
+		{ key = "Escape", action = "PopKeyTable" },
+		{ key = "Enter", action = "PopKeyTable" },
+	},
+	move_tab = {
+		{ key = "h", action = act.MoveTabRelative(-1) },
+		{ key = "j", action = act.MoveTabRelative(-1) },
+		{ key = "k", action = act.MoveTabRelative(1) },
+		{ key = "l", action = act.MoveTabRelative(1) },
+		{ key = "Escape", action = "PopKeyTable" },
+		{ key = "Enter", action = "PopKeyTable" },
+	},
+}
 
---config.key_tables = {
---  resize_pane = {
---    { key = "h",      action = act.AdjustPaneSize { "Left", 1 } },
---    { key = "j",      action = act.AdjustPaneSize { "Down", 1 } },
---    { key = "k",      action = act.AdjustPaneSize { "Up", 1 } },
---    { key = "l",      action = act.AdjustPaneSize { "Right", 1 } },
---    { key = "Escape", action = "PopKeyTable" },
---    { key = "Enter",  action = "PopKeyTable" },
---  },
---  move_tab = {
---    { key = "h",      action = act.MoveTabRelative(-1) },
---    { key = "j",      action = act.MoveTabRelative(-1) },
---    { key = "k",      action = act.MoveTabRelative(1) },
---    { key = "l",      action = act.MoveTabRelative(1) },
---    { key = "Escape", action = "PopKeyTable" },
---    { key = "Enter",  action = "PopKeyTable" },
---  }
---}
+--require("events")
 
 return config
 

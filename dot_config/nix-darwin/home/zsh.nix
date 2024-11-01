@@ -65,6 +65,9 @@
       cat = "bat";
       fzn =
         "fzf --preview 'bat --style=numbers --color=always {}' | xargs -n1 nvim";
+      skn = ''
+        sk --preview 'bat --style=numbers --color=always {}' | xargs -n1
+              nvim'';
       sshp = "ssh -o ProxyJump=sabaext";
 
       urldecode =
@@ -97,3 +100,4 @@
 
   };
 }
+
