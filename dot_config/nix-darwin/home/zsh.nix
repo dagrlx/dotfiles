@@ -38,13 +38,17 @@
       # Integracion de thefuck
       eval $(thefuck --alias)
 
-      [ -n "$WEZTERM_PANE" ] && export NVIM_LISTEN_ADDRESS="/tmp/nvim$WEZTERM_PANE"
+      #[ -n "$WEZTERM_PANE" ] && export NVIM_LISTEN_ADDRESS="/tmp/nvim$WEZTERM_PANE"
 
       #export HOSTNAME=$(hostname)
       #eval "$(starship init zsh)"
       #export STARSHIP_CONFIG=~/.config/starship.toml
 
       export XDG_CONFIG_HOME="/Users/dgarciar/.config"
+
+      export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+      zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+      source <(carapace _carapace)
 
     '';
 

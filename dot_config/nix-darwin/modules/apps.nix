@@ -28,7 +28,9 @@
   # The apps installed by homebrew are not managed by nix, and not reproducible!
   # But on macOS, homebrew has a much larger selection of apps than nixpkgs, especially for GUI apps!
   homebrew = {
+    brewPrefix = "/opt/homebrew/bin";
     enable = true;
+    #caskArgs.no_quarantine = true;
 
     onActivation = {
       # Controla si Homebrew se auto-actualiza a sí mismo y a todas las fórmulas durante la activación del sistema

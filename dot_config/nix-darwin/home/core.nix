@@ -168,7 +168,7 @@
       sensibleOnTop = true;
       # prefix = "C-a";
       terminal = "screen-256color";
-      shell = "${pkgs.zsh}/bin/zsh";
+      #shell = "${pkgs.zsh}/bin/zsh";
       historyLimit = 100000;
       plugins = with pkgs.tmuxPlugins; [
         yank
@@ -357,5 +357,14 @@
       nix-direnv.enable = true;
 
     };
+
+    # multi-shell multi-command argument completer
+    carapace = {
+      enable = true;
+      enableZshIntegration = true;
+      #enableNushellIntegration = true;
+      package = pkgs.carapace;
+    };
+
   };
 }
