@@ -72,14 +72,14 @@ outer.right = 6
 T = 'Built-in Retina Display'
 C = 'Built-in Retina Display'
 Z = 'Built-in Retina Display'
-W = 'DELL P2419H'
-1 = 'DELL P2419H'
-2 = 'DELL P2419H'
-3 = 'DELL P2419H'
-4 = 'LG FHD'
-5 = 'LG FHD'
-6 = 'LG FHD'
-7 = 'LG FHD'
+W = ['DELL P2419H', 'LG FHD', 'Built-in Retina Display']
+1 = ['DELL P2419H', 'LG FHD']
+2 = ['DELL P2419H', 'LG FHD']
+3 = ['DELL P2419H', 'LG FHD']
+4 = ['LG FHD', 'DELL P2419H']
+5 = ['LG FHD', 'DELL P2419H']
+6 = ['LG FHD', 'DELL P2419H']
+7 = ['LG FHD', 'DELL P2419H']
 #11 = 'LG FHD'
 
 [mode.main.binding]

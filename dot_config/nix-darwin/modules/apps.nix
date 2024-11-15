@@ -155,6 +155,7 @@
       "zed"
       "microsoft-teams"
       "microsoft-auto-update"
+      "windows-app" # new app for RDP
       "syncthing" # file sync
       "raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
       #"iglance" # beautiful system monitor
@@ -177,7 +178,7 @@
       "maintenance"
       "onyx"
       "deeper"
-      "tyke" # App para tomar notas rapidas temporal
+      #"tyke" # App para tomar notas rapidas temporal
       "applite" # App grafica homebrew - https://www.thriftmac.com
       "aerospace" # Tiling manager basado en i3wm
       "MonitorControl"

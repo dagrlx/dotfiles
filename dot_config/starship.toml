@@ -75,6 +75,7 @@ Unknown = " "
 Windows = "󰍲 "
 
 [shell]
+bash_indicator = 'bsh'
 nu_indicator = 'nu'
 zsh_indicator = 'zsh'
 style = 'cyan bold'

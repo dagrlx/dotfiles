@@ -79,6 +79,9 @@
       urlencode =
         "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
 
+      ff =
+        "aerospace list-windows --all | fzf --bind 'enter:execute(bash -c \"aerospace focus --window-id {1}\")+abort'";
+
     };
 
     history = {

@@ -226,6 +226,8 @@ config.colors = {
 	scrollbar_thumb = "#ff9452",
 }
 
+config.max_fps = 120
+
 --config.use_dead_keys = false
 config.warn_about_missing_glyphs = true --Activa/Desactiva las advertencias sobre glifos faltantes.
 

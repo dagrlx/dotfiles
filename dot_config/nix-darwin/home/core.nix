@@ -168,7 +168,7 @@
       sensibleOnTop = true;
       # prefix = "C-a";
       terminal = "screen-256color";
-      #shell = "${pkgs.zsh}/bin/zsh";
+      shell = "${pkgs.zsh}/bin/zsh";
       historyLimit = 100000;
       plugins = with pkgs.tmuxPlugins; [
         yank
