@@ -20,8 +20,9 @@
   # Each item in `inputs` will be passed as a parameter to the `outputs` function after being pulled and built.
   # repositorio nixpkgs-unstable es rolling release
   inputs = {
-    #nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-24.05-darwin";
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    #nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-24.11-darwin";
+    #nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # home-manager, used for managing user configuration
     home-manager = {

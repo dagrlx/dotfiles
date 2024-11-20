@@ -221,6 +221,7 @@ config.window_padding = {
 
 config.enable_scroll_bar = true
 config.scrollback_lines = 5000
+config.min_scroll_bar_height = "0.7cell"
 config.colors = {
 	-- El color del "thumb" de la barra de desplazamiento; la parte que representa el viewport actual
 	scrollbar_thumb = "#ff9452",

@@ -27,7 +27,7 @@
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
+  # plain files is through 'home.file'. (https://seroperson.me/2024/01/16/managing-dotfiles-with-nix/)
   #home.file = {
   # ".zshrc".source = ~/dotfiles/zshrc/.zshrc;
   # ".config/wezterm".source = ~/dotfiles/wezterm;

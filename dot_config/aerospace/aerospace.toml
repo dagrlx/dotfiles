@@ -12,7 +12,7 @@ after-startup-command = [
   # Sketchybar has a built-in detection of already running process,
   # so it won't be run twice on AeroSpace restart
   # 'exec-and-forget sketchybar --reload',
-  'exec-and-forget sketchybar'
+  'exec-and-forget sketchybar',
 ]
 
 # Notify Sketchybar about workspace change
@@ -42,14 +42,12 @@ default-root-container-orientation = 'auto'
 key-mapping.preset = 'qwerty'
 
 # Mouse lazily follows focused monitor (default in i3)
-on-focused-monitor-changed = [
-'move-mouse --fail-if-noop monitor-lazy-center'
-]
+on-focused-monitor-changed = ['move-mouse --fail-if-noop monitor-lazy-center']
 
 # Mouse lazily follows any focus (window or workspace)
 on-focus-changed = [
-'move-mouse --fail-if-noop window-lazy-center',
-'exec-and-forget sketchybar --trigger space_windows_change'
+  'move-mouse --fail-if-noop window-lazy-center',
+  'exec-and-forget sketchybar --trigger space_windows_change',
 ]
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
@@ -67,6 +65,12 @@ outer.bottom = 6
 outer.top = 38
 #outer.top = [ {monitor.'^built-in retina display$' = 10}, 50 ] 
 outer.right = 6
+
+# See https://nikitabobko.github.io/AeroSpace/guide#exec-env-vars
+[exec] # Again, you don't need to copy all config sections to your config.
+inherit-env-vars = true # If you don't touch "exec" section,
+[exec.env-vars] # it will fallback to "default-config.toml"
+PATH = '/opt/homebrew/bin:/opt/homebrew/sbin:${PATH}'
 
 [workspace-to-monitor-force-assignment]
 T = 'Built-in Retina Display'
@@ -176,7 +180,7 @@ ctrl-alt-shift-s = [
   'exec-and-forget sketchybar --reload',
   'mode main',
 ]
- 
+
 alt-shift-left = ['join-with left', 'mode main']
 alt-shift-down = ['join-with down', 'mode main']
 alt-shift-up = ['join-with up', 'mode main']
