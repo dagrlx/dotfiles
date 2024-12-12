@@ -74,7 +74,8 @@
       "pkgxdev/made"
       "localsend/localsend"
       "nikitabobko/tap"
-      #"netbirdio/tap"
+      "netbirdio/tap"
+      "alienator88/cask"
     ];
 
     # `brew install`
@@ -124,7 +125,7 @@
       #"talosctl"
       "ntfs-3g-mac"
 
-      "pkgx" # Alternativa a hombrew
+      #"pkgx" # Alternativa a hombrew
       "thefuck" # magnificent app that corrects your previous console command.
     ];
 
@@ -166,7 +167,7 @@
       #VPN
       "zerotier-one"
       "tailscale"
-      #"netbird-ui"
+      "netbird-ui"
 
       # Utilities
       "localsend"
@@ -183,6 +184,7 @@
       "aerospace" # Tiling manager basado en i3wm
       "MonitorControl"
       "pearcleaner" # mac app cleaner
+      "sentinel-app" # A GUI for controlling Gatekeeper
 
       #Terminales
       "iterm2"

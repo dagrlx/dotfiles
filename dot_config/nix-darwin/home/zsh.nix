@@ -28,12 +28,13 @@
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
       fi
 
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+
       # Cargar funciones desde el archivo
       source ~/.config/nix-darwin/home/zsh_func
 
       # Agregar pkgx al PATH y cargar su configuración
-      source <(pkgx --shellcode)
-      #eval "$(pkgx integrate)"
+      #source <(pkgx --shellcode)
 
       # Integracion de thefuck
       eval $(thefuck --alias)
@@ -45,6 +46,7 @@
       #export STARSHIP_CONFIG=~/.config/starship.toml
 
       export XDG_CONFIG_HOME="/Users/dgarciar/.config"
+
 
       export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
       zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'

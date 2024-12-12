@@ -21,10 +21,7 @@
     '';
 
     defaults = {
-      menuExtraClock.Show24Hour = true; # show 24 hour clock
-
-      spaces.spans-displays =
-        false; # (false = each physical display has a separate space (Mac default) true = one space spans across all physical displays)
+      menuExtraClock.Show24Hour = true; # show 24 hour clocki
 
       # customize dock
       dock = {
@@ -35,8 +32,8 @@
         tilesize = 40;
         enable-spring-load-actions-on-all-items = true;
         appswitcher-all-displays = true;
-        expose-group-by-app =
-          false; # Agrupa ventana por aplicació (Opción desactivada para mejora de yabai)
+        expose-group-apps =
+          false; # Agrupa ventana por aplicación (Opción desactivada para mejora de yabai)
         mru-spaces =
           false; # Agrupa spaces auto en función del uso mas reciente (Opción desactivada para yabai)
         magnification = false; # Resalta icono cuando se posiciona sobre el
@@ -112,9 +109,12 @@
           DSDontWriteUSBStores = true;
         };
 
-        # "com.apple.spaces" = {
-        #   "spans-displays" = 1; # Display have seperate spaces
-        # };
+        "com.apple.spaces" = {
+          # Display have separate spaces
+          #   true => disable this feature
+          #   false => enable this feature
+          "spans-displays" = false;
+        };
 
         "com.apple.screensaver" = {
           # Require password immediately after sleep or screen saver begins
@@ -164,18 +164,24 @@
       material-design-icons
       font-awesome
 
+      nerd-fonts.symbols-only
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.fira-code
+      nerd-fonts.iosevka
+
+      # (Obsolete) from NixOS 24.11 nerdfonts has been separated into individual font packages under the namespace nerd-fonts
       # nerdfonts
       # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/data/fonts/nerdfonts/shas.nix
-      (nerdfonts.override {
-        fonts = [
-          # symbols icon only
-          "NerdFontsSymbolsOnly"
-          # Characters
-          "FiraCode"
-          "JetBrainsMono"
-          "Iosevka"
-        ];
-      })
+      # (nerdfonts.override {
+      #   fonts = [
+      #     # symbols icon only
+      #     "NerdFontsSymbolsOnly"
+      #     # Characters
+      #     "FiraCode"
+      #     "JetBrainsMono"
+      #     "Iosevka"
+      #   ];
+      # })
     ];
   };
 

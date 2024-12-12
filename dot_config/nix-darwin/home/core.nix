@@ -253,8 +253,8 @@
       ];
 
       extraConfig = ''
-            #set-option -g default-shell ${pkgs.zsh}/bin/zsh
-            #set-option -g default-command ${pkgs.zsh}/bin/zsh
+            set-option -g default-shell ${pkgs.zsh}/bin/zsh
+            set-option -g default-command ${pkgs.zsh}/bin/zsh
 
             #Opción para mantener los colores del tema catppuccin de neovim cuando se esta dentro de tmux
             #set-option -g terminal-overrides ',xterm-256color:RGB'
@@ -270,7 +270,6 @@
 
             #set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
 
-
             # Configuracion para mostrar correctamente image preview en yazi
             set -g allow-passthrough on
             set -ga update-environment TERM
@@ -281,8 +280,7 @@
             bind-key x setw synchronize-panes off \; display-message "Sincronización de paneles desactivada"
 
             # Easier reload of config
-            bind r source-file ~/.config/tmux/tmux.conf
-
+            #bind r source-file ~/.config/tmux/tmux.conf
 
             #"set-option -g status-right '('Caracas:' #(TZ=America/Caracas date +%%H:%%M) 'Miami:' #(TZ=America/New_York date +%%H:%%M)) 'Santiago:' %Y-%m-%d %H:%M'
 
