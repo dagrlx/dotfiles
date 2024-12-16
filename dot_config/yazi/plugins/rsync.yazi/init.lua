@@ -1,4 +1,7 @@
+--- @sync entry
+
 -- function borrowed from chmod.yazi plugin
+
 local selected_or_hovered = ya.sync(function()
 	local tab = cx.active
 	local paths = {}
@@ -24,21 +27,21 @@ return {
 
 		local files = selected_or_hovered()
 		if #files == 0 then
-			return ya.notify { title = "Rsync", content = "No files selected", level = "warn", timeout = 3 }
+			return ya.notify({ title = "Rsync", content = "No files selected", level = "warn", timeout = 3 })
 		end
 
 		local default_dest = ""
 		if #files == 1 and remote_target ~= "" then
 			local base_name = files[1]:match("([^/]+)$")
 			default_dest = remote_target .. ":" .. base_name
-			ya.err { default_dest = default_dest }
+			ya.err({ default_dest = default_dest })
 		end
 
-		local dest, ok = ya.input {
+		local dest, ok = ya.input({
 			title = "Rsync - [user]@[remote]:<destination>",
 			value = default_dest or nil,
 			position = { "top-center", y = 3, w = 45 },
-		}
+		})
 		if ok ~= 1 then
 			return
 		end
@@ -54,28 +57,28 @@ return {
 		local stderr = cmd.stderr
 		local stdout = cmd.stdout
 		local return_code = cmd.status.code
-		ya.err {
+		ya.err({
 			stderr = stderr,
 			stdout = stdout,
 			err = err,
 			res = cmd.status.success,
 			return_code = return_code,
 			default_dest = default_dest,
-		}
+		})
 
 		if return_code ~= 0 then
-			ya.notify {
+			ya.notify({
 				title = "Rsync Plugin",
 				content = string.format("stderr below, exit code %s\n\n%s", cmd.status.code, stderr),
 				level = "error",
 				timeout = 10,
-			}
+			})
 		else
-			ya.notify {
+			ya.notify({
 				title = "Rsync Plugin",
 				content = "Rsync Completed!",
 				timeout = 3,
-			}
+			})
 		end
 	end,
 }

@@ -1,3 +1,6 @@
+--- @sync entry
+--- https://github.com/sxyazi/yazi/pull/1891
+
 local function entry(st)
 	if st.old then
 		Tab.layout, st.old = st.old, nil

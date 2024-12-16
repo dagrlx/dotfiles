@@ -174,6 +174,7 @@ return {
 							-- make the language server recognize "vim" global
 							diagnostics = {
 								globals = { "vim" },
+								disable = { "lowercase-global" }, -- Desactiva advertencias específicas
 							},
 							workspace = {
 								library = {

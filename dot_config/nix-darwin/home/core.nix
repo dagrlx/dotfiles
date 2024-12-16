@@ -271,7 +271,7 @@
             #set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
 
             # Configuracion para mostrar correctamente image preview en yazi
-            set -g allow-passthrough on
+            set -g allow-passthrough all
             set -ga update-environment TERM
             set -ga update-environment TERM_PROGRAM
 

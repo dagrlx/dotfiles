@@ -1,3 +1,5 @@
+--- @sync entry
+
 local hovered = ya.sync(function()
 	local h = cx.active.current.hovered
 	if not h then
@@ -12,12 +14,12 @@ local hovered = ya.sync(function()
 end)
 
 local function prompt()
-	return ya.input {
+	return ya.input({
 		title = "Smart filter:",
 		position = { "center", w = 50 },
 		realtime = true,
 		debounce = 0.1,
-	}
+	})
 end
 
 local function entry()
