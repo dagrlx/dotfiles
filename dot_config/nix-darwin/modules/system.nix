@@ -153,6 +153,10 @@
   # this is required if you want to use darwin's default shell - zsh
   programs.zsh.enable = true;
   environment.shells = [ pkgs.zsh ];
+  # Exportar SHELL variable 
+  programs.zsh.interactiveShellInit = ''
+    export SHELL=${pkgs.zsh}/bin/zsh
+  '';
 
   # Set your time zone.
   time.timeZone = "America/Santiago";

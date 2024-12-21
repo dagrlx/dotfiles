@@ -1,12 +1,16 @@
-{ username, ... }:
+{ username, config, ... }:
 
-{
+let
+  homeDirectory = "/Users/${username}";
+  dotfilesPath = "${homeDirectory}/dotfiles";
+
+in {
   # import sub modules
   imports = [
     ./zsh.nix
     ./core.nix
     #./git.nix
-    ./starship.nix
+    #./starship.nix
   ];
 
   # Home Manager needs a bit of information about you and the
@@ -28,17 +32,27 @@
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'. (https://seroperson.me/2024/01/16/managing-dotfiles-with-nix/)
-  #home.file = {
-  # ".zshrc".source = ~/dotfiles/zshrc/.zshrc;
-  # ".config/wezterm".source = ~/dotfiles/wezterm;
-  # ".config/skhd".source = ~/dotfiles/skhd;
-  # ".config/starship.toml".source = ./dotfiles/starship;
-  # ".config/starship.toml".source = ./dotfiles/starship/starship.toml;
-  # ".config/zellij".source = ~/dotfiles/zellij;
-  # ".config/nvim".source = ~/dotfiles/nvim;
-  # ".config/nix-darwin".source = ~/dotfiles/nix-darwin;
-  # ".config/tmux".source = ~/dotfiles/tmux;
-  #};
+  home.file = {
+
+    #".config/tmux".source = config.lib.file.mkOutOfStoreSymlink "/Users/dgarciar/.config/nix-darwin/home/dotfiles/tmux";
+  };
+
+  xdg.configFile = {
+    "nvim" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/nvim";
+      recursive = true;
+    };
+
+    "starship" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/startship";
+      recursive = true;
+    };
+
+    "tmux" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/tmux";
+      recursive = true;
+    };
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

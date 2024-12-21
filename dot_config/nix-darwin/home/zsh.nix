@@ -1,17 +1,22 @@
 { pkgs, ... }: {
   programs.zsh = {
     enable = true;
+    autocd = true;
     enableCompletion = true;
     completionInit = "autoload -U compinit && compinit";
     autosuggestion.enable = true; # Habilita las sugerencias de autocompletado
     #autosuggestion.highlight = "fg=#808080,bg=none,bold,underline";
     autosuggestion.highlight = "fg=#f8f8f2,bg=#272822,bold";
     #autosuggestion.highlight = "fg=#c79267,bg=#282a36,bold,italic";
-    autosuggestion.strategy = [ "history" ];
+    autosuggestion.strategy = [ "history" "completion" ];
     syntaxHighlighting.enable = true; # Habilita el resaltado de sintaxis
-    syntaxHighlighting.highlighters = [ "brackets" "pattern" "cursor" "root" ];
+    syntaxHighlighting.highlighters =
+      [ "brackets" "pattern" "regexp" "cursor" "root" ];
+
+    # Añadimos los patrones para abbr
+    syntaxHighlighting.patterns = { "abbr *" = "fg=blue,bold"; };
+
     historySubstringSearch.enable = true; # Enable history substring search.
-    zsh-abbr.enable = true; # Expande las abrebiaciones
     sessionVariables = {
       HOSTNAME = "${builtins.getEnv "hostname"}"; # export HOSTNAME=$(hostname)
     };
@@ -22,6 +27,9 @@
     #";
 
     initExtra = ''
+
+      ABBR_DEFAULT_BINDINGS=0
+      bindkey "^ " abbr-expand-and-insert
 
       export PATH=/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH
       if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
@@ -42,31 +50,53 @@
       #[ -n "$WEZTERM_PANE" ] && export NVIM_LISTEN_ADDRESS="/tmp/nvim$WEZTERM_PANE"
 
       #export HOSTNAME=$(hostname)
-      #eval "$(starship init zsh)"
-      #export STARSHIP_CONFIG=~/.config/starship.toml
+      export STARSHIP_CONFIG=~/.config/starship/starship.toml
+      eval "$(starship init zsh)"
 
       export XDG_CONFIG_HOME="/Users/dgarciar/.config"
 
+      export SHELL=${pkgs.zsh}/bin/zsh
 
       export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
       zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
       source <(carapace _carapace)
 
+      # Abbreviations variables
+      ABiBR_GET_AVAILABLE_ABBREVIATION=1
+      ABBR_LOG_AVAILABLE_ABBREVIATION=1
+      ABBR_SET_EXPANSION_CURSOR=1
+
+      # Load zsh-autosuggestions-abbreviations-strategy
+      source /opt/homebrew/share/zsh-autosuggestions-abbreviations-strategy/zsh-autosuggestions-abbreviations-strategy.zsh
+      ZSH_AUTOSUGGEST_STRATEGY=( abbreviations $ZSH_AUTOSUGGEST_STRATEGY )
+
     '';
+
+    zsh-abbr = {
+      enable = true;
+      abbreviations = {
+        update = "darwin-rebuild switch --flake ~/.config/nix-darwin/";
+        uflake = "nix flake update --flake ~/.config/nix-darwin";
+        ff =
+          "aerospace list-windows --all | fzf --bind 'enter:execute(bash -c \"aerospace focus --window-id {1}\")+abort'";
+        flushdns =
+          "sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder";
+        allow_app =
+          "codesign --sign - --force --deep @$ && xattr -d com.apple.quarantine @$"; # Para de-quarantine un app de MacOS
+      };
+    };
 
     shellAliases = {
       rustscan =
         "docker run -it --rm --name rustscan --platform linux/amd64 rustscan/rustscan";
       "..." = "cd ../..";
-      update = "darwin-rebuild switch --flake ~/.config/nix-darwin/";
-      uflake = "nix flake update --flake ~/.config/nix-darwin";
+      #update = "darwin-rebuild switch --flake ~/.config/nix-darwin/";
+      #uflake = "nix flake update --flake ~/.config/nix-darwin";
       ngc = "nix-collect-garbage -d";
       sgc = "sudo nix-collect-garbage -d";
       bcp0 = "brew cleanup --prune=0";
-      flushdns =
-        "sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder";
-      allow_app =
-        "codesign --sign - --force --deep @$ && xattr -d com.apple.quarantine @$"; # Para de-quarantine un app de MacOS
+      #flushdns = "sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder";
+      #allow_app = "codesign --sign - --force --deep @$ && xattr -d com.apple.quarantine @$"; # Para de-quarantine un app de MacOS
       n = "nano -clS";
       cat = "bat";
       fzn =
@@ -81,8 +111,7 @@
       urlencode =
         "python3 -c 'import sys, urllib.parse as ul; print(ul.quote_plus(sys.stdin.read()))'";
 
-      ff =
-        "aerospace list-windows --all | fzf --bind 'enter:execute(bash -c \"aerospace focus --window-id {1}\")+abort'";
+      #ff = "aerospace list-windows --all | fzf --bind 'enter:execute(bash -c \"aerospace focus --window-id {1}\")+abort'";
 
     };
 

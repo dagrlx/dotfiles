@@ -59,6 +59,7 @@
       hostname = config.hostname;
 
       specialArgs = inputs // { inherit username useremail hostname; };
+
     in {
       darwinConfigurations."${hostname}" = darwin.lib.darwinSystem {
         inherit system specialArgs;
@@ -71,6 +72,7 @@
           # home manager
           home-manager.darwinModules.home-manager
           {
+            home-manager.backupFileExtension = "backup";
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = specialArgs;

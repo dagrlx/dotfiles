@@ -75,4 +75,4 @@ require("zoxide"):setup({
 	update_db = true,
 })
 
-print(jit and "Usando LuaJIT" or "Usando Lua estándar")
+--print(jit and "Usando LuaJIT" or "Usando Lua estándar")

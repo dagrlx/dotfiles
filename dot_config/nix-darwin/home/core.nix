@@ -53,6 +53,7 @@
     sshpass
     sshfs
     tealdeer # A very fast implementation of tldr in Rust
+    tmux
     tmux-mem-cpu-load
     tmux-xpanes
     sesh # manager for tmux session
@@ -160,144 +161,12 @@
     #  enable = true;
     #};
 
-    tmux = {
+    starship = {
       enable = true;
-      mouse = true;
-      tmuxp.enable = true;
-      newSession = true;
-      sensibleOnTop = true;
-      # prefix = "C-a";
-      terminal = "screen-256color";
-      shell = "${pkgs.zsh}/bin/zsh";
-      historyLimit = 100000;
-      plugins = with pkgs.tmuxPlugins; [
-        yank
-        better-mouse-mode
-        vim-tmux-navigator
-        tmux-fzf
 
-        {
-          plugin = fzf-tmux-url;
-          extraConfig = ''
-            set -g @fzf-url-fzf-options '-p 60%,30% --prompt="   " --border-label=" Open URL "'
-            set -g @fzf-url-history-limit '2000'
-          '';
-        }
-
-        {
-          plugin = tmux-floax;
-          extraConfig = ''
-            set -g @floax-width '80%'
-            set -g @floax-height '80%'
-            set -g @floax-border-color 'magenta'
-            set -g @floax-text-color 'blue'
-            set -g @floax-bind 'p'
-            set -g @floax-change-path 'true'
-
-          '';
-        }
-
-        {
-          plugin = catppuccin;
-          extraConfig = ''
-
-            set -g @catppuccin_flavour 'macchiato'
-            #set -g @catppuccin_window_tabs_enabled on
-            #set -g @catppuccin_date_time "%H:%M"
-            set -g @catppuccin_window_left_separator "█"
-            set -g @catppuccin_window_right_separator "█ "
-            set -g @catppuccin_window_number_position "right"
-            set -g @catppuccin_window_middle_separator "  █"
-
-            set -g @catppuccin_window_default_fill "number"
-            set -g @catppuccin_window_default_text "#W"
-
-            set -g @catppuccin_window_current_fill "number"
-            set -g @catppuccin_window_current_text "#W"
-            #set -g @catppuccin_window_current_text "#W{?window_zoomed_flag,(),}"
-
-            set -g @catppuccin_status_modules_right "directory host session"
-
-            set -g @catppuccin_status_left_separator  ""
-            set -g @catppuccin_status_right_separator " "
-            set -g @catppuccin_status_right_separator_inverse "no"
-            set -g @catppuccin_status_fill "icon"
-            set -g @catppuccin_status_connect_separator "no"
-
-            set -g @catppuccin_directory_text "#{b:pane_current_path}"
-
-          '';
-        }
-
-        {
-          plugin =
-            resurrect; # Restaura el ambiente de tmux despues de reiniciar el equipo
-          extraConfig = ''
-            set -g @resurrect-strategy-vim 'session'
-            set -g @resurrect-strategy-nvim 'session'
-            set -g @resurrect-capture-pane-contents 'on'
-            set -g @resurrect-processes 'ssh pgsql lazygit lf mc yazi'
-          '';
-        }
-
-        {
-          plugin = continuum;
-          extraConfig = ''
-            set -g @continuum-restore 'on'
-            #set -g @continuum-boot 'on'
-            #set -g @continuum-boot-options 'wezterm,fullscreen'
-            set -g @continuum-save-interval '10'
-          '';
-        }
-
-      ];
-
-      extraConfig = ''
-            set-option -g default-shell ${pkgs.zsh}/bin/zsh
-            set-option -g default-command ${pkgs.zsh}/bin/zsh
-
-            #Opción para mantener los colores del tema catppuccin de neovim cuando se esta dentro de tmux
-            #set-option -g terminal-overrides ',xterm-256color:RGB'
-            set-option -sa terminal-overrides ",xterm*:Tc"
-
-            set -g base-index 1              # start indexing windows at 1 instead of 0
-            set -g set-clipboard on          # use system clipboard
-            set -g renumber-windows on       # renumber all windows when any window is closed
-
-            set -g status-position top      # macOS / darwin style
-
-            #set -g status-right 'Continuum status: #{continuum_status}'
-
-            #set -g status-right '#[fg=white]#(id -un)@#(hostname)   #(cat /run/current-system/darwin-version)'
-
-            # Configuracion para mostrar correctamente image preview en yazi
-            set -g allow-passthrough all
-            set -ga update-environment TERM
-            set -ga update-environment TERM_PROGRAM
-
-            # Combinación de teclas para activar/desactivar la sincronización de paneles
-            bind-key s setw synchronize-panes on \; display-message "Sincronización de paneles activada"
-            bind-key x setw synchronize-panes off \; display-message "Sincronización de paneles desactivada"
-
-            # Easier reload of config
-            #bind r source-file ~/.config/tmux/tmux.conf
-
-            #"set-option -g status-right '('Caracas:' #(TZ=America/Caracas date +%%H:%%M) 'Miami:' #(TZ=America/New_York date +%%H:%%M)) 'Santiago:' %Y-%m-%d %H:%M'
-
-            bind-key "E" run-shell "sesh connect \"$(
-        	    sesh list | sk-tmux -p 55%,60% \
-                    --no-sort --ansi --border-label ' sesh ' --prompt '⚡  ' \
-                    --header '  ^a all ^t tmux ^g configs ^x zoxide ^d tmux kill ^f find' \
-                    --bind 'tab:down,btab:up' \
-                    --bind 'ctrl-a:change-prompt(⚡  )+reload(sesh list)' \
-                    --bind 'ctrl-t:change-prompt(🪟  )+reload(sesh list -t)' \
-                    --bind 'ctrl-g:change-prompt(⚙️  )+reload(sesh list -c)' \
-                    --bind 'ctrl-x:change-prompt(📁  )+reload(sesh list -z)' \
-                    --bind 'ctrl-f:change-prompt(🔎  )+reload(fd -H -d 2 -t d -E .Trash . ~)' \
-                    --bind 'ctrl-d:execute(tmux kill-session -t {})+change-prompt(⚡  )+reload(sesh list)'
-                )\""
-
-      '';
+      enableBashIntegration = true;
+      enableZshIntegration = true;
+      enableNushellIntegration = true;
     };
 
     zellij = {

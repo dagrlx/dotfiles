@@ -91,6 +91,8 @@
 
       #"sesh" # session manager for tmux
 
+      "zsh-autosuggestions-abbreviations-strategy"
+
       "neovim"
 
       "yazi" # file manager
@@ -227,6 +229,7 @@
       "jordanbaird-ice" # Menu bar - Equivalente a bartender
       "tomatobar"
       "kap"
+      "cap"
       #"spaceman"
       "raspberry-pi-imager"
 
