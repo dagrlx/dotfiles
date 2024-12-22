@@ -1,0 +1,77 @@
+# A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
+# If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
+"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
+
+[manager]
+
+prepend_keymap = [
+  { on = [
+    "j",
+  ], run = [
+    "plugin arrow --args=1",
+  ], desc = "Move selection downwards, or wrap." },
+  { on = [
+    "k",
+  ], run = [
+    "plugin arrow --args=-1",
+  ], desc = "Move selection upwards, or wrap." },
+  { on = [
+    "l",
+  ], run = [
+    "plugin smart-enter",
+    "escape --visual --select",
+  ], desc = "Enter the child directory, or open file." },
+  { on = [
+    "n",
+  ], run = "plugin smart-enter --args='detatch'", desc = "Open in new window." },
+  { on = [
+    "=",
+  ], run = """
+        shell 'printf "Mode Bits: "; read ans; chmod $ans "$@"' --block --confirm
+    """, desc = "chmod" },
+  { on = [
+    "T",
+  ], run = [
+    "plugin hide-preview",
+  ], desc = "Hide or show preview" },
+  { on = [
+    "X",
+  ], run = [
+    "plugin max-preview",
+  ], desc = "Maximize or retore preview" },
+  { on = [
+    "c",
+    "m",
+  ], run = [
+    "plugin chmod",
+  ], desc = "Chmod on selected files" },
+  { on = [
+    "F",
+  ], run = [
+    "plugin smart-filter",
+  ], desc = "Smart filter" },
+  { on = [
+    "ñ",
+  ], run = [
+    "plugin jump-to-char",
+  ], desc = "Jump to char" },
+  { on = [
+    "R",
+  ], run = [
+    "plugin rsync --args='tuxadm@sabaext'",
+  ], desc = "Copiando archivo via rsync a sabaext" },
+  { on = [
+    "<C-p>",
+  ], run = """
+        shell 'qlmanage -p "$@"'
+    """, desc = "preview archivo con quick look" },
+]
+
+[spot]
+prepend_keymap = [{ on = "<C-i>", run = "spot", desc = "Activar Spotter" }]
+
+
+#[[manager.prepend_keymap]]
+#on   = [ "l" ]
+#run  = "plugin --sync smart-enter"
+#desc = "Enter the child directory, or open the file"
