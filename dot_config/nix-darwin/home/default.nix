@@ -44,7 +44,7 @@ in {
     };
 
     "starship" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/startship";
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/starship";
       recursive = true;
     };
 
