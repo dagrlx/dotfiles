@@ -16,6 +16,15 @@ nvt() {
   nvim $(fzf -m --preview='bat --style=numbers --color=always {}')
 }
 
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
 #function suyabai () {
 #  SHA256=$(shasum -a 256 /opt/homebrew/bin/yabai | awk "{print \$1;}")
 #  if [ -f "/private/etc/sudoers.d/yabai" ]; then
