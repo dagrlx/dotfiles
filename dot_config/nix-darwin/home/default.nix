@@ -57,6 +57,16 @@ in {
       source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/yazi";
       recursive = true;
     };
+
+    "wezterm" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/wezterm";
+      recursive = true;
+    };
+
+    "sketchybar" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/sketchybar";
+      recursive = true;
+    };
   };
 
   # Let Home Manager install and manage itself.
