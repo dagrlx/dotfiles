@@ -2,7 +2,7 @@
 
 let
   homeDirectory = "/Users/${username}";
-  dotfilesPath = "${homeDirectory}/dotfiles";
+  dotfilesPath = "${homeDirectory}/.dotfiles";
 
 in {
   # import sub modules
