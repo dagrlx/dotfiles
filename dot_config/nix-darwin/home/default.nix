@@ -52,6 +52,7 @@ in {
       source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/tmux";
       recursive = true;
     };
+
     "yazi" = {
       source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/yazi";
       recursive = true;

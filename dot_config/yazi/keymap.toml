@@ -51,7 +51,7 @@ prepend_keymap = [
     "plugin smart-filter",
   ], desc = "Smart filter" },
   { on = [
-    "f",
+    "ñ",
   ], run = [
     "plugin jump-to-char",
   ], desc = "Jump to char" },

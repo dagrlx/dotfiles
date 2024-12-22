@@ -1,5 +1,3 @@
---- @sync entry
-
 local hovered = ya.sync(function()
 	local h = cx.active.current.hovered
 	if not h then
@@ -14,12 +12,12 @@ local hovered = ya.sync(function()
 end)
 
 local function prompt()
-	return ya.input({
+	return ya.input {
 		title = "Smart filter:",
 		position = { "center", w = 50 },
 		realtime = true,
 		debounce = 0.1,
-	})
+	}
 end
 
 local function entry()
@@ -37,7 +35,7 @@ local function entry()
 		local h = hovered()
 		if h.unique and h.is_dir then
 			ya.manager_emit("escape", { filter = true })
-			ya.manager_emit("enter", { h.url })
+			ya.manager_emit("enter", {})
 			input = prompt()
 		elseif event == 1 then
 			ya.manager_emit("escape", { filter = true })
