@@ -75,6 +75,8 @@
     zsh-abbr = {
       enable = true;
       abbreviations = {
+        rustscan =
+          "docker run -it --rm --name rustscan --platform linux/amd64 rustscan/rustscan";
         update = "darwin-rebuild switch --flake ~/.config/nix-darwin/";
         uflake = "nix flake update --flake ~/.config/nix-darwin";
         ff =
@@ -87,8 +89,7 @@
     };
 
     shellAliases = {
-      rustscan =
-        "docker run -it --rm --name rustscan --platform linux/amd64 rustscan/rustscan";
+
       "..." = "cd ../..";
       #update = "darwin-rebuild switch --flake ~/.config/nix-darwin/";
       #uflake = "nix flake update --flake ~/.config/nix-darwin";
