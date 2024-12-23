@@ -70,6 +70,8 @@
       source /opt/homebrew/share/zsh-autosuggestions-abbreviations-strategy/zsh-autosuggestions-abbreviations-strategy.zsh
       ZSH_AUTOSUGGEST_STRATEGY=( abbreviations $ZSH_AUTOSUGGEST_STRATEGY )
 
+      eval "$(atuin init zsh)"
+
     '';
 
     zsh-abbr = {
