@@ -77,8 +77,8 @@
       abbreviations = {
         rustscan =
           "docker run -it --rm --name rustscan --platform linux/amd64 rustscan/rustscan";
-        update = "darwin-rebuild switch --flake ~/.config/nix-darwin/";
-        uflake = "nix flake update --flake ~/.config/nix-darwin";
+        update = "darwin-rebuild switch --flake ~/.dotfiles/nix-darwin/";
+        uflake = "nix flake update --flake ~/.dotfiles/nix-darwin";
         ff =
           "aerospace list-windows --all | fzf --bind 'enter:execute(bash -c \"aerospace focus --window-id {1}\")+abort'";
         flushdns =
