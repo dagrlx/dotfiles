@@ -883,3 +883,45 @@ help escapes
 yazi
 nvim ~/.config/nushell/config.nu 
 exit
+term query (ansi cursor_position) --prefix (ansi csi) --terminator 'R'
+term query $'(ansi osc)10;?(ansi st)' --prefix $'(ansi osc)10;' --terminator (ansi st)
+term query $'(ansi osc)52;c;?(ansi st)' --prefix $'(ansi osc)52;c;' --terminator (ansi st)
+[1 3 -2 -2 0 1 2] | chunk-by {|x| $x >= 0 }
+utouch 
+utouch prueba.txt
+nano prueba.txt 
+rm prueba.txt
+sys net
+exit
+mut list = [1 2]<\n>$list ++= [3]<\n>$list = $list | append 4
+$list
+exit
+mut list = [1 2]
+$list
+$list ++= [3]
+$list
+$list = $list | append 4
+$list
+let data = [<\n>    [category color name];<\n>    [fruit red apple]<\n>    [fruit red strawberry]<\n>    [vegetable red tomato]<\n>    [fruit orange orange]<\n>    [vegetable orange carrot]<\n>    [vegetable orange pumpkin]<\n>]
+$data | group-by color category
+$data | group-by color category --to-table
+sys cpu
+sys cpu | length
+sys cpu --long
+value<\n>1,aaa<\n>2,bbb<\n>3<\n>4,ddd<\n>5,eee,extra
+du
+du --help
+du -l
+du -l ~/.config/
+ls | select 4 | get name size
+ls
+alias 
+nvim ~/.config/nushell/config.nu 
+la
+alias list
+alias
+ff
+nvim ~/.config/nushell/env.nu 
+let defaults = nu -n -c "$env.config = {}; $env.config | reject color_config keybindings menus | to nuon" | from nuon | transpose key default<\n>let current = $env.config | reject color_config keybindings menus | transpose key current<\n>$current | merge $defaults | where $it.current != $it.default
+config nu --doc | nu-highlight | less -R
+exit
