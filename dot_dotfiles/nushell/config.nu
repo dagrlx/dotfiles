@@ -9,15 +9,12 @@ source ~/.cache/carapace/init.nu
 #### Aliases ####
 alias lt = eza --tree --level=2 --long --icons --git
 
-def la [] {
-    ls -la | select name type mode user group size modified | update modified {format date "%Y-%m-%d %H:%M:%S"}
-}
+# def show-alias [] {
+#     echo "=== Aliases ==="
+#     scope aliases
+#     echo "\n=== Funciones definidas ==="
+#      open ~/.dotfiles/nushell/functions.nu
+#}
 
-def fzn [] {
-    fzf --preview '''bat --style=numbers --color=always {}''' | xargs -n1 nvim
-}
-
-def ff [] {
-    aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'
-}
-
+# Cargar funciones complejas desde un archivo externo
+source ~/.dotfiles/nushell/functions.nu
