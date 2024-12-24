@@ -925,3 +925,91 @@ nvim ~/.config/nushell/env.nu
 let defaults = nu -n -c "$env.config = {}; $env.config | reject color_config keybindings menus | to nuon" | from nuon | transpose key default<\n>let current = $env.config | reject color_config keybindings menus | transpose key current<\n>$current | merge $defaults | where $it.current != $it.default
 config nu --doc | nu-highlight | less -R
 exit
+mkdir ~/.local/share/atuin/
+atuin init nu | save ~/.local/share/atuin/init.nu
+source ~/.local/share/atuin/init.nu
+which yazi
+yazi
+source ~/.local/share/atuin/init.nu
+exit
+nvim ~/.config/atuin/config.toml 
+source ~/.local/share/atuin/init.nu
+exity
+exit
+nvim ~/.config/atuin/config.toml 
+source ~/.local/share/atuin/init.nu
+nvim ~/.config/nix-darwin/home/zsh.nix 
+exit
+nvim ~/.config/atuin/config.toml 
+source ~/.local/share/atuin/init.nu
+exit
+atuin info
+yazi
+exit
+yazi
+clear
+q:qexit
+exit
+nvim ~/.config/atuin/config.toml 
+nvim ~/.config/nix-darwin/home/core.nix 
+alias
+nvim ~/.config/nushell/env.nu 
+nvim ~/.config/nushell/config.nu 
+yazi
+autin sync
+atuin sync
+atuin sync -f
+autin status
+atuin status
+atuin import auto
+yazi
+exit
+rciyt
+exit
+atuin init nu | save ~/.local/share/atuin/init.nu
+exit
+yazi
+exit
+yazi
+config nu --doc | nu-highlight | less -R
+config nu
+config nu --doc | nu-highlight | less -R
+ls
+config nu --doc | nu-highlight | less -R >> config.nu
+config nu --doc | nu-highlight | less -R > config.nu
+config nu --doc
+config nu --doc > config.nu
+config nu --doc | save config.nu
+nimv config.nu
+nvim config.nu
+env nu --doc 
+yazi
+cp config.nu .dotfiles/nushell/
+yazi
+exit
+config env --default | nu-highlight | less -R.
+config nu --default | nu-highlight | less -R.
+exit
+let defaults = nu -n -c "$env.config = {}; $env.config | reject color_config keybindings menus | to nuon" | from nuon | transpose key default<\n>let current = $env.config | reject color_config keybindings menus | transpose key current<\n>$current | merge $defaults | where $it.current != $it.default
+exit
+config nu --doc | nu-highlight | less -R
+config nu
+yazi
+config env --doc | nu-highlight | less -R
+config nu --doc | nu-highlight | less -R
+nvim ~/.config/nushell/config.nu 
+nvim ~/.config/nushell/config.nu.old
+onfig env --default | nu-highlight | less -R
+xonfig env --default | nu-highlight | less -R
+config env --default | nu-highlight | less -R
+config env --doc | nu-highlight | less -R
+config env --default | nu-highlight | less -R
+$env.config
+$env.config | table -e | bat -p
+config env
+exit
+yazi
+chezmoi add ~/.dotfiles/nushell/config.nu.old
+chezmoi add ~/.dotfiles/nushell/config.nu
+chezmoi add ~/.dotfiles/nushell/env.nu
+chezmoi add ~/.dotfiles/nushell/env.nu.old

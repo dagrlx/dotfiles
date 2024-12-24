@@ -123,7 +123,7 @@
       "chezmoi"
       #"yadm"
       "age" # Is a simple, modern and secure file encryption tool, format, and Go library.
-      "atuin" # Shell history with SQLite
+      #"atuin" # Shell history with SQLite
 
       #"talosctl"
       "ntfs-3g-mac"

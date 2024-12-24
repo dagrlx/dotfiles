@@ -233,5 +233,25 @@
       package = pkgs.carapace;
     };
 
+    # multi-shell history records SQLite
+    atuin = {
+      enable = true;
+      enableZshIntegration = true;
+      enableNushellIntegration = true;
+      package = pkgs.atuin;
+      flags = [ "--disable-up-arrow" ];
+      settings = {
+        auto_sync = true;
+        sync_frequency =
+          "5m"; # For example, 10s, 20m, 1h, etc. If set to 0, Atuin will sync after every command
+        sync_address = "https://api.atuin.sh";
+        search_mode =
+          "fuzzy"; # Atuin supports “prefix”, “fulltext”, “fuzzy”, and “skim” search modes (Default fuzzy)
+        enter_accept = false; # always inserts the selected command for editing
+        style = "full"; # Possible values: auto, full and compact.
+        inline_height = 40; # height of the search window (Default 0)
+      };
+    };
+
   };
 }
