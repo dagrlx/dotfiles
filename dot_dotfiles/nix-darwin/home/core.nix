@@ -29,8 +29,6 @@
     zsh-fzf-tab # Replace zsh's default completion selection menu with fzf
     #nix-index
 
-    #lua
-
     fd # para buscar archivos
     ffmpegthumbnailer # thumbnails de video necesario para yazi
     imagemagick # Yazi 0.3 now supports previewing fonts, SVGs, HEIC, and JPEG XL files
@@ -68,6 +66,7 @@
     zsh-fzf-tab
     zsh-syntax-highlighting
     zsh-autosuggestions
+    zsh-autosuggestions-abbreviations-strategy
     zsh-autocomplete
     zsh-you-should-use
 
@@ -156,14 +155,8 @@
       icons = "auto";
     };
 
-    #Terminal basado en Rust 
-    #alacritty = {
-    #  enable = true;
-    #};
-
     starship = {
       enable = true;
-
       enableBashIntegration = true;
       enableZshIntegration = true;
       enableNushellIntegration = true;
@@ -171,10 +164,13 @@
 
     zellij = {
       enable = true;
-      #enableZshIntegration = true;
-
-      settings = { theme = "catppuccin-macchiato"; };
-
+      settings = {
+        theme = "catppuccin-macchiato";
+        # key_bindings = {
+        #   primary_modifier = "Ctrl"; # Tecla modificadora primaria
+        #   secondary_modifier = "Shift"; # key secondary_modifier
+        # };
+      };
     };
 
     ripgrep = {
@@ -202,6 +198,7 @@
     zoxide = {
       enable = true;
       enableZshIntegration = true;
+      #enableNushellIntegration = true;
       options = [
         #"--no-aliases"
         "--cmd cd"
@@ -242,14 +239,16 @@
       flags = [ "--disable-up-arrow" ];
       settings = {
         auto_sync = true;
+        sync.records = true; # Enable sync v2 by Default
         sync_frequency =
           "5m"; # For example, 10s, 20m, 1h, etc. If set to 0, Atuin will sync after every command
         sync_address = "https://api.atuin.sh";
         search_mode =
           "fuzzy"; # Atuin supports “prefix”, “fulltext”, “fuzzy”, and “skim” search modes (Default fuzzy)
         enter_accept = false; # always inserts the selected command for editing
-        style = "full"; # Possible values: auto, full and compact.
-        inline_height = 40; # height of the search window (Default 0)
+        #style = "auto"; # Possible values: auto, full and compact.
+        #inline_height = 0; # height of the search window (Default 0)
+        history_filter = [ "^clear" "^exit" ];
       };
     };
 
