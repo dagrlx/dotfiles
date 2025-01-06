@@ -1,5 +1,17 @@
 [plugin]
-deps = [{ use = "yazi-rs/plugins:smart-filter", rev = "7afba3a" }, { use = "yazi-rs/plugins:smart-enter", rev = "7afba3a" }, { use = "yazi-rs/plugins:jump-to-char", rev = "7afba3a" }, { use = "yazi-rs/plugins:max-preview", rev = "7afba3a" }, { use = "yazi-rs/plugins:hide-preview", rev = "7afba3a" }, { use = "yazi-rs/plugins:chmod", rev = "7afba3a" }]
+deps = [
+  { use = "yazi-rs/plugins:smart-filter", rev = "71c4fc2" },
+  { use = "yazi-rs/plugins:smart-enter", rev = "71c4fc2" },
+  { use = "yazi-rs/plugins:jump-to-char", rev = "71c4fc2" },
+  { use = "yazi-rs/plugins:max-preview", rev = "71c4fc2" },
+  { use = "yazi-rs/plugins:hide-preview", rev = "71c4fc2" },
+  { use = "yazi-rs/plugins:chmod", rev = "71c4fc2" },
+  { use = "yazi-rs/plugins:diff", rev = "71c4fc2" },
+  { use = "yazi-rs/plugins:mime-ext", rev = "71c4fc2" },
+  { use = "AnirudhG07/rich-preview", rev = "8be4d27" },
+  { use = "KKV9/compress", rev = "60b24af" },
+  { use = "Lil-Dank/lazygit", rev = "c82794f" },
+]
 
 [flavor]
 deps = []
