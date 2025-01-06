@@ -87,6 +87,11 @@ in {
       source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/sketchybar";
       recursive = true;
     };
+
+    "ghostty" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/ghostty";
+      recursive = true;
+    };
   };
 
   # Let Home Manager install and manage itself.
