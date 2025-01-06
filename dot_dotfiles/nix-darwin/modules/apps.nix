@@ -54,7 +54,7 @@
       #"Tomito" = 1526042937;
       "Windows App" = 1295203466;
       "CotEditor" = 1024640650;
-      "MegaIPTVmacOS" = 1494386779;
+      #"MegaIPTVmacOS" = 1494386779;
       #"Airmail" = 918858936;
       #"Magnet" = 441258766;
       "ScreenBrush" = 1233965871;
@@ -76,6 +76,7 @@
       "nikitabobko/tap"
       "netbirdio/tap"
       "alienator88/cask"
+      "olets/tap"
     ];
 
     # `brew install`
@@ -91,12 +92,16 @@
 
       #"sesh" # session manager for tmux
 
+      #"zsh-autocomplete"
+      #"zsh-autosuggestions"
       "zsh-autosuggestions-abbreviations-strategy"
 
       "neovim"
+      "luacheck"
 
       "yazi" # file manager
       "poppler" # para PDF preview en yazi
+      "rich-cli" # for yazi plugin rich-preview
 
       ##Tiling windows manager
       #"yabai"
@@ -130,6 +135,8 @@
 
       #"pkgx" # Alternativa a hombrew
       "thefuck" # magnificent app that corrects your previous console command.
+
+      "tabiew" # Lector de archvio csv con consultas sql"
     ];
 
     # `brew install --cask`
@@ -184,24 +191,23 @@
       "deeper"
       #"tyke" # App para tomar notas rapidas temporal
       "applite" # App grafica homebrew - https://www.thriftmac.com
+
       "aerospace" # Tiling manager basado en i3wm
       "MonitorControl"
       "pearcleaner" # mac app cleaner
       "sentinel-app" # A GUI for controlling Gatekeeper
 
       #Terminales
-      "iterm2"
       "wezterm"
-      #"kitty"
       "warp" # terminal con AI y wrapper
       "wave" # terminal con AI alternativa a warp y es software libre
-      #"tabby" #Otro Terminal 
-      #"rio"
+      "ghostty" # Ghostty is a terminal emulator that differentiates itself by being fast, feature-rich, and native.
+      "kitty"
 
       "keepassxc"
       "podman-desktop"
       "devpod" # desarrollo en container
-      "slack"
+      #"slack"
       "teamviewer"
       "anydesk"
       "orbstack" # Docker y MV
@@ -227,12 +233,13 @@
       "cleanupbuddy" # Bloque teclado y mouse para poder hacer limpieza a la mac
       "displaylink"
       "obsidian"
-      "jordanbaird-ice" # Menu bar - Equivalente a bartender
+      #"jordanbaird-ice" # Menu bar - Equivalente a bartender
       "tomatobar"
       "kap"
       "cap"
       #"spaceman"
       "raspberry-pi-imager"
+      "quickrecorder" # record screen
 
       #Fonts for sketchybar, wezterm        
       "font-hack-nerd-font" # Font for sketchybar
