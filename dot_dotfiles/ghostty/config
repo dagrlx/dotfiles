@@ -1,0 +1,72 @@
+# Mouse
+mouse-hide-while-typing = true
+
+# Theme
+#theme = dark:catppuccin-mocha,light:catppuccin-latte
+#tokyonight
+theme = tokyonight
+
+# Some shaders can be found in this repo, they're usually uploaded to discord
+# https://github.com/hackrmomo/ghostty-shaders
+#custom-shader = shaders/matrix-hallway.glsl
+#custom-shader = shaders/starfield-colors.glsl
+#custom-shader = shaders/starfield.glsl
+
+background-opacity = 0.85
+background-blur-radius = 20
+
+font-size = 14
+
+# This assumes you installed tmux through brew if using macos
+#command = zsh --login -c "if command -v tmux >/dev/null 2>&1; then tmux attach || tmux; else zsh; fi"
+#command = /bin/zsh -c /opt/homebrew/bin/zellij
+#command = /bin/zsh -c zellij
+
+# Available values are: "native", "transparent", "tabs", and "hidden". (default is transparent)
+macos-titlebar-style = transparent
+#window-save-state = always
+
+#macos-option-as-alt = true
+
+shell-integration-features = cursor,sudo,title
+
+keybind = global:ctrl+y=toggle_visibility
+keybind = global:cmd+ç=toggle_quick_terminal
+
+# keybindings
+keybind = cmd+s>r=reload_config
+keybind = cmd+s>x=close_surface
+keybind = cmd+f=write_screen_file:open
+
+keybind = cmd+s>n=new_window
+
+# tabs 
+keybind = cmd+s>c=new_tab
+keybind = cmd+s>shift+l=next_tab
+keybind = cmd+s>shift+h=previous_tab
+keybind = cmd+s>comma=move_tab:-1
+keybind = cmd+s>period=move_tab:1
+
+# quick tab switch
+keybind = cmd+s>1=goto_tab:1
+keybind = cmd+s>2=goto_tab:2
+keybind = cmd+s>3=goto_tab:3
+keybind = cmd+s>4=goto_tab:4
+keybind = cmd+s>5=goto_tab:5
+keybind = cmd+s>6=goto_tab:6
+keybind = cmd+s>7=goto_tab:7
+keybind = cmd+s>8=goto_tab:8
+keybind = cmd+s>9=goto_tab:9
+
+# split
+keybind = cmd+s>¡=new_split:right
+keybind = cmd+s>-=new_split:down
+
+keybind = cmd+s>j=goto_split:bottom
+keybind = cmd+s>k=goto_split:top
+keybind = cmd+s>h=goto_split:left
+keybind = cmd+s>l=goto_split:right
+
+keybind = cmd+s>z=toggle_split_zoom
+
+keybind = cmd+s>e=equalize_splits
