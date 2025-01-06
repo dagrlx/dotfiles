@@ -12,7 +12,7 @@ return {
 				javascriptreact = { "prettier" },
 				typescriptreact = { "prettier" },
 				css = { "prettier" },
-				html = { "htmlbeautifier" },
+				html = { "prettier" },
 				json = { "prettier" },
 				yaml = { "yamlfix" },
 				markdown = { "prettier" },
@@ -29,6 +29,7 @@ return {
 				async = false,
 				timeout_ms = 1000,
 			},
+			--notify = false, -- Disable notify of conform
 		})
 
 		vim.keymap.set({ "n", "v" }, "<leader>mp", function()

@@ -1,4 +1,4 @@
-#!/nix/store/zi73657kywwkm9ci6d66j8apkq31syhl-perl-5.40.0/bin/perl
+#!/nix/store/8bvx035jl08wdq67gvj24w34znk0wh2d-perl-5.40.0/bin/perl
 
 use strict;
 use warnings;

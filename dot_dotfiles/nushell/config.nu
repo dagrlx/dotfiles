@@ -16,5 +16,8 @@ alias lt = eza --tree --level=2 --long --icons --git
 #      open ~/.dotfiles/nushell/functions.nu
 #}
 
+# Config for use of atuin
+source ~/.local/share/atuin/init.nu
+
 # Cargar funciones complejas desde un archivo externo
 source ~/.dotfiles/nushell/functions.nu

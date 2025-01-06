@@ -4,11 +4,13 @@ return {
 	"windwp/nvim-autopairs",
 	event = { "InsertEnter" },
 	dependencies = {
-		"hrsh7th/nvim-cmp",
+		"saghen/blink.cmp",
 	},
+	-- use treesitter to check for a pai
 	config = function()
 		-- import nvim-autopairs
 		local autopairs = require("nvim-autopairs")
+		local Rule = require("nvim-autopairs.rule")
 
 		-- configure autopairs
 		autopairs.setup({
@@ -20,13 +22,12 @@ return {
 			},
 		})
 
-		-- import nvim-autopairs completion functionality
-		local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+		local ts_conds = require("nvim-autopairs.ts-conds")
 
-		-- import nvim-cmp plugin (completions plugin)
-		local cmp = require("cmp")
-
-		-- make autopairs and completion work together
-		cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+		-- press % => %% only while inside a comment or string
+		autopairs.add_rules({
+			Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
+			Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
+		})
 	end,
 }

@@ -204,9 +204,9 @@ config.underline_thickness = 1
 config.underline_position = -2.0
 
 -- Windows configurartion
-config.window_background_opacity = 0.9
+config.window_background_opacity = 0.85
 --config.text_background_opacity = 0.5
-config.macos_window_background_blur = 30
+config.macos_window_background_blur = 20
 config.window_close_confirmation = "AlwaysPrompt"
 config.adjust_window_size_when_changing_font_size = false
 -- Controla la apariencia, funcionalidad de los bordes de la ventana y se permite redimensionarla

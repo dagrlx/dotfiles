@@ -40,7 +40,8 @@ opt.splitbelow = true -- split horizontal window to the bottom
 opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or insert mode start position
 
 -- clipboard
-opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+--opt.clipboard:append("unnamedplus") -- use system clipboard as default register
+opt.clipboard = "unnamedplus"
 
 -- disable codeium by default
 vim.g.codeium_enabled = false

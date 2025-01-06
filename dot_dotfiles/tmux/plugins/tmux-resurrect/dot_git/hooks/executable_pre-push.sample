@@ -1,4 +1,4 @@
-#!/nix/store/7dkrmf9gqhwl6cz766s26j3k4a6z0n00-bash-5.2p37/bin/bash
+#!/nix/store/5wjj1f3pa1ndi3kvskm1fcs9kdy2xajf-bash-5.2p37/bin/bash
 
 # An example hook script to verify what is about to be pushed.  Called by "git
 # push" after it has checked the remote status, but before anything has been
