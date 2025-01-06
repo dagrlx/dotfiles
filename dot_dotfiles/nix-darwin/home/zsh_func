@@ -11,10 +11,15 @@ function brew() {
 function zen () {
   ~/.config/sketchybar/plugins/zen.sh $1
 }
+#
+# nvt() {
+#   nvim $(fzf -m --preview='bat --style=numbers --color=always {}')
+# }
 
-nvt() {
-  nvim $(fzf -m --preview='bat --style=numbers --color=always {}')
+function open_fzf() {
+    nvim $(fzf -m --preview="bat --style=numbers --color=always {}")
 }
+
 
 function y() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
