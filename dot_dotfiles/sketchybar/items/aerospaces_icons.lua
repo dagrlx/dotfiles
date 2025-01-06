@@ -11,28 +11,16 @@ local LIST_CURRENT = "aerospace list-workspaces --focused"
 
 local spaces = {}
 local workspaceToMonitorMap = {}
-
--- Cache para íconos de aplicaciones para evitar búsquedas repetitivas
 local icon_cache = {}
 
 -- Function to get the icon for an application
 local function getIconForApp(appName)
-	if icon_cache[appName] then
-		return icon_cache[appName]
-	end
-	local icon = app_icons[appName] or app_icons["default"] or "?"
-	icon_cache[appName] = icon
-	return icon
-	--return app_icons[appName] or app_icons["default"] or "?"
+	return icon_cache[appName] or (app_icons[appName] or app_icons["default"] or "?")
 end
 
 -- Function to update workspace icons
 local function updateSpaceIcons(spaceId, workspaceName)
 	sbar.exec(LIST_APPS:format(workspaceName), function(appsOutput)
-		if not appsOutput then
-			return
-		end
-
 		local icon_strip = ""
 		local shouldDraw = false
 
@@ -48,9 +36,79 @@ local function updateSpaceIcons(spaceId, workspaceName)
 			spaces[spaceId].item:set({
 				label = { string = icon_strip, drawing = shouldDraw },
 			})
-		else
 		end
 	end)
+end
+
+-- Function to create a workspace item
+local function createWorkspaceItem(spaceId, workspaceName, monitorId)
+	local space_item = sbar.add("item", spaceId, {
+		icon = {
+			font = { family = settings.font.numbers },
+			string = workspaceName,
+			padding_left = 12,
+			padding_right = 12,
+			color = colors.white,
+			highlight_color = colors.yellow,
+		},
+		label = {
+			padding_right = 14,
+			padding_left = 0,
+			color = colors.grey,
+			highlight_color = colors.yellow,
+			font = "sketchybar-app-font:Regular:12.0",
+			y_offset = -1,
+		},
+		padding_left = 2,
+		padding_right = 2,
+		background = {
+			color = colors.bg1,
+			border_width = 1,
+			height = 26,
+			border_color = colors.grey,
+			corner_radius = 9,
+		},
+		click_script = "aerospace workspace --fail-if-noop " .. workspaceName,
+		display = monitorId,
+	})
+
+	local space_bracket = sbar.add("bracket", { spaceId }, {
+		background = {
+			color = colors.transparent,
+			border_color = colors.transparent,
+			height = 26,
+			border_width = 1,
+			corner_radius = 9,
+		},
+	})
+
+	space_item:subscribe("mouse.clicked", function()
+		sbar.exec("aerospace workspace --fail-if-noop " .. workspaceName, function(success)
+			if not success then
+				print("Warning: Failed to switch to workspace: " .. workspaceName)
+			end
+		end)
+	end)
+
+	return {
+		item = space_item,
+		bracket = space_bracket,
+		name = workspaceName,
+		monitor = monitorId,
+	}
+end
+
+-- Function to update workspace appearance
+local function updateWorkspaceAppearance(spaceId, isSelected)
+	spaces[spaceId].item:set({
+		icon = { highlight = isSelected },
+		label = { highlight = isSelected },
+	})
+	spaces[spaceId].bracket:set({
+		background = {
+			border_color = isSelected and colors.dirty_white or colors.transparent,
+		},
+	})
 end
 
 -- Function to add or update a workspace item
@@ -58,62 +116,11 @@ local function addOrUpdateWorkspaceItem(workspaceName, monitorId, isSelected)
 	local spaceId = "workspace_" .. workspaceName .. "_" .. monitorId
 
 	if not spaces[spaceId] then
-		local space_item = sbar.add("item", spaceId, {
-			icon = {
-				font = { family = settings.font.numbers },
-				string = workspaceName,
-				padding_left = 12,
-				padding_right = 12,
-				color = colors.white,
-				highlight_color = colors.yellow,
-			},
-			label = {
-				padding_right = 14,
-				padding_left = 0,
-				color = colors.grey,
-				highlight_color = colors.yellow,
-				font = "sketchybar-app-font:Regular:12.0",
-				y_offset = -1,
-			},
-			padding_left = 2,
-			padding_right = 2,
-			background = {
-				color = colors.bg1,
-				border_width = 1,
-				height = 26,
-				border_color = colors.grey,
-				corner_radius = 9,
-			},
-			click_script = "aerospace workspace --fail-if-noop " .. workspaceName,
-			display = monitorId,
-		})
-
-		local space_bracket = sbar.add("bracket", { spaceId }, {
-			background = {
-				color = colors.transparent,
-				border_color = colors.transparent,
-				height = 26,
-				border_width = 1,
-				corner_radius = 9,
-			},
-		})
-
-		space_item:subscribe("mouse.clicked", function()
-			sbar.exec("aerospace workspace --fail-if-noop " .. workspaceName)
-		end)
-
-		spaces[spaceId] = { item = space_item, bracket = space_bracket }
+		spaces[spaceId] = createWorkspaceItem(spaceId, workspaceName, monitorId)
 		workspaceToMonitorMap[workspaceName] = monitorId
 	end
 
-	spaces[spaceId].item:set({
-		icon = { highlight = isSelected },
-		label = { highlight = isSelected },
-	})
-	spaces[spaceId].bracket:set({
-		background = { border_color = isSelected and colors.dirty_white or colors.transparent },
-	})
-
+	updateWorkspaceAppearance(spaceId, isSelected)
 	updateSpaceIcons(spaceId, workspaceName)
 end
 
@@ -128,7 +135,6 @@ local function removeWorkspaceItem(spaceId)
 		if workspaceName then
 			workspaceToMonitorMap[workspaceName] = nil
 		end
-	else
 	end
 end
 
@@ -137,6 +143,8 @@ local function safeExec(command, callback)
 	sbar.exec(command, function(output)
 		if output then
 			callback(output)
+		else
+			print("Error: Command failed - " .. command)
 		end
 	end)
 end
@@ -178,7 +186,7 @@ end
 local function updateAllWorkspaces()
 	getMonitors(function(monitorList)
 		getFocusedWorkspace(function(focusedWorkspace)
-			local updatedSpaces = {} -- Guarda todos los worskpaces independiente de los monitores
+			local updatedSpaces = {}
 			for _, monitorId in ipairs(monitorList) do
 				getWorkspacesForMonitor(monitorId, function(workspaces)
 					for _, workspaceName in ipairs(workspaces) do
@@ -188,7 +196,7 @@ local function updateAllWorkspaces()
 						updatedSpaces[spaceId] = true
 					end
 
-					-- Remove obsolete workspaces for this monitor
+					-- Remove obsolete workspaces
 					for spaceId in pairs(spaces) do
 						if not updatedSpaces[spaceId] and spaceId:match("_%d+$") == "_" .. monitorId then
 							removeWorkspaceItem(spaceId)
@@ -203,18 +211,15 @@ end
 -- Initial setup
 updateAllWorkspaces()
 
+-- Observer for workspace changes
 local space_window_observer = sbar.add("item", {
 	drawing = false,
 	updates = true,
 })
 
-space_window_observer:subscribe(
-	--{ "aerospace_workspace_change", "front_app_switched", "space_windows_change" }, space_windwos_change lo ejecuto desde la config aerospace
-	{ "aerospace_workspace_change", "front_app_switched" },
-	function()
-		updateAllWorkspaces()
-	end
-)
+space_window_observer:subscribe({ "aerospace_workspace_change", "front_app_switched" }, function()
+	updateAllWorkspaces()
+end)
 
 -- Indicator for swapping menus and spaces
 local spaces_indicator = sbar.add("item", {
