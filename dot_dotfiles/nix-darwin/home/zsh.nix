@@ -2,13 +2,9 @@
   programs.zsh = {
     enable = true;
     autocd = true;
-    enableCompletion = true;
-    completionInit = "autoload -U compinit && compinit";
-    autosuggestion.enable = true; # Habilita las sugerencias de autocompletado
     #autosuggestion.highlight = "fg=#808080,bg=none,bold,underline";
     autosuggestion.highlight = "fg=#f8f8f2,bg=#272822,bold";
     #autosuggestion.highlight = "fg=#c79267,bg=#282a36,bold,italic";
-    autosuggestion.strategy = [ "history" "completion" ];
     syntaxHighlighting.enable = true; # Habilita el resaltado de sintaxis
     syntaxHighlighting.highlighters =
       [ "brackets" "pattern" "regexp" "cursor" "root" ];
@@ -16,29 +12,36 @@
     # Añadimos los patrones para abbr
     syntaxHighlighting.patterns = { "abbr *" = "fg=blue,bold"; };
 
+    enableCompletion = true;
+    #completionInit = "autoload -U compinit && compinit"; # Si se habilita este #deshabilita la caracteristicas de zsh-autocompletion
+    autosuggestion.enable = true; # Habilita las sugerencias de autocompletado
+    autosuggestion.strategy = [ "history" "completion" ];
+
     historySubstringSearch.enable = true; # Enable history substring search.
     sessionVariables = {
       HOSTNAME = "${builtins.getEnv "hostname"}"; # export HOSTNAME=$(hostname)
     };
 
-    #initExtra = builtins.readFile ./zshrc;
+    #initExtra = builtins.readFile ./zshrc
 
-    #initExtraFirst = "  # Commands that should be added to top of {file}.zshrc.
-    #";
+    # Commands that should be added to top of {file}.zshrc.
+    # initExtraFirst = ''
+    #   source $HOMEBREW_PREFIX/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+    # '';
 
     initExtra = ''
 
-      ABBR_DEFAULT_BINDINGS=0
-      bindkey "^ " abbr-expand-and-insert
+      #ABBR_DEFAULT_BINDINGS=0
+      #bindkey "^ " abbr-expand-and-insert
 
       export PATH=/run/current-system/sw/bin:$HOME/.nix-profile/bin:$PATH
-      if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+      if [ -e '/nix/var/nix/profiles/default/etc/profi:WEZTERM_PANEle.d/nix-daemon.sh' ]; then
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
       fi
 
       eval "$(/opt/homebrew/bin/brew shellenv)"
 
-      # Cargar funciones desde el archivo
+      # Cargar funciones
       source ~/.config/nix-darwin/home/zsh_func
 
       # Agregar pkgx al PATH y cargar su configuración
@@ -47,9 +50,8 @@
       # Integracion de thefuck
       eval $(thefuck --alias)
 
-      #[ -n "$WEZTERM_PANE" ] && export NVIM_LISTEN_ADDRESS="/tmp/nvim$WEZTERM_PANE"
-
       #export HOSTNAME=$(hostname)
+
       export STARSHIP_CONFIG=~/.config/starship/starship.toml
       eval "$(starship init zsh)"
 
@@ -62,20 +64,27 @@
       source <(carapace _carapace)
 
       # Abbreviations variables
-      ABiBR_GET_AVAILABLE_ABBREVIATION=1
-      ABBR_LOG_AVAILABLE_ABBREVIATION=1
-      ABBR_SET_EXPANSION_CURSOR=1
+      export ABBR_GET_AVAILABLE_ABBREVIATION=1
+      export ABBR_LOG_AVAILABLE_ABBREVIATION=1
+      export ABBR_SET_EXPANSION_CURSOR=1
 
-      # Load zsh-autosuggestions-abbreviations-strategy
+      # Load zsh-autosuggestions-abbreviations-strategy (Hombrew)
       source /opt/homebrew/share/zsh-autosuggestions-abbreviations-strategy/zsh-autosuggestions-abbreviations-strategy.zsh
-      ZSH_AUTOSUGGEST_STRATEGY=( abbreviations $ZSH_AUTOSUGGEST_STRATEGY )
+      export ZSH_AUTOSUGGEST_STRATEGY=( abbreviations $ZSH_AUTOSUGGEST_STRATEGY )
+
+      # Ghostty integration
+      if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
+          source "$GHOSTTY_RESOURCES_DIR"/shell-integration/zsh/ghostty-integration
+      fi
+
+      #source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
     '';
 
     zsh-abbr = {
       enable = true;
       abbreviations = {
-        update = "darwin-rebuild switch --flake ~/.dotfiles/nix-darwin/";
+        udarwin = "darwin-rebuild switch --flake ~/.dotfiles/nix-darwin/";
         uflake = "nix flake update --flake ~/.dotfiles/nix-darwin";
         ff =
           "aerospace list-windows --all | fzf --bind 'enter:execute(bash -c \"aerospace focus --window-id {1}\")+abort'";
@@ -83,6 +92,8 @@
           "sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder";
         allow_app =
           "codesign --sign - --force --deep @$ && xattr -d com.apple.quarantine @$"; # Para de-quarantine un app de MacOS
+        open_fzn =
+          "nvim $(fzf -m --preview='bat --style=numbers --color=always {}')";
       };
     };
 
@@ -105,6 +116,7 @@
         sk --preview 'bat --style=numbers --color=always {}' | xargs -n1
               nvim'';
       sshp = "ssh -o ProxyJump=sabaext";
+      c = "clear";
 
       urldecode =
         "python3 -c 'import sys, urllib.parse as ul; print(ul.unquote_plus(sys.stdin.read()))'";
