@@ -26,6 +26,8 @@
       # customize dock
       dock = {
         autohide = true;
+        autohide-delay = 0.0;
+        autohide-time-modifier = 0.15;
         orientation = "bottom";
         showhidden = true;
         show-recents = false; # disable recent apps

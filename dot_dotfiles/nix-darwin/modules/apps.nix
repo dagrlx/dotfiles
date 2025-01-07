@@ -30,6 +30,7 @@
   homebrew = {
     brewPrefix = "/opt/homebrew/bin";
     enable = true;
+    #macOS pone en cuarentena las aplicaciones descargadas de internet para mayor seguridad.
     #caskArgs.no_quarantine = true;
 
     onActivation = {

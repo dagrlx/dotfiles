@@ -15,6 +15,7 @@ theme = tokyonight
 background-opacity = 0.85
 background-blur-radius = 20
 
+font-family = "JetBrainsMono Nerd Font"
 font-size = 14
 
 # This assumes you installed tmux through brew if using macos
@@ -26,6 +27,17 @@ font-size = 14
 macos-titlebar-style = transparent
 #window-save-state = always
 
+# If `true`, the *Option* key will be treated as *Alt*. This makes terminal
+# sequences expecting *Alt* to work properly, but will break Unicode input
+# sequences on macOS if you use them via the *Alt* key. You may set this to
+# `false` to restore the macOS *Alt* key unicode sequences but this will break
+# terminal sequences expecting *Alt* to work.
+# 
+# The values `left` or `right` enable this for the left or right *Option*
+# key, respectively.
+# 
+# Note that if an *Option*-sequence doesn't produce a printable character, it
+# will be treated as *Alt* regardless of this setting. (i.e. `alt+ctrl+a`).
 #macos-option-as-alt = true
 
 shell-integration-features = cursor,sudo,title
