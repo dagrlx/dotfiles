@@ -81,6 +81,11 @@ return {
 					capabilities = capabilities,
 				})
 			end,
+			["yamlls"] = function()
+				lspconfig.yamlls.setup({
+					capabilities = capabilities,
+				})
+			end,
 			-- ["nil"] = function()
 			-- 	lspconfig.sqls.setup({
 			-- 		capabilities = capabilities,
