@@ -39,6 +39,24 @@ return {
 						return { "lsp", "path", "snippets", "buffer" }
 					end
 				end,
+
+				providers = {
+					lsp = {
+						min_keyword_length = 2, -- Number of characters to trigger provider
+						score_offset = 0, -- Boost/penalize the score of the items
+					},
+					path = {
+						min_keyword_length = 0,
+					},
+					snippets = {
+						min_keyword_length = 2,
+					},
+					buffer = {
+						min_keyword_length = 4,
+						max_items = 5,
+					},
+				},
+
 				-- Disable cmdline completions
 				-- cmdline = {},
 			},
@@ -54,9 +72,23 @@ return {
 			-- https://cmp.saghen.dev/configuration/completion.htm
 			completion = {
 
+				-- 'prefix' will fuzzy match on the text before the cursor
+				-- 'full' will fuzzy match on the text before *and* after the cursor
+				-- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
+
+				keyword = { range = "prefix" },
+
+				-- Disable auto brackets
+				-- NOTE: some LSPs may add auto brackets themselves anyway
+				accept = { auto_brackets = { enabled = false } },
+
 				-- https://cmp.saghen.dev/configuration/completion.html#menu
 				menu = {
+					-- Don't automatically show the completion menu
+					-- auto_show = false,
 					border = "rounded",
+
+					-- nvim-cmp style menu
 					draw = {
 						--columns = { { "label", "label_description", gap = 2 }, { "kind_icon", "kind", gap = 2 } },
 						treesitter = { "lsp" },
@@ -64,21 +96,29 @@ return {
 				},
 
 				-- https://cmp.saghen.dev/configuration/reference#completion-ghost-text
+				-- Display a preview of the selected item on the current line
 				ghost_text = { enabled = true },
 
 				-- https://cmp.saghen.dev/configuration/completion.html#documentation
 				documentation = {
 					auto_show = true,
 					auto_show_delay_ms = 200,
+					update_delay_ms = 50,
 					treesitter_highlighting = true,
 					window = { border = "rounded" },
 				},
 
 				-- https://cmp.saghen.dev/configuration/completion.html#list
+				-- Don't select by default, auto insert on selection
+				-- list = { selection = { preselect = false, auto_insert = true } },
+
 				list = {
-					selection = function(ctx)
-						return ctx.mode == "cmdline" and "auto_insert" or "preselect"
-					end,
+					selection = {
+						preselect = function(ctx)
+							-- return ctx.mode ~= "cmdline"
+							return ctx.mode ~= "cmdline" and not require("blink.cmp").snippet_active({ direction = 1 })
+						end,
+					},
 				},
 			},
 		},
