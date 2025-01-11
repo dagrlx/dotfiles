@@ -1,5 +1,6 @@
 # Mouse
 mouse-hide-while-typing = true
+mouse-scroll-multiplier = 2
 
 # Theme
 #theme = dark:catppuccin-mocha,light:catppuccin-latte
@@ -16,15 +17,18 @@ window-colorspace = display-p3
 
 # Some shaders can be found in this repo, they're usually uploaded to discord
 # https://github.com/hackrmomo/ghostty-shaders
-#custom-shader = shaders/matrix-hallway.glsl
-#custom-shader = shaders/starfield-colors.glsl
+custom-shader = shaders/inside-the-matrix.glsl
+#custom-shader = shaders/water.glsl
 #custom-shader = shaders/starfield.glsl
+#custom-shader = sparks-from-fire.glsl
 
 background-opacity = 0.85
+resize-overlay = always
 background-blur-radius = 20
 
 font-family = "JetBrainsMono Nerd Font"
 font-size = 14
+
 
 # This assumes you installed tmux through brew if using macos
 #command = zsh --login -c "if command -v tmux >/dev/null 2>&1; then tmux attach || tmux; else zsh; fi"
@@ -34,6 +38,10 @@ font-size = 14
 # Available values are: "native", "transparent", "tabs", and "hidden". (default is transparent)
 macos-titlebar-style = transparent
 #window-save-state = always
+
+window-padding-x = 10
+window-padding-y = 10
+window-padding-balance = true
 
 # Confirms that a surface should be closed before closing it.
 # 
@@ -55,7 +63,7 @@ confirm-close-surface = always
 # 
 # Note that if an *Option*-sequence doesn't produce a printable character, it
 # will be treated as *Alt* regardless of this setting. (i.e. `alt+ctrl+a`).
-#macos-option-as-alt = true
+macos-option-as-alt = right
 
 shell-integration-features = cursor,sudo,title
 
