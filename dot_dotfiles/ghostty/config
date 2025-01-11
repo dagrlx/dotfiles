@@ -4,7 +4,15 @@ mouse-hide-while-typing = true
 # Theme
 #theme = dark:catppuccin-mocha,light:catppuccin-latte
 #tokyonight
-theme = tokyonight
+theme = tokyonight_night
+
+# The colorspace to use for the terminal window. The default is `srgb` but
+# this can also be set to `display-p3` to use the Display P3 colorspace.
+# 
+# Changing this value at runtime will only affect new windows.
+# 
+# This setting is only supported on macOS.
+window-colorspace = display-p3
 
 # Some shaders can be found in this repo, they're usually uploaded to discord
 # https://github.com/hackrmomo/ghostty-shaders
@@ -26,6 +34,15 @@ font-size = 14
 # Available values are: "native", "transparent", "tabs", and "hidden". (default is transparent)
 macos-titlebar-style = transparent
 #window-save-state = always
+
+# Confirms that a surface should be closed before closing it.
+# 
+# This defaults to `true`. If set to `false`, surfaces will close without
+# any confirmation. This can also be set to `always`, which will always
+# confirm closing a surface, even if shell integration says a process isn't
+# running.
+confirm-close-surface = always
+
 
 # If `true`, the *Option* key will be treated as *Alt*. This makes terminal
 # sequences expecting *Alt* to work properly, but will break Unicode input
