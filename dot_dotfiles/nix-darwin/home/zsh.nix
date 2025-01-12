@@ -35,6 +35,8 @@
       # https://superuser.com/questions/997593/why-does-zsh-insert-a-when-i-press-the-delete-key/1078653#1078653
       bindkey "^[[3~" delete-char
 
+      bindkey '\C-z' undo
+
       #ABBR_DEFAULT_BINDINGS=0
       #bindkey "^ " abbr-expand-and-insert
 
