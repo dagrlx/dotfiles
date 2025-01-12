@@ -1,7 +1,10 @@
 return {
 	{
 		"saghen/blink.cmp",
-		dependencies = "rafamadriz/friendly-snippets",
+		dependencies = {
+			"rafamadriz/friendly-snippets",
+			{ "saghen/blink.compat", lazy = true, version = false },
+		},
 
 		version = "v0.*",
 
@@ -36,7 +39,7 @@ return {
 					then
 						return { "buffer" }
 					else
-						return { "lsp", "path", "snippets", "buffer" }
+						return { "lsp", "path", "snippets", "buffer", "obsidian", "obsidian_new", "obsidian_tags" }
 					end
 				end,
 
@@ -54,6 +57,20 @@ return {
 					buffer = {
 						min_keyword_length = 3,
 						max_items = 5,
+					},
+
+					--https://github.com/rbmarliere/dotfiles/commit/edae7c4933300faf024b6cf6585085351840bba1
+					obsidian = {
+						name = "obsidian",
+						module = "blink.compat.source",
+					},
+					obsidian_new = {
+						name = "obsidian_new",
+						module = "blink.compat.source",
+					},
+					obsidian_tags = {
+						name = "obsidian_tags",
+						module = "blink.compat.source",
 					},
 				},
 
@@ -76,7 +93,7 @@ return {
 				-- 'full' will fuzzy match on the text before *and* after the cursor
 				-- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
 
-				keyword = { range = "prefix" },
+				keyword = { range = "full" },
 
 				-- Disable auto brackets
 				-- NOTE: some LSPs may add auto brackets themselves anyway
@@ -86,6 +103,7 @@ return {
 				menu = {
 					-- Don't automatically show the completion menu
 					-- auto_show = false,
+
 					border = "rounded",
 
 					-- nvim-cmp style menu
