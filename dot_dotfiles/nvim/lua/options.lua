@@ -43,5 +43,8 @@ opt.backspace = "indent,eol,start" -- allow backspace on indent, end of line or 
 --opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 opt.clipboard = "unnamedplus"
 
+-- Configuración específica para archivos Markdown
+vim.cmd([[ augroup obsidian autocmd! autocmd BufEnter *.md set conceallevel=2 augroup END ]])
+
 -- disable codeium by default
 vim.g.codeium_enabled = false
