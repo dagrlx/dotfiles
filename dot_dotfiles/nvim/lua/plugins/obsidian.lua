@@ -30,5 +30,11 @@ return {
 		},
 
 		-- see below for full list of options 👇
+
+		-- Set nvim_cpm true completation is integrate with blink.compat (https://github.com/epwalsh/obsidian.nvim/issues/770#issuecomment-2564294774)
+		completion = {
+			nvim_cmp = true,
+			min_chars = 2,
+		},
 	},
 }
