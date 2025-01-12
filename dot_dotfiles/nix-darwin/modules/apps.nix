@@ -78,6 +78,7 @@
       "netbirdio/tap"
       "alienator88/cask"
       "olets/tap"
+      "lihaoyun6/tap"
     ];
 
     # `brew install`
@@ -206,7 +207,7 @@
       "kitty"
 
       "keepassxc"
-      "podman-desktop"
+      #"podman-desktop"
       "devpod" # desarrollo en container
       #"slack"
       "teamviewer"
@@ -228,7 +229,7 @@
       "grandperspective" # Muestra de forma grafica el uso del disco
       "keycastr" # Muestra la pulsación de las teclas en pantalla
       "hyperkey"
-      #"karabiner-elements" #Permite modificar/crear teclado y combinaciones de teclas 
+      "karabiner-elements" # Permite modificar/crear teclado y combinaciones de teclas
       "vlc"
       "keyclu" # Muestra la lista de shortcut de las aplicaciones que se seleccione
       "cleanupbuddy" # Bloque teclado y mouse para poder hacer limpieza a la mac
