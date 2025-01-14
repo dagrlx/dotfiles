@@ -24,7 +24,7 @@ window-colorspace = display-p3
 
 background-opacity = 0.85
 resize-overlay = always
-background-blur-radius = 20
+#background-blur-radius = 20
 
 font-family = "JetBrainsMono Nerd Font"
 font-size = 14
