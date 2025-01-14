@@ -32,6 +32,7 @@ end, { desc = "Fzf Files $HOME" })
 
 --- OIL ---
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+vim.keymap.set("n", "<leader>oi", "<cmd>lua require('oil').open_float('.')<CR>", { noremap = true, silent = true })
 
 -- Enable/Disable codeium
 keymap.set("n", "<leader>cd", "<cmd>CodeiumToggle<CR>", { desc = "Enable/Disable codeium" })
