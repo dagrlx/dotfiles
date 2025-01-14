@@ -297,7 +297,7 @@ if.app-id = 'org.keepassxc.keepassxc'
 run = ['layout floating', 'move-node-to-workspace Z']
 
 [[on-window-detected]]
-if.app-id = 'com.daisydiskapp.DaisyDiskStandAlone'
+if.app-id = 'com.daisydiskapp.DaisyDisk'
 run = ['layout floating']
 
 [[on-window-detected]]
