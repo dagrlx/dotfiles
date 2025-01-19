@@ -15,7 +15,7 @@ local icon_cache = {}
 
 -- Function to get the icon for an application
 local function getIconForApp(appName)
-	return icon_cache[appName] or (app_icons[appName] or app_icons["default"] or "?")
+	return icon_cache[appName] or app_icons[appName] or app_icons["Default"]
 end
 
 -- Function to update workspace icons
