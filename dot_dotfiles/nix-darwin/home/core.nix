@@ -84,8 +84,10 @@
     cacert # Equivalente en hombrew de ca-certificates
     #zsh-powerlevel10k
     nodejs
+    pm2
     ansible
-    nixfmt-classic # Formateador para nix
+    sqls  # LSP sql
+    #nixfmt-classic # Formateador para nix
 
     # productivity
     glow # markdown previewer in terminal
