@@ -121,7 +121,7 @@
       skn = ''
         sk --preview 'bat --style=numbers --color=always {}' | xargs -n1
               nvim'';
-      sshp = "ssh -o ProxyJump=sabaext";
+      sshp = "TERM=xterm-256color ssh -o ProxyJump=sabaext";
       c = "clear";
 
       urldecode =
