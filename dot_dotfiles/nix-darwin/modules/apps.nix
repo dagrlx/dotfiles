@@ -53,13 +53,13 @@
       #Xcode = 497799835;
       #"WireGuard" = 1451685025;
       #"Tomito" = 1526042937;
-      "Windows App" = 1295203466;
-      "CotEditor" = 1024640650;
+      #"Windows App" = 1295203466;
+      #"CotEditor" = 1024640650;
       #"MegaIPTVmacOS" = 1494386779;
       #"Airmail" = 918858936;
       #"Magnet" = 441258766;
-      "ScreenBrush" = 1233965871;
-      "Amphetamine" = 937984704;
+      #"ScreenBrush" = 1233965871;
+      #"Amphetamine" = 937984704;
       "The Unarchiver" = 425424353;
       #"You Search" = 1641136636;
     };
@@ -109,6 +109,7 @@
       #"yabai"
       #"skhd"
       "sketchybar"
+
       "lua" # Lenguaje para config sketchybar, aerospace
       #"lua-language-server"
       "rust"
@@ -121,7 +122,7 @@
 
       "nushell"
       "the_silver_searcher" # A code searching tool similar to ack, with a focus on speed.
-      "jq" # Se usa en yabai - Lightweight and flexible command-line JSON processor
+      #"jq" # Se usa en yabai - Lightweight and flexible command-line JSON processor
       "gh" # Se usa en pluing git sketchybar
       "btop" # monitoreo de recursos
       "sshs" # List and connect to hosts using ~/.ssh/config.
@@ -133,7 +134,7 @@
       #"atuin" # Shell history with SQLite
 
       #"talosctl"
-      "ntfs-3g-mac"
+      #"ntfs-3g-mac"
 
       #"pkgx" # Alternativa a hombrew
       "thefuck" # magnificent app that corrects your previous console command.
@@ -146,9 +147,9 @@
     casks = [
 
       "firefox"
+      "zen-browser"
       #"google-chrome"
-      "google-drive"
-      "brave-browser"
+      #"brave-browser"
       #{
       #  name = "microsoft-edge";
       #  greedy = true;
@@ -163,8 +164,8 @@
         greedy = true;
       }
 
-      #"vivaldi"
-      "visual-studio-code"
+      "vivaldi"
+      #"visual-studio-code"
       "zed"
       "microsoft-teams"
       "microsoft-auto-update"
@@ -172,8 +173,9 @@
       "syncthing" # file sync
       "raycast" # (HotKey: alt/option + space)search, caculate and run scripts(with many plugins)
       #"iglance" # beautiful system monitor
-      "mounty"
       "macfuse"
+      "mounty"
+     
       "vnc-viewer"
 
       #VPN
@@ -186,45 +188,51 @@
       "landrop"
       "keka"
       "KnockKnock"
-      "kopiaui"
-      "kubecontext"
+      #"kopiaui"
+      #"kubecontext"
       "maintenance"
       "onyx"
       "deeper"
       #"tyke" # App para tomar notas rapidas temporal
-      "applite" # App grafica homebrew - https://www.thriftmac.com
+      #"applite" # App grafica homebrew - https://www.thriftmac.com
+      "google-drive"
 
       "aerospace" # Tiling manager basado en i3wm
       "MonitorControl"
       "pearcleaner" # mac app cleaner
       "sentinel-app" # A GUI for controlling Gatekeeper
+      "ubersicht"
 
       #Terminales
       "wezterm"
-      "warp" # terminal con AI y wrapper
-      "wave" # terminal con AI alternativa a warp y es software libre
+      #"warp" # terminal con AI y wrapper
+      #"wave" # terminal con AI alternativa a warp y es software libre
       "ghostty" # Ghostty is a terminal emulator that differentiates itself by being fast, feature-rich, and native.
       "kitty"
 
       "keepassxc"
-      #"podman-desktop"
-      "devpod" # desarrollo en container
+      "podman-desktop"
+      #"devpod" # desarrollo en container
       #"slack"
       "teamviewer"
       "anydesk"
       "orbstack" # Docker y MV
       "appcleaner"
-      "diffusionbee" # Create Amazing Images Using AI
+      #"diffusionbee" # Create Amazing Images Using AI
       #"authy"
-      "utm"
+      #"utm"
       "numi" # calculadora
-      "stats"
+      #"stats"
       #"neovide"
       #"amazon-chime"
       "qbittorrent"
-      "send-anywhere"
+      #"send-anywhere"
       #"remote-desktop-manager"
+
       "telegram"
+      "whatsapp"
+      "zoom"
+
       #"wireshark" # network analyzer
       "grandperspective" # Muestra de forma grafica el uso del disco
       "keycastr" # Muestra la pulsación de las teclas en pantalla
@@ -237,11 +245,14 @@
       "obsidian"
       #"jordanbaird-ice" # Menu bar - Equivalente a bartender
       "tomatobar"
-      "kap"
-      "cap"
+      #"kap"
+      #"cap"
       #"spaceman"
-      "raspberry-pi-imager"
+      #"raspberry-pi-imager"
       "quickrecorder" # record screen
+      "shottr"
+
+      "font-sketchybar-app-font" # apps icons
 
       #Fonts for sketchybar, wezterm        
       "font-hack-nerd-font" # Font for sketchybar
@@ -250,7 +261,7 @@
       "font-sf-mono"
       "font-blex-mono-nerd-font"
 
-      "fly" # Command line interface to Concourse CI
+      #"fly" # Command line interface to Concourse CI
     ];
   };
 }
