@@ -84,7 +84,7 @@
     cacert # Equivalente en hombrew de ca-certificates
     #zsh-powerlevel10k
     nodejs
-    pm2
+    #pm2
     ansible
     sqls  # LSP sql
     #nixfmt-classic # Formateador para nix

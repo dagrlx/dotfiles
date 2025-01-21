@@ -16,14 +16,15 @@ local cal = sbar.add("item", {
 	label = {
 		color = colors.dirtywhite,
 		padding_right = 8,
-		width = 49,
+		width = 75, --49
 		align = "right",
 		font = { family = settings.font.numbers },
 	},
 	position = "right",
-	update_freq = 30,
+	update_freq = 1,
 	padding_left = 1,
 	padding_right = 1,
+
 	background = {
 		color = colors.bg2,
 		border_color = colors.lightblack,
@@ -46,9 +47,5 @@ sbar.add("bracket", { cal.name }, {
 sbar.add("item", { position = "right", width = settings.group_paddings })
 
 cal:subscribe({ "forced", "routine", "system_woke" }, function(env)
-	cal:set({ icon = os.date("%a. %d %b."), label = os.date("%H:%M") })
+	cal:set({ icon = os.date("%a. %d %b."), label = os.date("%H:%M:%S") })
 end)
-
--- cal:subscribe("mouse.clicked", function(env)
---   sbar.exec("open -a 'Calendar'")
--- end)
