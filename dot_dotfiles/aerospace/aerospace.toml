@@ -120,7 +120,7 @@ W = ['LG FHD', 'DELL P2419H']
 # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
 
 ctrl-enter = 'exec-and-forget open -a /Applications/WezTerm.app'
-ctrl-g = 'exec-and-forget open -na /Applications/Ghostty.app'
+ctrl-alt-g = 'exec-and-forget open -na /Applications/Ghostty.app'
 alt-g = 'exec-and-forget open -na /Applications/Ghostty.app --args -e nvim'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
