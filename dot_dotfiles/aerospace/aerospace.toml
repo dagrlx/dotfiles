@@ -301,8 +301,13 @@ if.app-id = 'com.daisydiskapp.DaisyDisk'
 run = ['layout floating']
 
 [[on-window-detected]]
+if.app-id = 'com.lihaoyun6.QuickRecorder'
+run = ['layout floating']
+
+[[on-window-detected]]
 if.app-id = 'com.microsoft.rdc.macos'
-run = ['layout floating', 'move-node-to-workspace 7']
+run = ['layout floating']
+check-further-callbacks = true
 
 [[on-window-detected]]
 if.app-id = 'com.microsoft.teams2'

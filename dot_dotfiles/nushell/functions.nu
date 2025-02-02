@@ -11,3 +11,12 @@ def ff [] {
     aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'
 }
 
+def sshp [target] {
+    let TERM = "xterm-256color";
+    ^ssh -o ProxyJump=sabaext $target
+}
+
+# def zen [arg] {
+#     ~/.config/sketchybar/plugins/zen.sh $arg
+# }
+

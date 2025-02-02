@@ -86,7 +86,7 @@
           true; # enable moving window by holding anywhere on it like on Linux
         NSAutomaticWindowAnimationsEnabled =
           false; # Whether to animate opening and closing of windows and popovers
-        "com.apple.keyboard.fnState" = true;  #Use F1, F2, etc. keys as standard function keys.
+        "com.apple.keyboard.fnState" = false;  #Use F1, F2, etc. keys as standard function keys.
       };
 
       # Customize settings that not supported by nix-darwin directly
