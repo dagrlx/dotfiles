@@ -2,6 +2,7 @@
 
 return {
 	"windwp/nvim-autopairs",
+	enabled = false,
 	event = { "InsertEnter" },
 	dependencies = {
 		"saghen/blink.cmp",

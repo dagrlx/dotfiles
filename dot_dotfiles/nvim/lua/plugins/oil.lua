@@ -1,64 +1,58 @@
--- ~/.config/nvim/lua/plugins/oil.lua
-
 return {
 	"stevearc/oil.nvim",
-	opts = {
-		keymaps = {
-			["g?"] = "actions.show_help",
-			["<CR>"] = "actions.select",
-			["<C-M-s>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
-			["<C-,>"] = {
-				"actions.select",
-				opts = { horizontal = true },
-				desc = "Open the entry in a horizontal split",
-			},
-			["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
-			["<C-0>"] = "actions.preview",
-			["<C-c>"] = "actions.close",
-			["<C-l>"] = "actions.refresh",
-			["-"] = "actions.parent",
-			["_"] = "actions.open_cwd",
-			["`"] = "actions.cd",
-			["~"] = { "actions.cd", opts = { scope = "tab" }, desc = ":tcd to the current oil directory" },
-			["gs"] = "actions.change_sort",
-			["gx"] = "actions.open_external",
-			["g."] = "actions.toggle_hidden",
-			["g\\"] = "actions.toggle_trash",
-		},
-		use_default_keymaps = false,
-		columns = {
-			"icon",
-			-- "permissions",
-			-- "size",
-			-- "mtime",
-		},
-		view_options = {
-			show_hidden = true,
-		},
-
-		float = {
-			-- Padding around the floating window
-			padding = 2,
-			max_width = 0,
-			max_height = 0,
-			border = "rounded",
-			win_options = {
-				winblend = 0,
-			},
-			-- This is the config that will be passed to nvim_open_win.
-			-- Change values here to customize the layout
-			override = function(conf)
-				-- Personaliza la posición de la ventana flotante
-				conf.relative = "editor"
-				conf.anchor = "NW" -- Esquina superior izquierda como punto de anclaje (NW,NE,SW,SE)
-				conf.row = 15 -- Ajusta el valor según la posición vertical deseada
-				conf.col = 150 -- Ajusta el valor según la posición horizontal deseada
-				conf.width = 80 -- Ancho de la ventana flotante
-				conf.height = 20 -- Altura de la ventana flotante
-				return conf
-			end,
-		},
-	},
 	-- Optional dependencies
-	dependencies = { "nvim-tree/nvim-web-devicons" },
+	dependencies = {
+		{ "echasnovski/mini.icons", opts = {} }, -- Use mini.icons for file icons
+		-- Alternatively, you can use nvim-web-devicons if preferred:
+		-- { "nvim-tree/nvim-web-devicons" },
+	},
+	lazy = false, -- Lazy loading is not recommended for Oil
+	config = function()
+		require("oil").setup({
+			default_file_explorer = true, -- Use Oil as the default file explorer
+			columns = {
+				"icon", -- Show file icons
+				-- Uncomment the following lines to enable additional columns:
+				-- "permissions",
+				-- "size",
+				-- "mtime",
+			},
+			keymaps = {
+				["<C-h>"] = false, -- Disable default mapping
+				["<C-c>"] = false, -- Prevent <C-c> from closing Oil (since it's often used as an escape key)
+				["<M-h>"] = "actions.select_split", -- Open file in a split
+				["q"] = "actions.close", -- Close Oil with 'q'
+			},
+			delete_to_trash = true, -- Move files to trash instead of deleting them permanently
+			skip_confirm_for_simple_edits = false, -- Require confirmation for simple edits
+			view_options = {
+				show_hidden = true, -- Show hidden files by default
+			},
+			float = {
+				padding = 2, -- Padding around the floating window
+				max_width = 90, -- Maximum width of the floating window (can be an integer or a percentage like 0.4)
+				max_height = 30, -- Maximum height of the floating window
+				border = "rounded", -- Border style for the floating window
+				win_options = {
+					winblend = 0, -- No transparency for the floating window
+				},
+				preview_split = "auto", -- Split direction for previews: "auto", "left", "right", "above", "below"
+				override = function(conf)
+					return conf -- Customize the layout by overriding the default configuration
+				end,
+			},
+		})
+
+		-- Keybindings
+		vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" }) -- Open Oil in the current directory
+		vim.keymap.set("n", "<leader>-", require("oil").toggle_float) -- Open Oil in a floating window
+
+		-- Autocommands
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "oil", -- Trigger on Oil file type
+			callback = function()
+				vim.opt_local.cursorline = true -- Enable cursorline in Oil buffers
+			end,
+		})
+	end,
 }

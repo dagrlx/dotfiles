@@ -25,7 +25,7 @@ exec-on-workspace-change = [
   '/bin/bash',
   '-c',
   'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
-  #'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0' 
+  #'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
 ]
 
 # Normalizations. See: https://nikitabobko.giaedrthub.io/AeroSpace/guide.html#normalization
@@ -79,7 +79,7 @@ inner.vertical = 10
 outer.left = 10
 outer.bottom = 10
 outer.top = 38
-#outer.top = [ {monitor.'^built-in retina display$' = 10}, 50 ] 
+#outer.top = [ {monitor.'^built-in retina display$' = 10}, 50 ]
 outer.right = 10
 
 # See https://nikitabobko.github.io/AeroSpace/guide#exec-env-vars
@@ -96,7 +96,7 @@ W = ['LG FHD', 'DELL P2419H']
 1 = ['DELL P2419H', 'LG FHD']
 2 = ['DELL P2419H', 'LG FHD']
 3 = ['DELL P2419H', 'LG FHD']
-4 = ['DELL P2419H', 'LG FHD', 'Built-in Retina Display']
+4 = ['DELL P2419H', 'LG FHD']
 5 = ['LG FHD', 'DELL P2419H']
 6 = ['LG FHD', 'DELL P2419H']
 7 = ['LG FHD', 'DELL P2419H']
@@ -121,6 +121,7 @@ W = ['LG FHD', 'DELL P2419H']
 
 ctrl-enter = 'exec-and-forget open -a /Applications/WezTerm.app'
 ctrl-alt-g = 'exec-and-forget open -na /Applications/Ghostty.app'
+alt-k = 'exec-and-forget open -na /Applications/Kitty.app'
 alt-g = 'exec-and-forget open -na /Applications/Ghostty.app --args -e nvim'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#layout
@@ -133,7 +134,7 @@ cmd-shift-v = 'layout v_tiles' # Cambie el diseño (layout) y la orientación de
 cmd-shift-h = 'layout h_tiles'
 #alt-shift-q = 'close --quit-if-last-window'
 
-# Para poder usar estas opciones hay que desactivar enable-normalization-flatten-containers 
+# Para poder usar estas opciones hay que desactivar enable-normalization-flatten-containers
 # https://nikitabobko.github.io/AeroSpace/commands#split
 #alt-v = 'split horizontal'
 #alt-x = 'split vertical'
@@ -278,7 +279,7 @@ run = ['layout tiling', 'move-node-to-workspace 1']
 
 [[on-window-detected]]
 if.app-id = "com.mitchellh.ghostty"
-run = 'move-node-to-workspace 4'
+run = ['layout floating', 'move-node-to-workspace 4']
 
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
@@ -315,7 +316,7 @@ run = ['move-node-to-workspace 2']
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'zoom'
-run = ['layout floating', 'move-node-to-workspace 6']
+run = ['layout floating', 'move-node-to-workspace Z']
 
 [[on-window-detected]]
 if.app-id = 'com.vivaldi.Vivaldi'

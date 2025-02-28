@@ -8,6 +8,8 @@ return {
 	dependencies = {
 		"windwp/nvim-ts-autotag",
 		"nvim-treesitter/nvim-treesitter-textobjects",
+		"nushell/tree-sitter-nu",
+		"bezhermoso/tree-sitter-ghostty",
 	},
 
 	config = function()
@@ -28,6 +30,7 @@ return {
 				"gitignore",
 				"markdown",
 				"markdown_inline",
+				"nu", -- nushell
 				"nix",
 				"passwd",
 				"php",

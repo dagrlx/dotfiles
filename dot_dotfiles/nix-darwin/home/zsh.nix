@@ -90,8 +90,8 @@
     zsh-abbr = {
       enable = true;
       abbreviations = {
-        udarwin = "darwin-rebuild switch --flake ~/.dotfiles/nix-darwin/";
-        uflake = "nix flake update --flake ~/.dotfiles/nix-darwin";
+        ufd = "darwin-rebuild switch --flake ~/.dotfiles/nix-darwin/";
+        ufn = "nix flake update --flake ~/.dotfiles/nix-darwin";
         ff =
           "aerospace list-windows --all | fzf --bind 'enter:execute(bash -c \"aerospace focus --window-id {1}\")+abort'";
         flushdns =
@@ -105,13 +105,14 @@
 
     shellAliases = {
       rustscan =
-        "docker run -it --rm --name rustscan --platform linux/amd64 rustscan/rustscan";
+      "docker run -it --rm --name rustscan --platform linux/amd64 rustscan/rustscan";
       "..." = "cd ../..";
-      #update = "darwin-rebuild switch --flake ~/.config/nix-darwin/";
-      #uflake = "nix flake update --flake ~/.config/nix-darwin";
+      #ufd = "darwin-rebuild switch --flake ~/.dotfiles/nix-darwin/";
+      #ufn = "nix flake update --flake ~/.dotfiles/nix-darwin";
       ngc = "nix-collect-garbage -d";
       sgc = "sudo nix-collect-garbage -d";
       bcp0 = "brew cleanup --prune=0";
+      brew-up ="brew update; brew upgrade; brew upgrade --cask --greedy"; 
       #flushdns = "sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder";
       #allow_app = "codesign --sign - --force --deep @$ && xattr -d com.apple.quarantine @$"; # Para de-quarantine un app de MacOS
       n = "nano -clS";
@@ -121,7 +122,9 @@
       skn = ''
         sk --preview 'bat --style=numbers --color=always {}' | xargs -n1
               nvim'';
-      sshp = "TERM=xterm-256color ssh -o ProxyJump=sabaext";
+      sshtp = "TERM=xterm-256color ssh -o ProxyJump=sabaext";
+      sshp = "ssh -o ProxyJump=sabaext";
+      ssht = "TERM=xterm-256color ssh";
       c = "clear";
 
       urldecode =

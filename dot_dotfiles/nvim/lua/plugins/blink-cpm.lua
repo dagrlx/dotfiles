@@ -39,11 +39,26 @@ return {
 					then
 						return { "buffer" }
 					else
-						return { "lsp", "path", "snippets", "buffer", "obsidian", "obsidian_new", "obsidian_tags" }
+						return {
+							"lazydev",
+							"lsp",
+							"path",
+							"snippets",
+							"buffer",
+							"obsidian",
+							"obsidian_new",
+							"obsidian_tags",
+						}
 					end
 				end,
 
 				providers = {
+					lazydev = {
+						name = "LazyDev",
+						module = "lazydev.integrations.blink",
+						-- make lazydev completions top priority (see `:h blink.cmp`)
+						score_offset = 100,
+					},
 					lsp = {
 						min_keyword_length = 2, -- Number of characters to trigger provider
 						score_offset = 0, -- Boost/penalize the score of the items
@@ -82,6 +97,7 @@ return {
 			signature = {
 				enabled = true,
 				window = {
+					show_documentation = false, -- only show the signature, and not the documentation.
 					border = "rounded",
 				},
 			},
@@ -93,11 +109,14 @@ return {
 				-- 'full' will fuzzy match on the text before *and* after the cursor
 				-- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
 
-				keyword = { range = "full" },
+				keyword = { range = "prefix" },
 
 				-- Disable auto brackets
 				-- NOTE: some LSPs may add auto brackets themselves anyway
-				accept = { auto_brackets = { enabled = false } },
+				accept = {
+					create_undo_point = true,
+					auto_brackets = { enabled = false },
+				},
 
 				-- https://cmp.saghen.dev/configuration/completion.html#menu
 				menu = {
@@ -108,19 +127,19 @@ return {
 
 					-- nvim-cmp style menu
 					draw = {
-						--columns = { { "label", "label_description", gap = 2 }, { "kind_icon", "kind", gap = 2 } },
+						columns = { { "label", "label_description", gap = 2 }, { "kind_icon", "kind", gap = 2 } },
 						treesitter = { "lsp" },
 					},
 				},
 
 				-- https://cmp.saghen.dev/configuration/reference#completion-ghost-text
 				-- Display a preview of the selected item on the current line
-				ghost_text = { enabled = true },
+				-- ghost_text = { enabled = true },
 
 				-- https://cmp.saghen.dev/configuration/completion.html#documentation
 				documentation = {
 					auto_show = true,
-					auto_show_delay_ms = 200,
+					auto_show_delay_ms = 300,
 					update_delay_ms = 50,
 					treesitter_highlighting = true,
 					window = { border = "rounded" },

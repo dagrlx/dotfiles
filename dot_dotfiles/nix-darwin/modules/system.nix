@@ -150,7 +150,11 @@
   };
 
   # Add ability to used TouchID for sudo authentication
-  security.pam.enableSudoTouchIdAuth = true;
+  # security.pam.enableSudoTouchIdAuth = true; # depreciated
+  security.pam.services.sudo_local.touchIdAuth = true;
+  
+  # This fixes Touch ID for sudo not working inside tmux and screen.
+  security.pam.services.sudo_local.reattach = true;
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   # this is required if you want to use darwin's default shell - zsh
@@ -175,20 +179,6 @@
       nerd-fonts.jetbrains-mono
       nerd-fonts.fira-code
       nerd-fonts.iosevka
-
-      # (Obsolete) from NixOS 24.11 nerdfonts has been separated into individual font packages under the namespace nerd-fonts
-      # nerdfonts
-      # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/pkgs/data/fonts/nerdfonts/shas.nix
-      # (nerdfonts.override {
-      #   fonts = [
-      #     # symbols icon only
-      #     "NerdFontsSymbolsOnly"
-      #     # Characters
-      #     "FiraCode"
-      #     "JetBrainsMono"
-      #     "Iosevka"
-      #   ];
-      # })
     ];
   };
 

@@ -5,11 +5,11 @@ return {
 	version = "*", -- This keeps it pinned to semantic releases
 	event = "VeryLazy",
 	dependencies = {
-		"nvim-lua/plenary.nvim",
-		"MunifTanjim/nui.nvim",
-		"rcarriga/nvim-notify",
+		"nvim-lua/plenary.nvim", -- For standard functions
+		"MunifTanjim/nui.nvim", -- To build the plugin UI
+		-- "rcarriga/nvim-notify",
 		-- This would be an optional dependency eventually
-		"nvim-telescope/telescope.nvim",
+		"nvim-telescope/telescope.nvim", -- For picking b/w different remote methods
 	},
 	config = true, -- This calls the default setup(); make sure to call it
 

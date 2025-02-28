@@ -7,9 +7,9 @@ opt.number = true
 opt.relativenumber = true
 opt.cursorline = true -- Resalta la línea donde está el cursor
 opt.cursorcolumn = true
---vim.opt.wrap = true -- Hace que el texto de las líneas largas (las que sobrepasan el ancho de la pantalla) siempre esté visible.
+vim.opt.wrap = true -- Hace que el texto de las líneas largas (las que sobrepasan el ancho de la pantalla) siempre esté visible.
 opt.breakindent = true -- Conserva la indentación de las líneas que sólo son visibles cuando wrap es true
-opt.textwidth = 80
+opt.textwidth = 0 -- valor 0 desactiva la opción (valores 80 o 120)
 -- tabs & indentation
 opt.tabstop = 4 -- La cantidad de carácteres que ocupa Tab. El valor por defecto es 8.
 opt.shiftwidth = 4 -- El espacio que Neovim usará para indentar una línea (en consonancia con tabstop)

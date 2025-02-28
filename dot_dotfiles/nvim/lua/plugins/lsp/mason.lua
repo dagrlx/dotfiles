@@ -58,6 +58,7 @@ return {
 				"eslint_d", -- JavaScript linter
 				"sql-formatter", -- sql formatter
 				"shellcheck", -- script
+				"yamllint", -- yaml linter
 				--"nixpkgs-fmt", -- nix
 			},
 			automatic_installation = true,

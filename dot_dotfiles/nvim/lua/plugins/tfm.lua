@@ -2,6 +2,7 @@
 
 return {
 	"rolv-apneseth/tfm.nvim",
+	-- enabled = false,
 	lazy = false,
 	opts = {
 		-- TFM to use

@@ -166,12 +166,10 @@
 
     zellij = {
       enable = true;
+      enableBashIntegration = false;
+      enableZshIntegration = false;
       settings = {
         theme = "catppuccin-macchiato";
-        # key_bindings = {
-        #   primary_modifier = "Ctrl"; # Tecla modificadora primaria
-        #   secondary_modifier = "Shift"; # key secondary_modifier
-        # };
       };
     };
 

@@ -84,6 +84,21 @@ return {
 			["yamlls"] = function()
 				lspconfig.yamlls.setup({
 					capabilities = capabilities,
+					settings = {
+						yaml = {
+							schemas = {
+								["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+								["https://json.schemastore.org/kustomization.json"] = "kustomization.yaml",
+								-- Agrega más esquemas según sea necesario
+							},
+							format = {
+								enable = true,
+							},
+							validate = true,
+							completion = true,
+							hover = true,
+						},
+					},
 				})
 			end,
 			-- ["nil"] = function()

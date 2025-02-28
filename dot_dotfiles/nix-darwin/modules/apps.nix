@@ -79,6 +79,7 @@
         "alienator88/cask"
         "olets/tap"
         "lihaoyun6/tap"
+        "TheZoraiz/ascii-image-converter"
     ];
 
     # `brew install`
@@ -89,6 +90,9 @@
         "aria2" # download tool
         "httpie" # http client
         "duckdns"
+
+        "coreutils"
+
         "podman"
         "podlet"
 
@@ -101,9 +105,13 @@
         "neovim"
         "luacheck"
 
+        "superfile"
+        "broot"
         "yazi" # file manager
         "poppler" # para PDF preview en yazi
         "rich-cli" # for yazi plugin rich-preview
+
+        "ascii-image-converter"
 
         ##Tiling windows manager
         #"yabai"
@@ -112,6 +120,7 @@
 
         "lua" # Lenguaje para config sketchybar, aerospace
         #"lua-language-server"
+        "go"
         "rust"
         "switchaudio-osx"
         "nowplaying-cli"
@@ -140,10 +149,9 @@
         "thefuck" # magnificent app that corrects your previous console command
 
         "tabiew" # Lector de archvio csv con consultas sql"
+        "aichat"  # all-in-one LLM CLI tool featuring Shell Assistant, CMD & REPL Mode, RAG, AI Tools & Agents, and More.
 
-        ##### AI tool
-        "lm-studio"  # App for testing llms models
-
+        "pam-reattach" # PAM module for reattaching to the user's GUI session (touchID)
 
     ];
 
@@ -170,8 +178,12 @@
       }
 
         "vivaldi"
+        
+        # Desarrollo y scripts    
         #"visual-studio-code"
         "zed"
+        "devpod"
+
         "microsoft-teams"
         "microsoft-auto-update"
         "windows-app" # new app for RDP
@@ -266,6 +278,10 @@
         "font-sf-mono"
         "font-blex-mono-nerd-font"
 
+         ##### AI tool
+        "lm-studio"  # App for testing llms models
+        "gpt4all"
+        
         #"fly" # Command line interface to Concourse CI
     ];
   };
