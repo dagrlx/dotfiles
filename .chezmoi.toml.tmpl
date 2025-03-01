@@ -1,9 +1,11 @@
 encryption = "age"
+
 [age]
-    identity = "~/.config/chezmoi/key_chezmoi.age"
-    recipient = "age1xss2p707mx7c56hyxkvxmrswvhlgs9qnly0ywmehc3s347mxes7sm0hp3c"
+identity = "~/.config/chezmoi/key_chezmoi.age"
+recipient = "age1xss2p707mx7c56hyxkvxmrswvhlgs9qnly0ywmehc3s347mxes7sm0hp3c"
 
 [git]
-    autoCommit = false
-    #commitMessageTemplate = "{{ `promptString \"Commit message\"` }}"
-    autoPush = false
+autoCommit = true
+commitMessageTemplate = "{{ `{{ promptString \"Commit message\" }}` }}"
+# autoPush = true
+
