@@ -119,10 +119,10 @@
       cat = "bat";
 
       # Chezmoi y git
-      chcd = "chezmoi cd"
-      chra = "chezmoi re-add"
-      chd = "chezmoi destroy"
-      gp = "git push origin main"
+      chcd = "chezmoi cd";
+      chra = "chezmoi re-add";
+      chd = "chezmoi destroy";
+      gp = "git push origin main";
 
       fzn =
         "fzf --preview 'bat --style=numbers --color=always {}' | xargs -n1 nvim";
