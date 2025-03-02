@@ -5,6 +5,12 @@ $env.config.edit_mode = "vi"
 # Show only startup time  
 $env.config.show_banner = "short"
 
+# use_kitty_protocol (bool):
+# A keyboard enhancement protocol supported by the Kitty Terminal. Additional keybindings are
+# available when using this protocol in a supported terminal. For example, without this protocol,
+# Ctrl+I is interpreted as the Tab Key. With this protocol, Ctrl+I and Tab can be mapped separately.
+$env.config.use_kitty_protocol = true
+
 #$env.config.buffer_editor = "nvim"
 
 # Lista archivos y directorios en formato árbol con detalles

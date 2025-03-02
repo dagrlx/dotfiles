@@ -1,5 +1,4 @@
 encryption = "age"
-
 [age]
 identity = "~/.config/chezmoi/key_chezmoi.age"
 recipient = "age1xss2p707mx7c56hyxkvxmrswvhlgs9qnly0ywmehc3s347mxes7sm0hp3c"
@@ -9,3 +8,11 @@ autoCommit = true
 commitMessageTemplate = "{{ `{{ promptString \"Commit message\" }}` }}"
 # autoPush = true
 
+[merge]
+    command = "nvim"
+    args = [
+        "-d",
+        {{ printf "%q" "{{ .Destination }}" }},
+        {{ printf "%q" "{{ .Source }}" }},
+        {{ printf "%q" "{{ .Target }}" }},
+    ]
