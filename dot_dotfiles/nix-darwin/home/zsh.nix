@@ -117,6 +117,13 @@
       #allow_app = "codesign --sign - --force --deep @$ && xattr -d com.apple.quarantine @$"; # Para de-quarantine un app de MacOS
       n = "nano -clS";
       cat = "bat";
+
+      # Chezmoi y git
+      chcd = "chezmoi cd"
+      chra = "chezmoi re-add"
+      chd = "chezmoi destroy"
+      gp = "git push origin main"
+
       fzn =
         "fzf --preview 'bat --style=numbers --color=always {}' | xargs -n1 nvim";
       skn = ''
