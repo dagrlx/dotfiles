@@ -90,6 +90,7 @@
         "aria2" # download tool
         "httpie" # http client
         "duckdns"
+        "iproute2mac"
 
         "coreutils"
 
