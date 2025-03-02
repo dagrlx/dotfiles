@@ -1,3 +1,6 @@
 .DS_Store
 flake.lock
+Thumbs.db
+key_chezmoi.age 
+key.txt
 
