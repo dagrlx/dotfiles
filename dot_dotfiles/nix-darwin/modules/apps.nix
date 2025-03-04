@@ -111,6 +111,7 @@
         "yazi" # file manager
         "poppler" # para PDF preview en yazi
         "rich-cli" # for yazi plugin rich-preview
+        "imagemagick"
 
         "ascii-image-converter"
 
@@ -278,6 +279,8 @@
         "sf-symbols" # iconos
         "font-sf-mono"
         "font-blex-mono-nerd-font"
+        "font-symbols-only-nerd-font"
+
 
          ##### AI tool
         "lm-studio"  # App for testing llms models
