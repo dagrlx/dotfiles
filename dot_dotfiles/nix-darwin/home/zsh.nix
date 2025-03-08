@@ -112,7 +112,7 @@
       ngc = "nix-collect-garbage -d";
       sgc = "sudo nix-collect-garbage -d";
       bcp0 = "brew cleanup --prune=0";
-      brew-up ="brew update; brew upgrade; brew upgrade --cask --greedy"; 
+      brew-up ="brew update && brew upgrade && brew upgrade --cask --greedy"; 
       #flushdns = "sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder";
       #allow_app = "codesign --sign - --force --deep @$ && xattr -d com.apple.quarantine @$"; # Para de-quarantine un app de MacOS
       n = "nano -clS";
