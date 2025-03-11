@@ -109,8 +109,14 @@
       "..." = "cd ../..";
       #ufd = "darwin-rebuild switch --flake ~/.dotfiles/nix-darwin/";
       #ufn = "nix flake update --flake ~/.dotfiles/nix-darwin";
+      # Operates only for the current user
+      # https://nixos.wiki/wiki/Storage_optimization#cite_note-4
       ngc = "nix-collect-garbage -d";
+      # You can remove all but the current generation with
+      # Or all generations older than a specific period (e.g. 30 days)
+      # sudo nix-collect-garbage --delete-older-than 30d      
       sgc = "sudo nix-collect-garbage -d";
+      dlg = "darwin-rebuild --list-generations";
       bcp0 = "brew cleanup --prune=0";
       brew-up ="brew update && brew upgrade && brew upgrade --cask --greedy"; 
       #flushdns = "sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder";
