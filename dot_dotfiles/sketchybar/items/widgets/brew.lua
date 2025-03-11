@@ -22,7 +22,7 @@ local brew = sbar.add("item", "widgets.brew", {
 		font = { family = settings.font.numbers },
 	},
 	updates = "on",
-	update_freq = 10,
+	update_freq = 60, -- Update every 60 seg
 })
 
 function GetThresholdColor(count)
