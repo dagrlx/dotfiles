@@ -8,10 +8,6 @@ function brew() {
   fi
 }
 
-function zen () {
-  ~/.config/sketchybar/plugins/zen.sh $1
-}
-#
 # nvt() {
 #   nvim $(fzf -m --preview='bat --style=numbers --color=always {}')
 # }
