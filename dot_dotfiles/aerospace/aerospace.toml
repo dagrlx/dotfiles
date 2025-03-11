@@ -53,12 +53,15 @@ key-mapping.preset = 'qwerty'
 # See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 # Fallback value (if you omit the key): on-focused-monitor-changed = []
-on-focused-monitor-changed = ['move-mouse --fail-if-noop monitor-lazy-center']
+on-focused-monitor-changed = [
+  'move-mouse  monitor-lazy-center',
+  'exec-and-forget sketchybar --trigger aerospace_monitor_change FOCUSED_MONITOR=$AEROSPACE_FOCUSED_MONITOR',
+]
 
 # Mouse lazily follows any focus (window or workspace)
 on-focus-changed = [
-  'move-mouse --fail-if-noop window-lazy-center',
-  'exec-and-forget sketchybar --trigger space_windows_change',
+  'move-mouse  window-lazy-center',
+  'exec-and-forget sketchybar --trigger aerospace_focus_change',
 ]
 
 # You can effectively turn off macOS "Hide application" (cmd-h) feature by toggling this flag
@@ -140,6 +143,7 @@ cmd-shift-h = 'layout h_tiles'
 #alt-x = 'split vertical'
 
 alt-ctrl-f = 'fullscreen'
+
 alt-shift-f = 'macos-native-fullscreen'
 
 shift-alt-b = 'balance-sizes'
@@ -178,17 +182,17 @@ ctrl-alt-6 = 'workspace 6'
 ctrl-alt-7 = 'workspace 7'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-#alt-cmd-t = 'move-node-to-workspace --focus-follows-window --fail-if-noop T'
-#alt-cmd-c = 'move-node-to-workspace --fail-if-noop C'
-alt-cmd-z = 'move-node-to-workspace --fail-if-noop Z'
-alt-cmd-w = 'move-node-to-workspace --focus-follows-window --fail-if-noop W'
-alt-cmd-1 = 'move-node-to-workspace --focus-follows-window --fail-if-noop 1'
-alt-cmd-2 = 'move-node-to-workspace --focus-follows-window --fail-if-noop 2'
-alt-cmd-3 = 'move-node-to-workspace --focus-follows-window --fail-if-noop 3'
-alt-cmd-4 = 'move-node-to-workspace --focus-follows-window --fail-if-noop 4'
-alt-cmd-5 = 'move-node-to-workspace --focus-follows-window --fail-if-noop 5'
-alt-cmd-6 = 'move-node-to-workspace --focus-follows-window --fail-if-noop 6'
-alt-cmd-7 = 'move-node-to-workspace --focus-follows-window --fail-if-noop 7'
+#alt-cmd-t = 'move-node-to-workspace --focus-follows-window  T'
+#alt-cmd-c = 'move-node-to-workspace  C'
+alt-cmd-z = 'move-node-to-workspace Z'
+alt-cmd-w = 'move-node-to-workspace --focus-follows-window W'
+alt-cmd-1 = 'move-node-to-workspace --focus-follows-window 1'
+alt-cmd-2 = 'move-node-to-workspace --focus-follows-window 2'
+alt-cmd-3 = 'move-node-to-workspace --focus-follows-window 3'
+alt-cmd-4 = 'move-node-to-workspace --focus-follows-window 4'
+alt-cmd-5 = 'move-node-to-workspace --focus-follows-window 5'
+alt-cmd-6 = 'move-node-to-workspace --focus-follows-window 6'
+alt-cmd-7 = 'move-node-to-workspace --focus-follows-window 7'
 
 # https://nikitabobko.github.io/AeroSpace/commands#workspace
 alt-shift-right = 'workspace next'
