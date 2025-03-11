@@ -66,7 +66,6 @@
 
     taps = [
         "homebrew/services"
-        #"romkatv/powerlevel10k"
         "jzelinskie/duckdns"
         "koekeishiya/formulae"
         "FelixKratz/formulae"
@@ -231,7 +230,6 @@
 
         "keepassxc"
         "podman-desktop"
-        #"devpod" # desarrollo en container
         #"slack"
         "teamviewer"
         "anydesk"
