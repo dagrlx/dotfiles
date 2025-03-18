@@ -96,6 +96,8 @@
         "podman"
         "podlet"
 
+        "zellij"
+
         #"sesh" # session manager for tmux
 
         #"zsh-autocomplete"
