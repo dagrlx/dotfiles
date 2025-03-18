@@ -92,6 +92,11 @@ in {
       source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/ghostty";
       recursive = true;
     };
+
+    "zellij" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/zellij";
+      recursive = true;
+    };
   };
 
   # Let Home Manager install and manage itself.
