@@ -25,8 +25,11 @@
 
       # customize dock
       dock = {
+        # auto show and hide dock
         autohide = true;
+        # remove delay for showing dock
         autohide-delay = 0.0;
+        # how fast is the dock showing animation
         autohide-time-modifier = 0.15;
         orientation = "bottom";
         showhidden = true;
