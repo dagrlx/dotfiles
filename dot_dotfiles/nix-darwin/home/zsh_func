@@ -1,13 +1,12 @@
 # ~/config/nix-darwin/home/func_zsh
 
-function brew() {
-  command brew "$@" 
-
-  if [[ $* =~ "upgrade" ]] || [[ $* =~ "update" ]] || [[ $* =~ "outdated" ]]; then
-    sketchybar --trigger brew_update
-  fi
-}
-
+# function brew() {
+#   command brew "$@" 
+#   if [[ $* =~ "upgrade" ]] || [[ $* =~ "update" ]] || [[ $* =~ "outdated" ]]; then
+#     sketchybar --trigger brew_update
+#   fi
+# }
+#
 # nvt() {
 #   nvim $(fzf -m --preview='bat --style=numbers --color=always {}')
 # }
