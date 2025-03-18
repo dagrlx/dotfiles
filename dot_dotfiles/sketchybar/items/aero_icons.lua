@@ -227,7 +227,7 @@ sbar.add("item", {
 	updates = true,
 }):subscribe("aerospace_monitor_change", function(env)
 	local focused_monitor = env.FOCUSED_MONITOR
-	print("Monitor enfocado: " .. focused_monitor)
+	-- print("Monitor enfocado: " .. focused_monitor)
 	-- Aquí puedes añadir lógica para actualizar la interfaz según el monitor
 end)
 
@@ -236,7 +236,7 @@ sbar.add("item", {
 	drawing = false,
 	updates = true,
 }):subscribe("aerospace_focus_change", function()
-	print("El foco ha cambiado")
+	-- print("El foco ha cambiado")
 	-- Aquí puedes añadir lógica para actualizar la interfaz según el foco
 end)
 
