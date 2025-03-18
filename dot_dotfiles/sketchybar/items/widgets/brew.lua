@@ -3,7 +3,6 @@ local colors = require("colors")
 local settings = require("settings")
 
 local thresholds = {
-	-- default color green will be returned if count is less than the first threshold
 	[3] = colors.yellow,
 	[5] = colors.orange,
 	[10] = colors.red,
@@ -22,10 +21,11 @@ local brew = sbar.add("item", "widgets.brew", {
 		font = { family = settings.font.numbers },
 	},
 	updates = "on",
-	update_freq = 60, -- Update every 60 seg
+	update_freq = 60, -- Actualiza cada 60 segundos
 })
 
-function GetThresholdColor(count)
+-- Función para determinar el color según el umbral
+local function GetThresholdColor(count)
 	local thresholdKeys = {}
 	for key in pairs(thresholds) do
 		table.insert(thresholdKeys, key)
@@ -43,21 +43,21 @@ function GetThresholdColor(count)
 	return colors.green
 end
 
-brew:subscribe({ "routine", "brew_update" }, function()
+-- Función que ejecuta brew outdated y actualiza el widget
+local function update_brew_status()
 	sbar.exec("brew outdated | wc -l | tr -d ' '", function(brew_outdated)
 		local icon = icons.brew.empty
 		local color = colors.green
 		local label = "0"
-		local count = brew_outdated
 		local drawing = "off"
 
-		if tonumber(count) > 0 then
+		if tonumber(brew_outdated) > 0 then
 			icon = icons.brew.full
-			label = count
-			color = GetThresholdColor(count)
+			label = brew_outdated
+			color = GetThresholdColor(brew_outdated)
 			drawing = "on"
 		end
-		--print("color: ", color, "count: ", count, "icon: ", icon, "label: ", label, "drawing: ", drawing)
+
 		brew:set({
 			icon = {
 				string = icon,
@@ -67,8 +67,12 @@ brew:subscribe({ "routine", "brew_update" }, function()
 			label = { string = label },
 		})
 	end)
-end)
+end
 
+-- Suscribir a eventos de actualización
+brew:subscribe({ "routine", "brew_update" }, update_brew_status)
+
+-- Agregar un bracket y padding como en el original
 sbar.add("bracket", "widgets.brew.bracket", { brew.name }, {
 	background = { color = colors.bg1 },
 })
@@ -77,3 +81,13 @@ sbar.add("item", "widgets.brew.padding", {
 	position = "right",
 	width = settings.group_paddings,
 })
+
+-- Detecta si se ejecuto manualmente algunos de los comando y actualiza el widget
+sbar.exec(
+	[[
+pgrep -lf "brew (upgrade|update|outdated)" | grep -q "brew" && sketchybar --trigger brew_update
+]],
+	function()
+		sbar.trigger("brew_update")
+	end
+)
