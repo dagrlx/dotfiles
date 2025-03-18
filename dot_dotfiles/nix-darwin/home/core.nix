@@ -164,14 +164,14 @@
       enableNushellIntegration = true;
     };
 
-    zellij = {
-      enable = true;
-      enableBashIntegration = false;
-      enableZshIntegration = false;
-      settings = {
-        theme = "catppuccin-macchiato";
-      };
-    };
+    # zellij = {
+    #   enable = true;
+    #   enableBashIntegration = false;
+    #   enableZshIntegration = false;
+    #   settings = {
+    #     theme = "catppuccin-macchiato";
+    #   };
+    # };
 
     ripgrep = {
       enable = true;
