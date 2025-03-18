@@ -1,41 +1,41 @@
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-filter"
-rev = "3d0c7c6"
+rev = "79193b3"
 hash = "f0c4b41b5d19a3144958383333eff6e7"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:smart-enter"
-rev = "3d0c7c6"
+rev = "79193b3"
 hash = "7918aab6a71caf31b58411f789195677"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:jump-to-char"
-rev = "3d0c7c6"
+rev = "79193b3"
 hash = "a670c03eb3760812e044a24f94cedc55"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:max-preview"
-rev = "3d0c7c6"
+rev = "79193b3"
 hash = "a8025f2bb311e869069364fba01abffc"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:hide-preview"
-rev = "3d0c7c6"
+rev = "79193b3"
 hash = "53f826884e2c7e521cecc492a7f31d7e"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
-rev = "3d0c7c6"
+rev = "79193b3"
 hash = "2f1053f89d1a301a648ab181d0948e38"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
-rev = "3d0c7c6"
+rev = "79193b3"
 hash = "7a08e303167d5b655c06da6d570f0333"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mime-ext"
-rev = "3d0c7c6"
+rev = "79193b3"
 hash = "1f9fc0e55ff859a32e793833403ee7bd"
 
 [[plugin.deps]]
