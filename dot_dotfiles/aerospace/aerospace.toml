@@ -364,6 +364,7 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'com.linguee.DeepLCopyTranslator'
+if.app-name-regex-substring = 'DeepL'
 run = 'layout floating'
 
 [[on-window-detected]]
