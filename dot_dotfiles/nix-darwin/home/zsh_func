@@ -1,5 +1,12 @@
 # ~/config/nix-darwin/home/func_zsh
 
+function brew() {
+    command brew "$@"  # Ejecuta el comando brew original
+    if [[ "$1" == "upgrade" || "$1" == "update" || "$1" == "outdated" ]]; then
+        sketchybar --trigger brew_update  # Dispara la actualización del widget
+    fi
+}
+
 # function brew() {
 #   command brew "$@" 
 #   if [[ $* =~ "upgrade" ]] || [[ $* =~ "update" ]] || [[ $* =~ "outdated" ]]; then
