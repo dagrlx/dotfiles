@@ -1,178 +1,79 @@
 local icons = require("icons")
-local settings = require("settings")
 local colors = require("colors")
+local settings = require("settings")
 
--- Crear el widget principal de brew
+local thresholds = {
+	-- default color green will be returned if count is less than the first threshold
+	[3] = colors.yellow,
+	[5] = colors.orange,
+	[10] = colors.red,
+}
+
 local brew = sbar.add("item", "widgets.brew", {
 	position = "right",
+	drawing = "off",
 	icon = {
-		string = icons.brew.empty, -- Icono inicial (cuando no hay paquetes desactualizados)
-		font = {
-			family = settings.nerd_font, -- Asegúrate de que esta fuente esté configurada
-			style = "Regular",
-			size = 19.0,
-		},
-		color = colors.green, -- Color inicial del icono
+		string = icons.brew.empty,
+		color = colors.green,
+		align = "left",
 	},
 	label = {
-		string = "0", -- Valor inicial
-		color = colors.text, -- Color del texto
-		font = {
-			family = settings.font.numbers, -- Asegúrate de que esta fuente esté configurada
-			size = 12.0,
-		},
+		string = "0",
+		font = { family = settings.font.numbers },
 	},
-	background = {
-		color = colors.bg1, -- Fondo gris oscuro
-		drawing = true, -- Asegúrate de que el fondo se dibuje
-	},
-	drawing = "off", -- Inicialmente oculto
-	update_freq = 300, -- Actualiza cada 300 segundos (5 minutos)
-	popup = {
-		align = "right",
-		height = 20,
-	},
+	updates = "on",
+	update_freq = 300, -- Update every 300 seg
 })
 
--- Crear un popup para mostrar los detalles de los paquetes desactualizados
-local brew_details = sbar.add("item", "widgets.brew.details", {
-	position = "popup." .. brew.name,
-	click_script = "sketchybar --set widgets.brew popup.drawing=off",
-	background = {
-		color = colors.bg1, -- Color de fondo del popup
-		corner_radius = 12,
-		padding_left = 5,
-		padding_right = 10,
-	},
-})
-
--- Variable para almacenar el último conteo de paquetes desactualizados
-local last_outdated_count = 0
-
--- Función para limpiar el popup
-local function clear_popup()
-	local existing_packages = brew:query()
-	if existing_packages.popup and next(existing_packages.popup.items) ~= nil then
-		for _, item in pairs(existing_packages.popup.items) do
-			sbar.remove(item)
-		end
+function GetThresholdColor(count)
+	local thresholdKeys = {}
+	for key in pairs(thresholds) do
+		table.insert(thresholdKeys, key)
 	end
-end
 
--- Variable para controlar la limpieza del popup
-local skip_cleanup = false
-
--- Manejar clics del mouse
-brew:subscribe({ "mouse.clicked" }, function(info)
-	if info.BUTTON == "left" then
-		-- Alternar la visibilidad del popup
-		sbar.exec("sketchybar --set widgets.brew popup.drawing=toggle")
-	elseif info.BUTTON == "right" then
-		-- Forzar una actualización
-		sbar.trigger("brew_update")
-	end
-end)
-
--- Ocultar el popup cuando el mouse sale del widget
-brew:subscribe({ "mouse.exited", "mouse.exited.global" }, function()
-	brew:set({ popup = { drawing = false } })
-end)
-
--- Mostrar el popup cuando el mouse entra en el widget
-brew:subscribe({ "mouse.entered" }, function()
-	brew:set({ popup = { drawing = true } })
-end)
-
--- Limpiar el popup cuando se dispara el evento brew_cleanup
-brew:subscribe({ "brew_cleanup" }, function()
-	if not skip_cleanup then
-		brew:set({ label = "0" })
-		clear_popup()
-	end
-end)
-
--- Función para actualizar el widget
-local function update_brew_widget()
-	skip_cleanup = false
-
-	-- Ejecutar brew update y brew outdated
-	sbar.exec("brew update")
-	sbar.exec("brew outdated", function(outdated)
-		skip_cleanup = true
-
-		-- Definir umbrales de color
-		local thresholds = {
-			{ count = 10, color = colors.red },
-			{ count = 5, color = colors.orange },
-			{ count = 3, color = colors.yellow },
-			{ count = 1, color = colors.green },
-			{ count = 0, color = colors.text },
-		}
-
-		-- Contar paquetes desactualizados
-		local count = 0
-		for _ in outdated:gmatch("\n") do
-			count = count + 1
-		end
-
-		-- Actualizar el widget solo si el conteo ha cambiado
-		if count ~= last_outdated_count then
-			last_outdated_count = count
-
-			-- Limpiar el popup
-			clear_popup()
-
-			-- Agregar paquetes desactualizados al popup
-			for package in outdated:gmatch("[^\n]+") do
-				sbar.add("item", "widgets.brew.package." .. package, {
-					label = {
-						string = tostring(package),
-						align = "right",
-						padding_right = 20,
-						padding_left = 20,
-					},
-					icon = {
-						string = tostring(package),
-						drawing = false,
-					},
-					click_script = "sketchybar --set widgets.brew popup.drawing=off",
-					position = "popup." .. brew.name,
-				})
-			end
-
-			-- Cambiar el ícono y el color según el número de paquetes desactualizados
-			local icon = (count > 0) and icons.brew.full or icons.brew.empty
-			local color = colors.green
-			local drawing = (count > 0) and "on" or "off" -- Ocultar el widget si no hay paquetes desactualizados
-
-			for _, threshold in ipairs(thresholds) do
-				if count >= threshold.count then
-					color = threshold.color
-					break
-				end
-			end
-
-			brew:set({
-				icon = {
-					string = icon,
-					color = color,
-				},
-				label = {
-					string = tostring(count),
-					color = colors.text,
-				},
-				background = {
-					color = colors.bg1,
-					drawing = true,
-				},
-				drawing = drawing, -- Mostrar u ocultar el widget según el conteo
-			})
-		end
+	table.sort(thresholdKeys, function(a, b)
+		return a > b
 	end)
+
+	for _, threshold in ipairs(thresholdKeys) do
+		if tonumber(count) >= threshold then
+			return thresholds[threshold]
+		end
+	end
+	return colors.green
 end
 
--- Actualizar el widget cuando se dispara el evento brew_update
-brew:subscribe({ "routine", "forced", "brew_update" }, update_brew_widget)
+brew:subscribe({ "routine", "brew_update" }, function()
+	sbar.exec("brew outdated | wc -l | tr -d ' '", function(brew_outdated)
+		local icon = icons.brew.empty
+		local color = colors.green
+		local label = "0"
+		local count = brew_outdated
+		local drawing = "off"
 
--- Verificar el estado de brew al iniciar
-sbar.trigger("brew_update")
+		if tonumber(count) > 0 then
+			icon = icons.brew.full
+			label = count
+			color = GetThresholdColor(count)
+			drawing = "on"
+		end
+		--print("color: ", color, "count: ", count, "icon: ", icon, "label: ", label, "drawing: ", drawing)
+		brew:set({
+			icon = {
+				string = icon,
+				color = color,
+			},
+			drawing = drawing,
+			label = { string = label },
+		})
+	end)
+end)
+
+sbar.add("bracket", "widgets.brew.bracket", { brew.name }, {
+	background = { color = colors.bg1 },
+})
+
+sbar.add("item", "widgets.brew.padding", {
+	position = "right",
+	width = settings.group_paddings,
+})
