@@ -2,11 +2,12 @@
 
 function brew() {
     command brew "$@"  # Ejecuta el comando brew original
-    if [[ "$1" == "upgrade" || "$1" == "update" || "$1" == "outdated" ]]; then
-        sketchybar --trigger brew_update  # Dispara la actualización del widget
+
+    # Actualizar el widget si el comando afecta el estado de los paquetes
+    if [[ "$1" == "outdated" || "$1" == "upgrade" || "$1" == "update" || "$*" =~ "--cask" || "$*" =~ "--greedy" ]]; then
+        sketchybar --trigger brew_update
     fi
 }
-
 # function brew() {
 #   command brew "$@" 
 #   if [[ $* =~ "upgrade" ]] || [[ $* =~ "update" ]] || [[ $* =~ "outdated" ]]; then
