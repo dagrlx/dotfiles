@@ -145,7 +145,7 @@
         "age" # Is a simple, modern and secure file encryption tool, format, and Go library.
         #"atuin" # Shell history with SQLite
 
-        #"talosctl"
+        "talosctl"
         #"ntfs-3g-mac"
 
         #"pkgx" # Alternativa a hombrew
