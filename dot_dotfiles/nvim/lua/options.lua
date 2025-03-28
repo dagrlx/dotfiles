@@ -7,7 +7,7 @@ opt.number = true
 opt.relativenumber = true
 opt.cursorline = true -- Resalta la línea donde está el cursor
 opt.cursorcolumn = true
-vim.opt.wrap = true -- Hace que el texto de las líneas largas (las que sobrepasan el ancho de la pantalla) siempre esté visible.
+opt.wrap = true -- Hace que el texto de las líneas largas (las que sobrepasan el ancho de la pantalla) siempre esté visible.
 opt.breakindent = true -- Conserva la indentación de las líneas que sólo son visibles cuando wrap es true
 opt.textwidth = 0 -- valor 0 desactiva la opción (valores 80 o 120)
 -- tabs & indentation
@@ -48,3 +48,6 @@ vim.cmd([[ augroup obsidian autocmd! autocmd BufEnter *.md set conceallevel=2 au
 
 -- disable codeium by default
 vim.g.codeium_enabled = false
+
+-- Recommended sessionoptions config for auto-session plugin
+opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
