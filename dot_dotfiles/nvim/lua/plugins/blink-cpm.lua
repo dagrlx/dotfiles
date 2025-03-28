@@ -6,7 +6,7 @@ return {
 			{ "saghen/blink.compat", lazy = true, version = false },
 		},
 
-		version = "v0.*",
+		version = "v1.*",
 
 		---@module 'blink.cmp'
 		---@type blink.cmp.Config
