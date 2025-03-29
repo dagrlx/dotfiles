@@ -35,3 +35,19 @@ def --env y [...args] {
 	rm -fp $tmp
 }
 
+# function for brew widget in sketchybar
+def brew [...params] {
+    ^brew ...$params
+
+    # Actualizar el widget si el comando afecta el estado de los paquetes
+    let trigger_update = (
+        ($params | get 0) in ["outdated" "upgrade" "update"] or
+        ($params | any {|p| $p =~ "--cask"}) or
+        ($params | any {|p| $p =~ "--greedy"})
+    )
+
+    if $trigger_update {
+        ^sketchybar --trigger brew_update
+    }
+ }
+
