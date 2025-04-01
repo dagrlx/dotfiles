@@ -35,19 +35,22 @@ def --env y [...args] {
 	rm -fp $tmp
 }
 
-# function for brew widget in sketchybar
-def brew [...params] {
-    ^brew ...$params
+# update widget brew in sketchybar
+def brew [args: list<string>] {
+    # Ejecutar el comando brew con los argumentos proporcionados
+    ^brew ...$args
 
-    # Actualizar el widget si el comando afecta el estado de los paquetes
-    let trigger_update = (
-        ($params | get 0) in ["outdated" "upgrade" "update"] or
-        ($params | any {|p| $p =~ "--cask"}) or
-        ($params | any {|p| $p =~ "--greedy"})
-    )
+    # Filtrar solo los comandos principales, excluyendo flags
+    let main_commands = $args | where { |arg| not ($arg =~ "^--") }
 
-    if $trigger_update {
-        ^sketchybar --trigger brew_update
+    # Verificar si se debe actualizar el widget de Sketchybar
+    if ($main_commands | any { |arg| $arg in ["outdated", "upgrade", "update"] }) {
+        sketchybar --trigger brew_update
     }
- }
+}
+
+
+
+
+
 
