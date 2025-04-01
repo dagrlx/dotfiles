@@ -285,6 +285,9 @@
          ##### AI tool
         "lm-studio"  # App for testing llms models
         "gpt4all"
+
+        "lulu" # firewwall for macOS
+        "freelens" # for managing Kubernetes clusters
         
         #"fly" # Command line interface to Concourse CI
     ];
